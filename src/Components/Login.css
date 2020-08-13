@@ -1,0 +1,31 @@
+.loginUsername{
+    display: flex;
+    padding: 5px;
+}
+.loginPassword{
+    display: flex;
+    padding: 5px;
+}
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginButton {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    border: solid 0.5px;
+    border-radius: 30px;
+    background-color: #006400;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+
+input {
+    border: solid 0.5px;
+    border-radius: 30px;
+}

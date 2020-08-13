@@ -1,0 +1,29 @@
+.inventoryTable {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: solid 0.5px;
+    width: 60%;
+    overflow: scroll;
+}
+
+.tableIcons {
+    padding-left: 30px;
+}
+
+.tableQuantity{
+    display: flex;
+    justify-content: center;
+}
+
+.tableHeader {
+    background-color: skyblue;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.tableRow {
+    border: solid 0.5px;
+    display: flex;
+    justify-content: space-evenly;
+}

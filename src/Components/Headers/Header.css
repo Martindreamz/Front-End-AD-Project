@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userHeader {
+    display: flex;
+}
+
+.userHeaderName {
+    display: flex;
+}
+.userHeaderState {
+    display: flex;
+}

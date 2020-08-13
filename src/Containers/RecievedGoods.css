@@ -1,0 +1,17 @@
+.recievedGoodsBody {
+    display: flex; 
+    align-Items: center; 
+    justify-Content: center;
+    flex-direction: column;
+}
+
+.checkInventoryButton {
+    background-color: skyblue;
+    border: solid 0.5px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.MuiSvgIcon-root {
+    cursor: pointer;
+}
