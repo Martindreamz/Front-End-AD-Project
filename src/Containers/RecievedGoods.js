@@ -36,9 +36,9 @@ class RecievedGoods extends React.Component {
             ], 
             showPopup: false,
             popupData: {
-                id: 1,
-                name: "test",
-                quantity: 15
+                id: "",
+                name: "",
+                quantity: 1
             }
         }
     }
@@ -57,20 +57,28 @@ class RecievedGoods extends React.Component {
         //redirect to check inventory url
         window.location.href = domain
     }
-    togglePopupAction = () => {
+    togglePopupAction = async () => {
         //show popup
-        this.setState({
+        await this.setState({
             popupData: {
-                id: null,
-                name: null,
+                id: "",
+                name: "",
                 quantity: 1
             }, 
             showPopup: !this.state.showPopup
         })
     }
+
+    //Create/Edit button event handling
     addInventoryAction = () => {
         this.setState({
             showPopup: true
+        })
+    }
+    editInventoryAction = async (event) => {
+        await this.setState({
+            popupData: this.state.data.find(item => item.id == event.currentTarget.id),
+            showPopup: !this.state.showPopup
         })
     }
 
@@ -81,8 +89,8 @@ class RecievedGoods extends React.Component {
                 {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
                 <div className="recievedGoodsBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
-                    <InventoryTable data={this.state.data} />
-                    <button className="checkInventoryButton" onClick={this.checkInventoryAction} > Check Inventory</button>
+                    <InventoryTable data={this.state.data} editData={this.editInventoryAction} />
+                    <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
                 </div>
             </div>
         )

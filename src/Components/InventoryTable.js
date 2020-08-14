@@ -9,27 +9,22 @@ class InventoryTable extends React.Component {
     constructor(props) {
         super(props)
 
-        this.editButton = this.editButton.bind(this)
         this.deleteButton = this.deleteButton.bind(this)
     }
     //event Listeners
-    editButton = () => {
-        //redirect to edit page
-        window.location.href = domain
-    }
     deleteButton = () => {
         //actions to delete record
     }
 
     render() {
         const inventoryItem = this.props.data.map(item =>
-            <tr className="tableRow">
+            <tr className="tableRow" >
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td className="tableQuantity">
                     {item.quantity}
                     <div className="tableIcons">
-                        <EditIcon onClick={this.editButton} />
+                        <EditIcon id={item.id} onClick={this.props.editData} />
                         <DeleteIcon onClick={this.deleteButton} />
                     </div>
                 </td>
