@@ -12,7 +12,7 @@ class RecievedGoods extends React.Component {
         super()
         this.state = {
             //test data
-            data1: [
+            data: [
                 {
                     id: 1,
                     name: "pen",
@@ -48,8 +48,8 @@ class RecievedGoods extends React.Component {
         //HTTP get request
         axios.get('https://localhost:5001/api/invt')
             .then(response => {
-                const items = response.data1;
-                this.setState({ data1: items });
+                const items = response.data;
+                this.setState({ data: items });
             })
     }
 
@@ -77,7 +77,7 @@ class RecievedGoods extends React.Component {
     }
     editInventoryAction = async (event) => {
         await this.setState({
-            popupData: this.state.data1.find(item => item.id == event.currentTarget.id),
+            popupData: this.state.data.find(item => item.id == event.currentTarget.id),
             showPopup: !this.state.showPopup
         })
     }
@@ -86,19 +86,11 @@ class RecievedGoods extends React.Component {
         return (
             <div>
                 <Header />
-<<<<<<< HEAD
-                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data1={this.state.popupData} /> : null}
+                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
                 <div className="recievedGoodsBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
-                    <InventoryTable data1={this.state.data1} editData={this.editInventoryAction} />
+                    <InventoryTable data={this.state.data} editData={this.editInventoryAction} />
                     <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
-=======
-                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
-                <div className="inventoryBody">
-                    <AddCircleIcon onClick={this.addInventoryAction} />
-                    <InventoryTable type={false} data={this.state.data} editData={this.editInventoryAction} />
-                    <button className="inventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
->>>>>>> 05c88c8930db63cc31958269dab8690cd6546002
                 </div>
             </div>
         )

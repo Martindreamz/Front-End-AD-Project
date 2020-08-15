@@ -9,7 +9,6 @@ import './App.css';
 import Header from './Components/Headers/Header';
 import Login from './Components/Login';
 import RecievedGoods from './Containers/RecievedGoods';
-<<<<<<< HEAD
 import SupplierList from './Containers/SupplierList';
 import CheckInventory from './Containers/CheckInventory';
 
@@ -30,6 +29,7 @@ function App() {
 
                   <Route path='/supplier'>
                       <SupplierList />
+                  </Route>
 
                   <Route path='/test1'>
                       <CheckInventory />

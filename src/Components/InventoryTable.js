@@ -20,7 +20,7 @@ class InventoryTable extends React.Component {
     }
 
     render() {
-        const inventoryItem = this.props.data1.map(item =>
+        const inventoryItem = this.props.data.map(item =>
             <tr className="tableRow" >
                 <td>{item.id}</td>
                 <td>{item.name}</td>
