@@ -1,11 +1,11 @@
-.recievedGoodsBody {
+.inventoryBody {
     display: flex; 
     align-Items: center; 
     justify-Content: center;
     flex-direction: column;
 }
 
-.checkInventoryButton {
+.inventoryButton {
     background-color: skyblue;
     border: solid 0.5px;
     border-radius: 30px;

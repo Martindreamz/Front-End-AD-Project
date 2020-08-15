@@ -46,7 +46,7 @@ class RecievedGoods extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get(/* api url here */)
+        axios.get(/* api here */)
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
@@ -87,10 +87,10 @@ class RecievedGoods extends React.Component {
             <div>
                 <Header />
                 {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
-                <div className="recievedGoodsBody">
+                <div className="inventoryBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
-                    <InventoryTable data={this.state.data} editData={this.editInventoryAction} />
-                    <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
+                    <InventoryTable type={false} data={this.state.data} editData={this.editInventoryAction} />
+                    <button className="inventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
                 </div>
             </div>
         )
