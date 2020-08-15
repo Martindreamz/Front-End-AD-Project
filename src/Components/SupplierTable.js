@@ -5,7 +5,7 @@ import './InventoryTable.css';
 import {domain} from '../Configurations/Config';
 
 
-class InventoryTable extends React.Component {
+class SupplierTable extends React.Component {
     constructor(props) {
         super(props)
 
@@ -17,15 +17,16 @@ class InventoryTable extends React.Component {
     }
 
     render() {
-        const inventoryItem = this.props.data1.map(item =>
+        const supplierItem = this.props.data.map(item =>
             <tr className="tableRow" >
-                <td>{item.id}</td>
+                <td>{item.supplierCode}</td>
                 <td>{item.name}</td>
-                <td className="tableQuantity">
-                    {item.quantity}
+                <td>{item.contactPerson}</td>
+                <td>{item.priority}</td>
+                <td>
                     <div className="tableIcons">
-                        <EditIcon id={item.id} onClick={this.props.editData} />
-                        <DeleteIcon onClick={this.deleteButton} />
+                        <EditIcon id={item.id}/>
+                        <DeleteIcon />
                     </div>
                 </td>
             </tr>        
@@ -34,14 +35,16 @@ class InventoryTable extends React.Component {
         return (
             <table className="inventoryTable">
                 <tr className="tableHeader">
-                    <th>Item Code</th>
-                    <th>Description</th>
-                    <th>Total Quantity</th>
+                    <th>Supplier Code</th>
+                    <th>Name</th>
+                    <th>Contact Person</th>
+                    <th>Priority</th>
+                    <th></th>
                 </tr>
-                {inventoryItem}
+                {supplierItem}
             </table>
         )
     }
 }
 
-export default InventoryTable;
+export default SupplierTable;

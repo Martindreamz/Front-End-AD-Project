@@ -9,6 +9,8 @@ import './App.css';
 import Header from './Components/Headers/Header';
 import Login from './Components/Login';
 import RecievedGoods from './Containers/RecievedGoods';
+import SupplierList from './Containers/SupplierList';
+
 
 function App() {
   return (
@@ -23,6 +25,9 @@ function App() {
                   </Route>
                   <Route path='/test'>
                       <RecievedGoods />
+                  </Route>
+                  <Route path='/supplier'>
+                      <SupplierList />
                   </Route>
               </Switch>
           </Router>

@@ -12,7 +12,7 @@ class RecievedGoods extends React.Component {
         super()
         this.state = {
             //test data
-            data: [
+            data1: [
                 {
                     id: 1,
                     name: "pen",
@@ -48,8 +48,8 @@ class RecievedGoods extends React.Component {
         //HTTP get request
         axios.get(/* api url here */)
             .then(response => {
-                const items = response.data;
-                this.setState({ data: items });
+                const items = response.data1;
+                this.setState({ data1: items });
             })
     }
 
@@ -77,7 +77,7 @@ class RecievedGoods extends React.Component {
     }
     editInventoryAction = async (event) => {
         await this.setState({
-            popupData: this.state.data.find(item => item.id == event.currentTarget.id),
+            popupData: this.state.data1.find(item => item.id == event.currentTarget.id),
             showPopup: !this.state.showPopup
         })
     }
@@ -86,10 +86,10 @@ class RecievedGoods extends React.Component {
         return (
             <div>
                 <Header />
-                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
+                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data1={this.state.popupData} /> : null}
                 <div className="recievedGoodsBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
-                    <InventoryTable data={this.state.data} editData={this.editInventoryAction} />
+                    <InventoryTable data1={this.state.data1} editData={this.editInventoryAction} />
                     <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
                 </div>
             </div>
