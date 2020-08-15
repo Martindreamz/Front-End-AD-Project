@@ -46,7 +46,7 @@ class RecievedGoods extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get(/* api here */)
+        axios.get('https://localhost:5001/api/invt')
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
