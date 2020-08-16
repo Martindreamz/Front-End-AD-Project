@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import './RecievedGoods.css';
-import InventoryTable from '../Components/InventoryTable';
+import DiscrepancyTable from '../Components/DiscrepancyTable';
 import axios from 'axios';
 
-class CheckInventory extends React.Component {
+class DiscrepancyList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,22 +13,26 @@ class CheckInventory extends React.Component {
                 {
                     id: 1,
                     name: "pen",
-                    quantity: 10
+                    quantity: 10,
+                    cost: 2.00
                 },
                 {
                     id: 2,
                     name: "pencil",
-                    quantity: 5
+                    quantity: 5,
+                    cost: 3.00
                 },
                 {
                     id: 3,
                     name: "pencil",
-                    quantity: 15
+                    quantity: 15,
+                    cost: 4.00
                 },
                 {
                     id: 4,
                     name: "pencil",
-                    quantity: 5
+                    quantity: 5,
+                    cost: 5.00
                 }
             ]
         }
@@ -50,17 +54,22 @@ class CheckInventory extends React.Component {
         console.log(event.currentTarget.id)
     }
 
+    //Event handling to send post request to backend
+    submitAction = () => {
+        //actions here
+    }
+
     render() {
         return (
             <div>
                 <Header />
                 <div className="inventoryBody">
-                    <InventoryTable type={true} data={this.state.data} handleQtyInput={this.handleInput} />
-                    <button className="inventoryButton" >Submit</button>
+                    <DiscrepancyTable data={this.state.data} handleReasonsInput={this.handleInput} />
+                    <button className="inventoryButton" onClick={this.submitAction} >Submit</button>
                 </div>
             </div>
         )
     }
 }
 
-export default CheckInventory;
+export default DiscrepancyList;
