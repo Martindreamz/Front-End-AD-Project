@@ -5,8 +5,8 @@ import DiscrepancyTable from '../Components/DiscrepancyTable';
 import axios from 'axios';
 
 class DiscrepancyList extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             //test data
             data: [
