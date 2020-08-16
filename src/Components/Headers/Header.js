@@ -30,6 +30,7 @@ class Header extends React.Component {
       <nav className="navbar">
         <div class="brand-title">
           <HomeIcon onClick={this.homeButtonAction} />
+          Stationery Management System
         </div>
         <a href="#" class="toggle-button" onClick={this.toggleButtonAction}>
           <span class="bar"></span>
