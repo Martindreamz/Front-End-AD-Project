@@ -42,6 +42,9 @@ function App() {
                   <Route path='/test2'>
                       <DiscrepancyList />
                   </Route>
+                   <Route path='/requisitionForm'>
+                      <RequisitionForm />
+                  </Route>
               </Switch>
              </Router>
             </div>
