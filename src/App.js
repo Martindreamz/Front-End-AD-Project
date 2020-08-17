@@ -8,6 +8,7 @@ import {
 import './App.css';
 import Header from './Components/Headers/Header';
 import Login from './Components/Login';
+import SupplierForm from './Components/SupplierForm';
 import RecievedGoods from './Containers/RecievedGoods';
 import SupplierList from './Containers/SupplierList';
 import CheckInventory from './Containers/CheckInventory';
@@ -31,12 +32,17 @@ function App() {
                   <Route path='/supplier'>
                       <SupplierList />
                   </Route>
+                  <Route path='/supplier-form'>
+                      <SupplierForm />
+                  </Route>
 
                   <Route path='/test1'>
                       <CheckInventory />
                   </Route>
                   <Route path='/test2'>
                       <DiscrepancyList />
+                  </Route>
+
                   </Route>
               </Switch>
           </Router>
