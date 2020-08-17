@@ -9,7 +9,9 @@ import './App.css';
 import Header from './Components/Headers/Header';
 import Login from './Components/Login';
 import RecievedGoods from './Containers/RecievedGoods';
-import RequisitionForm from './Containers/RequisitionForm';
+import SupplierList from './Containers/SupplierList';
+import CheckInventory from './Containers/CheckInventory';
+import DiscrepancyList from './Containers/DiscrepancyList';
 
 function App() {
   return (
@@ -25,8 +27,16 @@ function App() {
                   <Route path='/test'>
                       <RecievedGoods />
                   </Route>
-                  <Route path='/requisitionForm'>
-                        <RequisitionForm />
+
+                  <Route path='/supplier'>
+                      <SupplierList />
+                  </Route>
+
+                  <Route path='/test1'>
+                      <CheckInventory />
+                  </Route>
+                  <Route path='/test2'>
+                      <DiscrepancyList />
                   </Route>
               </Switch>
           </Router>
