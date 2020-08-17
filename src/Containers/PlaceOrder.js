@@ -2,6 +2,7 @@
 import Header from '../Components/Headers/Header';
 import PlaceOrderTable from "../Components/PlaceOrderTable"
 import './RecievedGoods.css';
+import './general.css';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 
@@ -9,6 +10,7 @@ class PlaceOrder extends Component {
     constructor() {
         super()
         this.state = {
+            subTotal:0,
             //test data
             data: [
                 {
@@ -27,6 +29,17 @@ class PlaceOrder extends Component {
                     reOrderQty: 45,
                     price: 1.0,
                     unit: "each",
+                    supplier: "Main Supplier"
+
+                }
+                ,
+
+                {
+                    itemCode: "P049",
+                    desc: "Pad Postit 2 x 4",
+                    reOrderQty: 100,
+                    price: 5.6,
+                    unit: "dozen",
                     supplier: "Main Supplier"
 
                 }
@@ -55,11 +68,15 @@ class PlaceOrder extends Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/invt')
+        axios.get('https://localhost:5001/api/placeOrder')
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
+                
             })
+        var total = this.state.data.map(item => item.price * item.reOrderQty).reduce((total, price) => total + price)
+        this.setState({ subTotal: total })
+        console.log(total)
     }
 
     checkInventoryAction = () => {
@@ -68,11 +85,22 @@ class PlaceOrder extends Component {
     }
 
     render() {
+        var CurrencyFormat = require('react-currency-format')
         return (
             <div>
                 <Header />
-                <div className="recievedGoodsBody">
+                <div className="tableBody">
                     <PlaceOrderTable data={this.state.data} />
+                   
+                    <br />
+                    <div className="tablebottom">
+                        <h3>Sub total:
+                        <CurrencyFormat value={this.state.subTotal} decimalScale={2} fixedDecimalScale={true} displayType={'text'} prefix={'$'} />
+                        </h3>
+                        <br/>
+                        <button className="button">Edit</button>
+                        <button className="button">Submit</button>
+                    </div>
                 </div>
             </div>
         )
