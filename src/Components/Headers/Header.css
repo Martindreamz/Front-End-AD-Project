@@ -1,8 +1,5 @@
 * {
   box-sizing: border-box;
-}
-
-body {
   margin: 0;
   padding: 0;
 }
@@ -17,12 +14,23 @@ body {
 }
 
 .brand-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin: 0.5rem;
+}
+
+.brand-title p {
+  float: right;
+  padding-top: 0.7rem;
+}
+
+.MuiSvgIcon-root {
+  margin-right: 1.5rem;
 }
 
 .navbar-links {
   height: 100%;
+  margin-right: 1.5rem;
+  align-items: center;
 }
 
 .navbar-links ul {
@@ -39,7 +47,7 @@ body {
   display: block;
   text-decoration: none;
   color: white;
-  padding: 1rem;
+  padding: 0 1rem 0.5rem;
 }
 
 .navbar-links li:hover {
@@ -55,6 +63,7 @@ body {
   justify-content: space-between;
   width: 30px;
   height: 21px;
+  margin-top: 12px;
 }
 
 .toggle-button .bar {

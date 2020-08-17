@@ -26,29 +26,34 @@ class Header extends React.Component {
   };
 
   render() {
+    const iconStyle = {
+      width: 35,
+      height: 35,
+      marginTop: 5,
+      marginLeft: 15,
+      marginRight: 15,
+    };
+
     return (
       <nav className="navbar">
-        <div class="brand-title">
-          <HomeIcon onClick={this.homeButtonAction} />
+        <div className="brand-title">
+          <HomeIcon onClick={this.homeButtonAction} style={iconStyle} />
+          <p>Stationery Management System</p>
         </div>
-        <a href="#" class="toggle-button" onClick={this.toggleButtonAction}>
+        <a href="#" className="toggle-button" onClick={this.toggleButtonAction}>
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
         </a>
-        <div class="navbar-links">
+        <div className="navbar-links">
           <ul>
             <li>
-              <a href="#">
-                <AccountBoxIcon />
-                {this.state.name}
-              </a>
+              <AccountBoxIcon style={iconStyle} />
+              <a href="#">{this.state.name}</a>
             </li>
             <li>
-              <a href="#">
-                <ExitToAppIcon />
-                {this.state.logState}
-              </a>
+              <ExitToAppIcon style={iconStyle} />
+              <a href="#">{this.state.logState}</a>
             </li>
           </ul>
         </div>
