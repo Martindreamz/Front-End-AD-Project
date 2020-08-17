@@ -1,38 +1,114 @@
-.inventoryTable {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border: solid 0.5px;
-    width: 60%;
-    overflow: scroll;
+.genericTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid 0.5px;
+  width: 60%;
+  overflow: scroll;
+  margin-top: 1.5rem;
 }
 
-.requisitionTable{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border: solid 0.5px;
-    width: 100%;
+.inventoryTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid 0.5px;
+  width: 60%;
+  overflow: scroll;
+}
+
+.requisitionTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid 0.5px;
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background-color: #f4f5f6;
+}
+
+th {
+  width: 20%;
+}
+
+td {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tableIcons {
-    padding-left: 30px;
+  padding-left: 30px;
 }
 
-.tableQuantity{
-    display: flex;
-    justify-content: center;
+.tableQuantity {
+  display: flex;
+  justify-content: center;
 }
 
 .tableHeader {
-    background-color: skyblue;
-    display: flex;
-    justify-content: space-evenly;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: linear-gradient(
+    to bottom right,
+    #247494,
+    #1c5a73,
+    #103442,
+    #000000
+  );
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .tableRow {
-    border: solid 0.5px;
-    display: flex;
-    justify-content: space-evenly;
+  border: solid 0.3px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
+.tableRow:hover {
+  background-color: #ddd;
+}
+
+button {
+  display: inline-block;
+  padding: 0.3em 1.2em;
+  border: 0.1em;
+  margin: 0.5em;
+  border-radius: 1em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #000000;
+  text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+  text-align: center;
+  transition: all 0.15s;
+}
+
+button.greenButton {
+  background-color: #7edb5f;
+  border: solid #7edb5f;
+}
+
+button.redButton {
+  background-color: #d43f4c;
+  border: solid #d43f4c;
+}
+
+button:hover {
+  text-shadow: 0 0 2em rgba(255, 255, 255, 1);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+@media all and (max-width: 30em) {
+   button {
+    display: block;
+    margin: 0.4em auto;
+  }
+}
