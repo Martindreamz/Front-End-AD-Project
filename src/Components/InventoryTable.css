@@ -30,11 +30,14 @@ tr:nth-child(even) {
 }
 
 th {
- 
+  width: 20%;
 }
 
 td {
-  
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tableIcons {
