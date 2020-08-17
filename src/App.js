@@ -12,6 +12,7 @@ import RecievedGoods from './Containers/RecievedGoods';
 import SupplierList from './Containers/SupplierList';
 import CheckInventory from './Containers/CheckInventory';
 import DiscrepancyList from './Containers/DiscrepancyList';
+import ManageDepartment from './Containers/ManageDepartment';
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
                   </Route>
                   <Route path='/test2'>
                       <DiscrepancyList />
+                  </Route>
+                  <Route path='/manager'>
+                      <ManageDepartment />
                   </Route>
               </Switch>
           </Router>
