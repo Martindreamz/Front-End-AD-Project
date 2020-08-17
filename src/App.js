@@ -27,10 +27,9 @@ function App() {
                   </Route>
                   <Route path='/test'>
                       <RecievedGoods />
-                    </Route>
-                    <Route path='/requisitionForm'>
-                        <RequisitionForm />
-                    </Route>
+                  </Route>
+                  <Route path='/requisitionForm'>
+                      <RequisitionForm />
                   </Route>
 
                   <Route path='/supplier'>
