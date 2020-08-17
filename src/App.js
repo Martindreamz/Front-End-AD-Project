@@ -9,6 +9,7 @@ import './App.css';
 import Header from './Components/Headers/Header';
 import Login from './Components/Login';
 import RecievedGoods from './Containers/RecievedGoods';
+import PlaceOrder from "./Containers/PlaceOrder"
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
                   </Route>
                   <Route path='/test'>
                       <RecievedGoods />
+                  </Route>
+                  <Route path='/placeOrder'>
+                      <PlaceOrder />
                   </Route>
               </Switch>
           </Router>
