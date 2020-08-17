@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './InventoryTable.css';
-import {domain} from '../Configurations/Config';
+import { domain } from '../Configurations/Config';
 
 
 class InventoryTable extends React.Component {
     constructor(props) {
         super(props)
-
+        this.state = {
+            //state to reuse table for managed recieve goods and inventory check screens
+            isCheckInvTable: props.type
+        }
         this.deleteButton = this.deleteButton.bind(this)
     }
     //event Listeners
@@ -23,12 +26,20 @@ class InventoryTable extends React.Component {
                 <td>{item.name}</td>
                 <td className="tableQuantity">
                     {item.quantity}
-                    <div className="tableIcons">
-                        <EditIcon id={item.id} onClick={this.props.editData} />
-                        <DeleteIcon onClick={this.deleteButton} />
-                    </div>
+                    {this.state.isCheckInvTable ? null :
+                        <div className="tableIcons">
+                            <EditIcon id={item.id} onClick={this.props.editData} />
+                            <DeleteIcon onClick={this.deleteButton} />
+                        </div>
+                    }
                 </td>
-            </tr>        
+                {this.state.isCheckInvTable ?
+                    <td>
+                        <input id={item.id} type="number" min="0" max="9999" onChange={this.props.handleQtyInput} />
+                    </td>
+                    : null
+                }
+            </tr>
         )
 
         return (
@@ -37,6 +48,7 @@ class InventoryTable extends React.Component {
                     <th>Item Code</th>
                     <th>Description</th>
                     <th>Total Quantity</th>
+                    {this.state.isCheckInvTable ? <th>Inventory Quantity</th> : null}
                 </tr>
                 {inventoryItem}
             </table>
