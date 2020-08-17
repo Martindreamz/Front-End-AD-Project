@@ -3,9 +3,9 @@
     "",
     "\\src",
     "\\src\\Components",
-    "\\src\\Configurations",
+    "\\src\\Components\\Headers",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Components\\InventoryTable.js",
+  "SelectedNode": "\\src\\Containers\\RequisitionForm.js",
   "PreviewInSolutionExplorer": false
 }

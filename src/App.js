@@ -9,9 +9,10 @@ import './App.css';
 import Header from './Components/Headers/Header';
 import Login from './Components/Login';
 import RecievedGoods from './Containers/RecievedGoods';
+import RequisitionForm from './Containers/RequisitionForm';
 
 function App() {
-  return (
+    return (
       <div className="App">
           <Router>
               <Switch>
@@ -23,10 +24,13 @@ function App() {
                   </Route>
                   <Route path='/test'>
                       <RecievedGoods />
-                  </Route>
+                    </Route>
+                    <Route path='/requisitionForm'>
+                        <RequisitionForm />
+                    </Route>
               </Switch>
-          </Router>
-      </div>
+             </Router>
+            </div>
   );
 }
 
