@@ -20,13 +20,23 @@ const styles = {
 class RequisitionFormTable extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            requestData: [{
+                id: "",
+                category: "",
+                description: "",
+                quantity: "",
+                unit: ""
+            }],
+
+
+            cat: null,
+            openCat: false
+        }
     }
 
-    state = {
-        cat: null,
-        openCat: false
-    }
-
+    //Event Handling
     showCat = (event) => {
         this.setState({
             cat: event.target.value,
@@ -48,7 +58,7 @@ class RequisitionFormTable extends React.Component {
 
     render() {
         //mapping data 
-        const ReqItem = this.props.reqData.map(item =>
+        const ReqItem = this.state.requestData.map(item =>
             <tr className="tableRow">
                 <td>
                     <InputLabel id="demo-controlled-open-select-label">Category</InputLabel>
@@ -59,13 +69,16 @@ class RequisitionFormTable extends React.Component {
                         open={this.state.catOpen}
                         onClose={this.closeCat}
                         onChange={this.state.showCat}>
-                        <MenuItem>{item.category}</MenuItem>
+                        {/*menuitem not working*/}
+                        {this.props.category.map(item => <option value={item}>{item}</option>)}
+                        
                     </Select>
                 </td>
                 <td>{item.description}</td>
                 <td>{item.quantity}</td>
                 <td>{item.unit}</td>
             </tr>
+
         )
 
         return (

@@ -44,8 +44,19 @@ class RequisitionForm extends React.Component {
                     description: "Eraser (soft)",
                     quantity: 20,
                     unit: "Each"
+                },
+                {
+                    id: 5,
+                    category: "Eraser",
+                    description: "Eraser (soft)",
+                    quantity: 20,
+                    unit: "Each"
                 }
             ],
+
+            dropdownData: [],
+            category: [],
+
             showPopup: false,
             popupData: {
                 id: "",
@@ -56,13 +67,42 @@ class RequisitionForm extends React.Component {
     }
 
     //Run once before render - lifecycle
-    componentDidMount() {
+    async componentDidMount() {
         //HTTP get request
         axios.get('api here')
             .then(response => {
                 const items = response.reqData;
                 this.setState({ reqData: items });
             })
+
+        await this.setState(prevState => {
+            //get distinct category name
+            const categoryName = [...new Set(prevState.reqData.map(item => item.category))]
+            console.log(categoryName)
+
+            var data = []
+            categoryName.forEach(name => {
+                const itemName = name
+                //get array of object with category == name
+                const categoryData = prevState.reqData.map(item => {
+                    if (name == item.category) {
+                        return item
+                    }
+                    return null
+                }).filter(item => item != null)
+                data.push({
+                    itemName: categoryData
+                })
+            })
+            console.log(data)
+
+            return {
+                dropdownData: data,
+                category: categoryName 
+            }
+        })
+        console.log(this.state.reqData)
+        console.log(this.state.category)
     }
 
     render() {
@@ -71,7 +111,7 @@ class RequisitionForm extends React.Component {
                 <Header />
                 <div className="requisitionFormBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
-                    <RequisitionFormTable reqData={this.state.reqData}/>
+                    <RequisitionFormTable data={this.state.dropdownData} category={this.state.category} />
                     <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
                 </div>
             </div>
