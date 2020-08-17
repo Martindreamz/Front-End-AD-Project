@@ -12,6 +12,7 @@ import RecievedGoods from './Containers/RecievedGoods';
 import SupplierList from './Containers/SupplierList';
 import CheckInventory from './Containers/CheckInventory';
 import DiscrepancyList from './Containers/DiscrepancyList';
+import RequisitionForm from './Containers/RequisitionForm';
 
 function App() {
   return (
