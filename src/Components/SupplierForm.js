@@ -6,8 +6,28 @@ class SupplierForm extends React.Component {
    constructor(props) {
         super(props);
         this.state = {
-            message: ''
+            message: '',
+            currentSupplierObj: [],
         };
+
+        this.initialState = { 
+          id : '', 
+          supplierCode: '',  
+          name: '',  
+          contactPerson: '',  
+          gstRegisNo: '',  
+          fax: '',  
+          address: '',  
+          priority: '',
+          email: '',  
+          phoneNum: '', 
+        }  
+      
+        if (props.isEdit) {  
+          this.state.currentSupplierObj = props.editSupObj  
+        } else {  
+          this.state.currentSupplierObj = this.initialState; 
+        } 
     }
 
     reset = () =>{
@@ -59,6 +79,7 @@ class SupplierForm extends React.Component {
                                          id="supplierCode"
                                          required="required"
                                          ref="supplierCodeRef"
+                                         value={this.state.currentSupplierObj.supplierCode}  
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-6">
@@ -66,6 +87,7 @@ class SupplierForm extends React.Component {
                               <input type="text"
                                          id="gstRegisNo"
                                          ref="gstRegisNoRef"
+                                         value={this.state.currentSupplierObj.gstRegisNo} 
                                          className="form-control"/>
                           </div>
                       </div>
@@ -76,6 +98,7 @@ class SupplierForm extends React.Component {
                                          id="name"
                                          required="required"
                                          ref="nameRef"
+                                         value={this.state.currentSupplierObj.name} 
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-6">
@@ -84,6 +107,7 @@ class SupplierForm extends React.Component {
                                          id="contactPerson"
                                          required="required"
                                          ref="contactPersonRef"
+                                         value={this.state.currentSupplierObj.contactPerson} 
                                          className="form-control"/>
                           </div>
                       </div>
@@ -95,6 +119,7 @@ class SupplierForm extends React.Component {
                                          id="phoneNum"
                                          required="required"
                                          ref="phoneNumRef"
+                                         value={this.state.currentSupplierObj.phoneNum} 
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-3">
@@ -103,6 +128,7 @@ class SupplierForm extends React.Component {
                                          id="fax"
                                          required="required"
                                          ref="faxRef"
+                                         value={this.state.currentSupplierObj.fax} 
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-3">
@@ -111,6 +137,7 @@ class SupplierForm extends React.Component {
                                    id="email"
                                    required="required"
                                    ref="emailRef"
+                                   value={this.state.currentSupplierObj.email} 
                                    className="form-control"/>
                           </div>
                       </div>
@@ -122,13 +149,13 @@ class SupplierForm extends React.Component {
                                          required="required"
                                          className="form-control" ref="priorityRef">
 
-                                         <option value="1st">
+                                         <option value="1st" selected={this.state.currentSupplierObj.priority=='1st'?"selected":''}>
                                          First 
                                          </option>
-                                         <option value="2nd">
+                                         <option value="2nd" selected={this.state.currentSupplierObj.priority=='2nd'?"selected":''}>
                                          Second 
                                          </option>
-                                         <option value="3rd">
+                                         <option value="3rd" selected={this.state.currentSupplierObj.priority=='3rd'?"selected":''}>
                                          Third 
                                          </option>
 
@@ -141,6 +168,7 @@ class SupplierForm extends React.Component {
                                          id="address"
                                          required="required"
                                          ref="addressRef"
+                                         value={this.state.currentSupplierObj.address} 
                                          className="form-control"
                                          rows="3" cols="40"/>
                           </div>

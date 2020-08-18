@@ -14,10 +14,11 @@ class RecievedGoods extends React.Component {
         super()
         this.state = {
             //test data
-            data: [],
+            data: [],editSupObj: [],isEdit:false,
             showSupplierForm : false, 
         }
         this.addSupplierFun = this.addSupplierFun.bind(this)
+        this.editSupplier = this.editSupplier.bind(this)
     }
 
     addSupplierFun(previousState) {
@@ -26,6 +27,15 @@ class RecievedGoods extends React.Component {
         )
         this.componentDidMount();
     }
+
+    editSupplier(supplier) { 
+        this.setState({  
+              editSupObj : supplier,
+              isEdit: true,
+              showSupplierForm: true,
+            });
+        //axios.put('https://localhost:5001/api/Store/updateSupplier/' + supplier.id).then(result=>{  });
+    } 
 
     //Run once before render - lifecycle
     componentDidMount() {
@@ -60,12 +70,12 @@ class RecievedGoods extends React.Component {
                 <div className="row" >
                     {!this.state.showSupplierForm ?
                         <div className="col-sm-12  ">
-                            <SupplierTable data={this.state.data}/>
+                            <SupplierTable data={this.state.data} editSupplier={this.editSupplier} />
                         </div> 
                         : null
                     }
-                    {this.state.showSupplierForm ?
-                        <SupplierForm />
+                    {this.state.showSupplierForm || this.state.isEdit?
+                        <SupplierForm editSupObj={this.state.editSupObj} isEdit={true}/>
                         : null
                     }
                 </div>

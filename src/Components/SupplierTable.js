@@ -10,9 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class SupplierTable extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { data: []  , initial:true,}
+        this.state = { data: []  , initial:true, editSupObj: []}
         this.deleteSupplier = this.deleteSupplier.bind(this)
-        this.editSupplier = this.editSupplier.bind(this)
     }
     
     deleteSupplier(id) {  
@@ -26,10 +25,7 @@ class SupplierTable extends React.Component {
       });
         
     } 
-    editSupplier(id) { 
-
-    } 
-
+   
     render() {
         if(this.state.initial==true){
             this.state.data = this.props.data;
@@ -42,7 +38,7 @@ class SupplierTable extends React.Component {
                 <td>{item.priority}</td>
                 <td>
                     <div className="tableIcons">
-                        <EditIcon id={item.id}/>
+                        <EditIcon id={item.id} onClick={()=>this.props.editSupplier(item)}/>
                         <DeleteIcon id={item.id} onClick={() => this.deleteSupplier(item.id)}/>
                     </div>
                 </td>
