@@ -42,7 +42,7 @@ class DiscrepancyList extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get(/* api here */)
+        axios.get("http://localhost:50001/")
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
