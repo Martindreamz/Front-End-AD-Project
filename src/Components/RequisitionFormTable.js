@@ -36,7 +36,45 @@ class RequisitionFormTable extends React.Component {
 
             showDescription: false,
             description: '',
-            openDescription: false
+            openDescription: false,
+
+            //test
+            data: [
+                {
+                    Clips: [
+                        {
+                            id: 1,
+                            category: "Clip",
+                            description: "Clips Double 2",
+                            quantity: 10,
+                            unit: "Dozen"
+                        },
+                        {
+                            id: 2,
+                            category: "Clip",
+                            description: "Clips Double 1",
+                            quantity: 10,
+                            unit: "Dozen"
+                        }
+                    ],
+                    Pen: [
+                        {
+                            id: 3,
+                            category: "Pen",
+                            description: "Pen Ballpoint Black",
+                            quantity: 1,
+                            unit: "Box"
+                        },
+                        {
+                            id: 4,
+                            category: "Pen",
+                            description: "Pen Ballpoint",
+                            quantity: 1,
+                            unit: "Box"
+                        }
+                    ],
+                }
+            ]
         }
     }
     //Event Handling
@@ -66,18 +104,18 @@ class RequisitionFormTable extends React.Component {
         const selected = event.target.value
         this.setState({
             description: selected,
-            openDescription: !this.state.openCat
+            openDescription: !this.state.openDescription
         });
     }
     closeDesc = () => {
         this.setState({
-            openDescription: !this.state.openCat
+            openDescription: !this.state.openDescription
         })
     }
 
     descOpen = () => {
         this.setState({
-            openDescription: !this.state.openCat
+            openDescription: !this.state.openDescription
         })
     }
 
@@ -95,7 +133,7 @@ class RequisitionFormTable extends React.Component {
                         onClose={this.closeCat}
                         onOpen={this.catOpen}
                         onChange={this.showCat}>
-                        {this.props.category.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                        {this.props.category.map((item,index) => <MenuItem value={index}>{item}</MenuItem>)}
                     </Select>
 
                 </td>
@@ -109,7 +147,7 @@ class RequisitionFormTable extends React.Component {
                             onClose={this.closeDesc}
                             onOpen={this.descOpen}
                             onChange={this.showDesc}>
-                            {this.props.category.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                            {console.log(this.props.data[Number(this.state.cat)])}
                         </Select>
                         : null
                     }
