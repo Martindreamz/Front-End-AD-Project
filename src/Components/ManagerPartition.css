@@ -44,6 +44,12 @@ html {
   text-align: center;
 }
 
+.middlepane table {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .rightpane {
   width: 25%;
   height: 100%;
