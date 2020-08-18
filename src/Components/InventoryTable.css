@@ -103,13 +103,13 @@ button {
 }
 
 button.greenButton {
-  background-color: #7edb5f;
-  border: solid #7edb5f;
+  background-image: radial-gradient(#afe89b, #7edb5f, #46a626);
+  border: solid #46a626;
 }
 
 button.redButton {
-  background-color: #d43f4c;
-  border: solid #d43f4c;
+  background-image: radial-gradient(#e58b92, #dd6973, #a62630);
+  border: solid #a62630;
 }
 
 button:hover {

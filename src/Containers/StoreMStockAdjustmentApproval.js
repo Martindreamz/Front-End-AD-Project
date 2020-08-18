@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Header from "../Components/Headers/Header";
-import "./RecievedGoods.css";
-import StockAdjustmentApprovalTable from "../Components/StockAdjustmentApprovalTable";
+import StoreMStockAdjustmentApprovalTable from "../Components/StoreMStockAdjustmentApprovalTable";
 import axios from "axios";
 
-class StockAdjustmentApproval extends Component {
+class StoreMStockAdjustmentApproval extends Component {
   constructor() {
     super();
     this.state = {
@@ -43,11 +42,11 @@ class StockAdjustmentApproval extends Component {
       <div>
         <Header />
         <div className="inventoryBody">
-          <StockAdjustmentApprovalTable data={this.state.data} />
+          <StoreMStockAdjustmentApprovalTable data={this.state.data} />
         </div>
       </div>
     );
   }
 }
 
-export default StockAdjustmentApproval;
+export default StoreMStockAdjustmentApproval;
