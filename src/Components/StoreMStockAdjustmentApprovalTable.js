@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import "./InventoryTable.css";
 import { domain } from "../Configurations/Config";
 
-class StockAdjustmentApprovalTable extends Component {
-  constructor(props) {
-    super(props);
+class StoreMStockAdjustmentApprovalTable extends Component {
+  constructor() {
+    super();
     this.state = {};
   }
 
@@ -35,4 +35,4 @@ class StockAdjustmentApprovalTable extends Component {
   }
 }
 
-export default StockAdjustmentApprovalTable;
+export default StoreMStockAdjustmentApprovalTable;
