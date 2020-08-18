@@ -12,6 +12,7 @@ import SupplierForm from './Components/SupplierForm';
 import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApproval";
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
+import PlaceOrder from "./Containers/PlaceOrder";
 
 function App() {
   return (
@@ -54,7 +55,13 @@ function App() {
 
           <Route path='/supplier-form'>
               <SupplierForm />
-          </Route>
+                  </Route>
+                  <Route path='/PlaceOrder'>
+                      <PlaceOrder />
+                  </Route>
+                  <Route path='/placeOrderSubmit'>
+                      <PlaceOrderSubmit />
+                  </Route>
         </Switch>
       </Router>
     </div>
