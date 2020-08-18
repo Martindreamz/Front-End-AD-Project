@@ -5,7 +5,6 @@ import "./PurchaseOrder.css"
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import PurchaseOrderTable from "../Components/PurchaseOrderTable"
-import { Container, Row, Col } from 'reactstrap';
 
 
 class PurchaseOrder extends Component {
@@ -86,37 +85,36 @@ class PurchaseOrder extends Component {
         //const
         return (
             <div className="page">
-                <Container className="subpage">
-                        <Row>
-                    <Col className="pageHeader">
+                <div className="subpage">
+                        
+                    <div className="pageHeader">
                             PO Number:{this.state.purchaseOrder.OrdID}
-                        </Col>
-                        </Row>
+                    </div>
+                   
                     
-                        <Row>
-                            <Col className="pageTitle">
+                  
+                        <div className="pageTitle">
                                     LOGIC UNIVERSITY<br />
                                     Stationery Purchase Order
-                            </Col>
-                        </Row>
-                        <Row>
-                        <Col>
+                            </div>
+                        
+                    <div>
                                 Supplier: {this.state.supplier.name} <br/>
                                 Deliver to: Logic University Store  <br />
-                                Attn: Daryl
-                            </Col>
-                            <Col>Clerk</Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <div className="tableBody">
+                                Attn: Daryl<br />
+                         
+                           Clerk
+                </div>
+                      
+                           
+                <div className="tableBody">
                                     <PurchaseOrderTable data={this.state.purchaseOrderDetail} />
                                 </div>
-                            </Col>
-                        </Row>
-                    </Container>
+               
 
                 </div>
+
+            </div>
       
 
 

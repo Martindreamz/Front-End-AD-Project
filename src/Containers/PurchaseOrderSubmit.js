@@ -21,8 +21,8 @@ class PurchaseOrderSubmit extends Component {
                 <div className="tableBody">
                 <div className="btn-group">
                         <button class="button">Main Supplier</button>
-                        <button class="button">Sub supplier 2</button>
                         <button class="button">Sub supplier 1</button>
+                        <button class="button">Sub supplier 2</button>
                 </div>
                 <Pdf targetRef={ref} filename="PurchaseOrder.pdf">
                     
