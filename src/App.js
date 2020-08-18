@@ -4,14 +4,15 @@ import "./App.css";
 import Header from "./Components/Headers/Header";
 import Login from "./Components/Login";
 import RecievedGoods from "./Containers/RecievedGoods";
-import SupplierList from "./Containers/SupplierList";
+import PlaceOrder from "./Containers/PlaceOrder";
+import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
 import CheckInventory from "./Containers/CheckInventory";
 import DiscrepancyList from "./Containers/DiscrepancyList";
 import RequisitionForm from "./Containers/RequisitionForm";
-import SupplierForm from './Components/SupplierForm';
 import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApproval";
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
+import SupplierList from "./Containers/SupplierList";
 
 function App() {
   return (
@@ -42,18 +43,20 @@ function App() {
           <Route path="/requisitionForm">
             <RequisitionForm />
           </Route>
-          <Route path="/StoreMstockAdjustmentApproval">
+          <Route path="/StoreMStockAdjustmentApproval">
             <StoreMStockAdjustmentApproval />
+          </Route>
+          <Route path="/DepRepDisbursement">
+            <DepRepDisbursement />
           </Route>
           <Route path="/manager">
             <ManageDepartment />
           </Route>
-          <Route path="/depRepDisbursement">
-            <DepRepDisbursement />
+          <Route path="/placeOrder">
+            <PlaceOrder />
           </Route>
-
-          <Route path='/supplier-form'>
-              <SupplierForm />
+          <Route path="/placeOrderSubmit">
+            <PurchaseOrderSubmit />
           </Route>
         </Switch>
       </Router>

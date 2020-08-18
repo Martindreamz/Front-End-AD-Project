@@ -40,7 +40,7 @@ class SupplierForm extends React.Component {
 
     render(){
       return (
-        <div class="container py-5 .bg-light" >
+        <div class="container .bg-light" >
           <div class="row">
               <div class="col-md-12 mx-auto text-center">
                   <p class="display-4">Supplier Detail Form</p>
