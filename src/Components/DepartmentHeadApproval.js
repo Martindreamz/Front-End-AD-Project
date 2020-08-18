@@ -22,8 +22,8 @@ class DepartmentHeadApproval extends Component {
         <tr className="tableRow">
           <td> Bianca Cao</td>
           <td>
-            <button className="greenButton">Approve</button>
             <button className="redButton">Reject</button>
+            <button className="greenButton">Approve</button>
           </td>
           <td>
             <textarea />
@@ -32,8 +32,8 @@ class DepartmentHeadApproval extends Component {
         <tr className="tableRow">
           <td> Daryl Kouk</td>
           <td>
-            <button className="greenButton">Approve</button>
             <button className="redButton">Reject</button>
+            <button className="greenButton">Approve</button>
           </td>
           <td>
             <textarea />
@@ -42,8 +42,8 @@ class DepartmentHeadApproval extends Component {
         <tr className="tableRow">
           <td> Jane Lee</td>
           <td>
-            <button className="greenButton">Approve</button>
             <button className="redButton">Reject</button>
+            <button className="greenButton">Approve</button>
           </td>
           <td>
             <textarea />
@@ -52,8 +52,8 @@ class DepartmentHeadApproval extends Component {
         <tr className="tableRow">
           <td> Jane Lee</td>
           <td>
-            <button className="greenButton">Approve</button>
             <button className="redButton">Reject</button>
+            <button className="greenButton">Approve</button>
           </td>
           <td>
             <textarea />
@@ -62,8 +62,8 @@ class DepartmentHeadApproval extends Component {
         <tr className="tableRow">
           <td> Jane Lee</td>
           <td>
-            <button className="greenButton">Approve</button>
             <button className="redButton">Reject</button>
+            <button className="greenButton">Approve</button>
           </td>
           <td>
             <textarea />

@@ -26,16 +26,8 @@ class ManageDepartment extends Component {
             <h1>LOGIC UNIVERSITY</h1>
             <h1>DEPARTMENT INFORMATION</h1>
           </div>
-          <div className="leftHeader">
-            <h4>Your People</h4>
-          </div>
-          <div className="middleHeader">
-            <h4>Your Tasks</h4>
-          </div>
-          <div className="rightHeader">
-            <h4>Your Logistics</h4>
-          </div>
           <div className="leftpane">
+            <h4>Your People</h4>
             <div>
               <DepartmentHeadDelegate />
             </div>
@@ -47,9 +39,11 @@ class ManageDepartment extends Component {
             </div>
           </div>
           <div className="middlepane">
+            <h4>Your Tasks</h4>
             <DepartmentHeadApproval />
           </div>
           <div className="rightpane">
+            <h4>Your Logistics</h4>
             <DepartmentHeadCollection />
           </div>
         </div>

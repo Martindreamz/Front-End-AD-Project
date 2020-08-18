@@ -10,40 +10,6 @@ html {
   height: 100%;
 }
 
-.leftHeader {
-  width: 25%;
-  height: 10%;
-  float: left;
-  border-collapse: collapse;
-}
-
-.leftHeader h4 {
-  text-align: center;
-}
-
-.middleHeader {
-  width: 50%;
-  height: 10%;
-  float: left;
-  border-collapse: collapse;
-}
-
-.middleHeader h4 {
-  text-align: center;
-}
-
-.rightHeader {
-  width: 25%;
-  height: 10%;
-  position: relative;
-  float: right;
-  border-collapse: collapse;
-}
-
-.rightHeader h4 {
-  text-align: center;
-}
-
 .toppane {
   width: 100%;
   height: 20%;
@@ -59,6 +25,11 @@ html {
   height: 100%;
   float: left;
   border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.leftpane h4 {
+  text-align: center;
 }
 
 .middlepane {
@@ -66,12 +37,33 @@ html {
   height: 100%;
   float: left;
   border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.middlepane h4 {
+  text-align: center;
 }
 
 .rightpane {
   width: 25%;
   height: 100%;
   position: relative;
-  float: right;
+  float: left;
   border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.rightpane h4 {
+  text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .leftpane,
+  .middlepane,
+  .rightpane {
+    display: block;
+    float: none;
+    width: 100%;
+    padding: 20px 0;
+  }
 }
