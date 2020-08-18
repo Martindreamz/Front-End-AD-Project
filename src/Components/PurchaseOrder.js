@@ -5,6 +5,8 @@ import "./PurchaseOrder.css"
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import PurchaseOrderTable from "../Components/PurchaseOrderTable"
+import { Container, Row, Col } from 'reactstrap';
+
 
 class PurchaseOrder extends Component {
     constructor() {
@@ -45,21 +47,21 @@ class PurchaseOrder extends Component {
 
             ],
 
-            purchaseOrder: 
-                {
-                    OrdID: 200068,
-                    ClerkID: "001",
-                    SupplierID: 1,
-                    DateOfOrder: "12 / 07 / 2020"
-                }
+            purchaseOrder:
+            {
+                OrdID: 200068,
+                ClerkID: "001",
+                SupplierID: 1,
+                DateOfOrder: "12 / 07 / 2020"
+            }
 
             ,
 
-            supplier: 
-                {
-                    supplierId: 1,
-                    name: "Main Supplier"
-                }
+            supplier:
+            {
+                supplierId: 1,
+                name: "Main Supplier"
+            }
 
         }
     }
@@ -84,20 +86,38 @@ class PurchaseOrder extends Component {
         //const
         return (
             <div className="page">
-                <div className="subpage">
-                    <div className="pageHeader">
-                        PO Number:{this.state.purchaseOrder.OrdID}
-                    </div>
-                    <div className="pageTitle">
-                        LOGIC UNIVERSITY<br />
-                        Stationery Purchase Order 
-                        </div>
-                <div className="tableBody">
-                    <PurchaseOrderTable data={this.state.purchaseOrderDetail} />
-                    </div>
-                </div>
+                <Container className="subpage">
+                        <Row>
+                    <Col className="pageHeader">
+                            PO Number:{this.state.purchaseOrder.OrdID}
+                        </Col>
+                        </Row>
+                    
+                        <Row>
+                            <Col className="pageTitle">
+                                    LOGIC UNIVERSITY<br />
+                                    Stationery Purchase Order
+                            </Col>
+                        </Row>
+                        <Row>
+                        <Col>
+                                Supplier: {this.state.supplier.name} <br/>
+                                Deliver to: Logic University Store  <br />
+                                Attn: Daryl
+                            </Col>
+                            <Col>Clerk</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <div className="tableBody">
+                                    <PurchaseOrderTable data={this.state.purchaseOrderDetail} />
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
 
-            </div>
+                </div>
+      
 
 
         )
