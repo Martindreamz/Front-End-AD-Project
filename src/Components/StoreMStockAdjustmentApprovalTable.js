@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./InventoryTable.css";
 import { domain } from "../Configurations/Config";
 
-class StockAdjustmentApprovalTable extends Component {
+class StoreMStockAdjustmentApprovalTable extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,21 +13,21 @@ class StockAdjustmentApprovalTable extends Component {
       <tr className="tableRow">
         <td>{item.id}</td>
         <td>{item.requestor}</td>
-        <td className="tableQuantity">{item.amount}</td>
+        <td>{item.amount}</td>
         <td>
-          <button className="approveButton">Approve</button>
-          <button className="rejectButton">Reject</button>
+          <button className="redButton">Reject</button>
+          <button className="greenButton">Approve</button>
         </td>
       </tr>
     ));
 
     return (
-      <table className="inventoryTable">
+      <table className="genericTable">
         <tr className="tableHeader">
           <th>Voucher No</th>
           <th>Requestor</th>
           <th>Amount</th>
-          <th>Approve / Reject</th>
+          <th>Reject / Approve</th>
         </tr>
         {approvalItem}
       </table>
@@ -35,4 +35,4 @@ class StockAdjustmentApprovalTable extends Component {
   }
 }
 
-export default StockAdjustmentApprovalTable;
+export default StoreMStockAdjustmentApprovalTable;

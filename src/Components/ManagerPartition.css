@@ -1,0 +1,69 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.toppane {
+  width: 100%;
+  height: 20%;
+  border-collapse: collapse;
+}
+
+.toppane h1 {
+  text-align: center;
+}
+
+.leftpane {
+  width: 25%;
+  height: 100%;
+  float: left;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.leftpane h4 {
+  text-align: center;
+}
+
+.middlepane {
+  width: 50%;
+  height: 100%;
+  float: left;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.middlepane h4 {
+  text-align: center;
+}
+
+.rightpane {
+  width: 25%;
+  height: 100%;
+  position: relative;
+  float: left;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.rightpane h4 {
+  text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+  .leftpane,
+  .middlepane,
+  .rightpane {
+    display: block;
+    float: none;
+    width: 100%;
+    padding: 20px 0;
+  }
+}

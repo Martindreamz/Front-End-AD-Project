@@ -8,8 +8,10 @@ import SupplierList from "./Containers/SupplierList";
 import CheckInventory from "./Containers/CheckInventory";
 import DiscrepancyList from "./Containers/DiscrepancyList";
 import RequisitionForm from "./Containers/RequisitionForm";
-import StockAdjustmentApproval from "./Containers/StockAdjustmentApproval";
 import SupplierForm from './Components/SupplierForm';
+import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApproval";
+import ManageDepartment from "./Containers/ManageDepartment";
+import DepRepDisbursement from "./Containers/DepRepDisbursement";
 
 function App() {
   return (
@@ -28,11 +30,9 @@ function App() {
           <Route path="/requisitionForm">
             <RequisitionForm />
           </Route>
-
           <Route path="/supplier">
             <SupplierList />
           </Route>
-
           <Route path="/test1">
             <CheckInventory />
           </Route>
@@ -42,8 +42,14 @@ function App() {
           <Route path="/requisitionForm">
             <RequisitionForm />
           </Route>
-          <Route path="/stockAdjustmentApproval">
-            <StockAdjustmentApproval />
+          <Route path="/StoreMstockAdjustmentApproval">
+            <StoreMStockAdjustmentApproval />
+          </Route>
+          <Route path="/manager">
+            <ManageDepartment />
+          </Route>
+          <Route path="/depRepDisbursement">
+            <DepRepDisbursement />
           </Route>
 
           <Route path='/supplier-form'>
