@@ -14,9 +14,9 @@ class DepartmentHeadDelegate extends Component {
 
         return (
             <div>
-                <table style={{ textAlign: "center" }}>
+                <table style={{ textAlign: "center" }} >
                     <tr><th> Acting Department Head</th></tr>
-                    <tr><td> Wutt Yee</td></tr>
+                    <tr><td> { this.props.rep}</td></tr>
                 </table></div>)
     }
 }

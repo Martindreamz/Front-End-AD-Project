@@ -19,13 +19,13 @@ class DepartmentHeadCollection extends Component {
                         <td>
                             <table style={{ textAlign: "center" }}>
                                 <tr><th> Next Delivery</th></tr>
-                                <tr><td> 08/08/2020</td></tr>
+                                <tr><td> { this.props.department.nextCollection}</td></tr>
                             </table>
                         </td>
                         <td>
                             <table style={{ textAlign: "center" }}>
                                 <tr><th> Stationery Collection Point</th></tr>
-                                <tr><td> University Hospital</td></tr>
+                                <tr><td> { this.props.department.collectionPt}</td></tr>
                             </table>
                         </td>
                     </tr>

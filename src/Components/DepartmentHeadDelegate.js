@@ -16,7 +16,7 @@ class DepartmentHeadDelegate extends Component {
             <div>
                 <table style={{ textAlign: "center" }}>
                     <tr><th> Acting Department Head</th></tr>
-                    <tr><td> Wutt Yee</td></tr>
+                    <tr><td> { this.props.delegate}</td></tr>
                 </table></div>)
     }
 }
