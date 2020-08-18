@@ -71,7 +71,7 @@ class PlaceOrderTable extends Component {
         return (
 
             <table className="inventoryTable">
-                <tr className="tableHeader">
+                <thead className="tableHeader">
                     <th><input
                         name="chkboxAll"
                         type="checkbox"
@@ -84,8 +84,10 @@ class PlaceOrderTable extends Component {
                     <th>Price</th>
                     <th>Amount</th>
                     <th>Supplier</th>
-                </tr>
-                {orderItem}
+                </thead>
+                <tbody>
+                    {orderItem}
+                    </tbody>
                 </table>
 
 

@@ -1,9 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
     "\\src",
+    "\\src\\Components",
+    "\\src\\Components\\Headers",
+    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Containers\\RecievedGoods.js",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }

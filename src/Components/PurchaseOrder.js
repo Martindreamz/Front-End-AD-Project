@@ -1,25 +1,23 @@
-﻿import React, { Component } from "react"
-import Header from '../Components/Headers/Header';
-import PlaceOrderTable from "../Components/PlaceOrderTable"
-import './RecievedGoods.css';
-import './general.css';
+// JavaScript source code
+
+import React, { Component } from "react"
+import "./PurchaseOrder.css"
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
+import PurchaseOrderTable from "../Components/PurchaseOrderTable"
 
-class PlaceOrder extends Component {
+class PurchaseOrder extends Component {
     constructor() {
         super()
         this.state = {
-            subTotal:0,
-            //test data
-            data: [
+            purchaseOrderDetail: [
                 {
                     itemCode: "C0101",
                     desc: "Clips Double 2",
                     reOrderQty: 10,
                     price: 0.8,
                     unit: "box of 10",
-                    supplier:"Main Supplier"
+                    supplier: "Main Supplier"
 
                 },
 
@@ -44,23 +42,24 @@ class PlaceOrder extends Component {
 
                 }
 
+
             ],
 
-            supplier: [
+            purchaseOrder: 
+                {
+                    OrdID: 200068,
+                    ClerkID: "001",
+                    SupplierID: 1,
+                    DateOfOrder: "12 / 07 / 2020"
+                }
+
+            ,
+
+            supplier: 
                 {
                     supplierId: 1,
                     name: "Main Supplier"
-                },
-                {
-                    supplierID: 2,
-                    name: "Sub Supplier 1"
-                },
-                {
-                    supplierID: 3,
-                    name: "Sub Supplier 3"
                 }
-            ]
-
 
         }
     }
@@ -68,15 +67,11 @@ class PlaceOrder extends Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/placeOrder')
+        axios.get(/*replace with api url*/)
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
-                
             })
-        var total = this.state.data.map(item => item.price * item.reOrderQty).reduce((total, price) => total + price)
-        this.setState({ subTotal: total })
-
     }
 
     checkInventoryAction = () => {
@@ -86,26 +81,30 @@ class PlaceOrder extends Component {
 
     render() {
         var CurrencyFormat = require('react-currency-format')
+        //const
         return (
-            <div>
-                <Header />
+            <div className="page">
+                <div className="subpage">
+                    <div className="pageHeader">
+                        PO Number:{this.state.purchaseOrder.OrdID}
+                    </div>
+                    <div className="pageTitle">
+                        LOGIC UNIVERSITY<br />
+                        Stationery Purchase Order 
+                        </div>
                 <div className="tableBody">
-                    <PlaceOrderTable data={this.state.data} />
-                   
-                    <br />
-                    <div className="tablebottom">
-                        <h3>Sub total:
-                        <CurrencyFormat value={this.state.subTotal} decimalScale={2} fixedDecimalScale={true} displayType={'text'} prefix={'$'} />
-                        </h3>
-                        <br/>
-                        <button className="button">Edit</button>
-                        <button className="button">Submit</button>
+                    <PurchaseOrderTable data={this.state.purchaseOrderDetail} />
                     </div>
                 </div>
+
             </div>
+
+
         )
+
     }
 
 }
 
-export default PlaceOrder
+export default PurchaseOrder
+

@@ -7,6 +7,14 @@
     overflow: scroll;
 }
 
+.purchaseOrderTable {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: solid 0.5px;
+    width: 100%;
+}
+
 .requisitionTable{
     display: flex;
     flex-direction: column;
@@ -34,5 +42,6 @@
     border: solid 0.5px;
     display: flex;
     justify-content: space-evenly;
+    text-align:left;
 }
 

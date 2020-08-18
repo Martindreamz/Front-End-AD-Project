@@ -10,6 +10,7 @@ import Header from './Components/Headers/Header';
 import Login from './Components/Login';
 import RecievedGoods from './Containers/RecievedGoods';
 import PlaceOrder from "./Containers/PlaceOrder"
+import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit"
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
                   </Route>
                   <Route path='/placeOrder'>
                       <PlaceOrder />
+                  </Route>
+                  <Route path='/placeOrderSubmit'>
+                      <PurchaseOrderSubmit />
                   </Route>
               </Switch>
           </Router>
