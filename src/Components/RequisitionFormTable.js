@@ -31,28 +31,91 @@ class RequisitionFormTable extends React.Component {
             }],
 
 
-            cat: null,
-            openCat: false
+            cat: '',
+            openCat: false,
+
+            showDescription: false,
+            description: '',
+            openDescription: false,
+
+            //test
+            data: [
+                {
+                    Clips: [
+                        {
+                            id: 1,
+                            category: "Clip",
+                            description: "Clips Double 2",
+                            quantity: 10,
+                            unit: "Dozen"
+                        },
+                        {
+                            id: 2,
+                            category: "Clip",
+                            description: "Clips Double 1",
+                            quantity: 10,
+                            unit: "Dozen"
+                        }
+                    ],
+                    Pen: [
+                        {
+                            id: 3,
+                            category: "Pen",
+                            description: "Pen Ballpoint Black",
+                            quantity: 1,
+                            unit: "Box"
+                        },
+                        {
+                            id: 4,
+                            category: "Pen",
+                            description: "Pen Ballpoint",
+                            quantity: 1,
+                            unit: "Box"
+                        }
+                    ],
+                }
+            ]
         }
     }
-
     //Event Handling
     showCat = (event) => {
+        const selected = event.target.value
         this.setState({
-            cat: event.target.value,
-            //openCat: true
+            cat: selected,
+            showDescription: true
         });
     }
 
     closeCat = () => {
         this.setState({
-            openCat: false
+            openCat: !this.state.openCat
         })
     }
 
     catOpen = () => {
         this.setState({
-            openCat: true
+            openCat: !this.state.openCat
+        })
+    }
+
+
+
+    showDesc = (event) => {
+        const selected = event.target.value
+        this.setState({
+            description: selected,
+            openDescription: !this.state.openDescription
+        });
+    }
+    closeDesc = () => {
+        this.setState({
+            openDescription: !this.state.openDescription
+        })
+    }
+
+    descOpen = () => {
+        this.setState({
+            openDescription: !this.state.openDescription
         })
     }
 
@@ -66,15 +129,29 @@ class RequisitionFormTable extends React.Component {
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
                         value={this.state.cat}
-                        open={this.state.catOpen}
+                        open={this.state.openCat}
                         onClose={this.closeCat}
-                        onChange={this.state.showCat}>
-                        {/*menuitem not working*/}
-                        {this.props.category.map(item => <option value={item}>{item}</option>)}
-                        
+                        onOpen={this.catOpen}
+                        onChange={this.showCat}>
+                        {this.props.category.map((item,index) => <MenuItem value={index}>{item}</MenuItem>)}
                     </Select>
+
                 </td>
-                <td>{item.description}</td>
+                <td>
+                    {this.state.showDescription ? 
+                        <Select
+                            labelId="demo-controlled-open-select-label"
+                            id="demo-controlled-open-select"
+                            value={this.state.description}
+                            open={this.state.openDescription}
+                            onClose={this.closeDesc}
+                            onOpen={this.descOpen}
+                            onChange={this.showDesc}>
+                            {console.log(this.props.data[Number(this.state.cat)])}
+                        </Select>
+                        : null
+                    }
+                </td>
                 <td>{item.quantity}</td>
                 <td>{item.unit}</td>
             </tr>

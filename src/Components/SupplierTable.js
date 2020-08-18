@@ -3,22 +3,34 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './InventoryTable.css';
 import {domain} from '../Configurations/Config';
+import axios from 'axios';
 
 
 class SupplierTable extends React.Component {
     constructor(props) {
         super(props)
+        this.state = { data: []  , initial:true,}
+        this.deleteSupplier = this.deleteSupplier.bind(this)
+    }
+    
+    deleteSupplier(id) {  
+     
+    axios.delete('https://localhost:5001/api/Supplier/delete/' + id).then(result=>{  
+       this.setState({  
+          data: this.state.data.filter(s=>s.id !== id), 
+          initial: false,
+        });
 
-        this.deleteButton = this.deleteButton.bind(this)
-    }
-    //event Listeners
-    deleteButton = () => {
-        //actions to delete record
-    }
+      });
+        
+    } 
 
     render() {
-        const supplierItem = this.props.data.map(item =>
-            <tr className="tableRow" >
+        if(this.state.initial==true){
+            this.state.data = this.props.data;
+        }
+        const supplierItem = this.state.data.map(item =>
+            <tr className="tableRow" key={item.id}>
                 <td>{item.supplierCode}</td>
                 <td>{item.name}</td>
                 <td>{item.contactPerson}</td>
@@ -26,7 +38,7 @@ class SupplierTable extends React.Component {
                 <td>
                     <div className="tableIcons">
                         <EditIcon id={item.id}/>
-                        <DeleteIcon />
+                        <DeleteIcon id={item.id} onClick={() => this.deleteSupplier(item.id)}/>
                     </div>
                 </td>
             </tr>        
@@ -39,6 +51,7 @@ class SupplierTable extends React.Component {
                     <th>Name</th>
                     <th>Contact Person</th>
                     <th>Priority</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 {supplierItem}

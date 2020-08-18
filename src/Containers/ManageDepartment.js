@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import Header from '../Components/Headers/Header';
-import DepartmentHeadDelegate from '../Components/DepartmentHeadDelegate'
-import DepartmentHeadCollection from '../Components/DepartmentHeadCollection'
-import DepartmentHeadEmployee from '../Components/DepartmentHeadEmployee'
-import DepartmentHeadRep from '../Components/DepartmentHeadRep'
-import DepartmentHeadApproval from '../Components/DepartmentHeadApproval'
+import Header from "../Components/Headers/Header";
+import DepartmentHeadDelegate from "../Components/DepartmentHeadDelegate";
+import DepartmentHeadCollection from "../Components/DepartmentHeadCollection";
+import DepartmentHeadEmployee from "../Components/DepartmentHeadEmployee";
+import DepartmentHeadRep from "../Components/DepartmentHeadRep";
+import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
+import "../Components/ManagerPartition.css";
 
 class ManageDepartment extends Component {
     constructor() {
@@ -75,48 +76,39 @@ class ManageDepartment extends Component {
         }
     }
 
-
-    render() {
-        return (
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <div className="toppane">
+            <Header />
+            <h1>LOGIC UNIVERSITY</h1>
+            <h1>DEPARTMENT INFORMATION</h1>
+          </div>
+          <div className="leftpane">
+            <h4>Your People</h4>
             <div>
-                <Header />
-                <h1 style={{ textAlign: "center" }} >LOGIC UNIVERSITY</h1>
-                <h1 style={{ textAlign: "center" }} >DEPARTMENT INFORMATION</h1>
-
-                <table cellSpacing="0" width='100%' align="center" >
-
-                    <tr ><th style={{ textAlign: "center" }} width='30%' colspan="1">Your People</th>
-                        <th style={{ textAlign: "center" }} width='40%' colspan="1">Your task</th>
-                        <th style={{ textAlign: "center" }} width='30%' colspan="1">Logistics</th>
-                    </tr>
-
-                    <tr >
-                        <td Align="center">
-                            <table>
-                                <tr Align="center">
-                                    <DepartmentHeadDelegate delegate={this.state.department.delegate} />
-                                </tr>
-                                <tr Align="center">
-                                    <div style={{ overflowY:"auto" }}>
-                                        <DepartmentHeadEmployee staff={this.state.staff} />
-                                    </div>
-                                </tr>
-                                <tr Align="center">
-                                    <DepartmentHeadRep rep={this.state.department.rep} />
-                                </tr>
-                            </table>
-                        </td>
-                        <td style={{ textAlign: "center", verticalAlign: "baseline" }}>
-                            <DepartmentHeadApproval requisition={this.state.requisition} />
-                        </td>
-                        <td style={{ textAlign: "center", verticalAlign: "baseline" }}>
-                            <DepartmentHeadCollection department={this.state.department} />
-                        </td>
-                    </tr>
-                </table>
+                        <DepartmentHeadDelegate delegate={this.state.department.delegate} />
             </div>
-        )
-    }
+            <div>
+                        <DepartmentHeadEmployee staff={this.state.staff}/>
+            </div>
+            <div>
+                        <DepartmentHeadRep rep={this.state.department.rep}/>
+            </div>
+          </div>
+          <div className="middlepane">
+            <h4>Your Tasks</h4>
+                    <DepartmentHeadApproval requisition={this.state.requisition}/>
+          </div>
+          <div className="rightpane">
+            <h4>Your Logistics</h4>
+                    <DepartmentHeadCollection department={this.state.department}/>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default ManageDepartment
+export default ManageDepartment;
