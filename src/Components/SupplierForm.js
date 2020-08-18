@@ -1,4 +1,5 @@
 import React, { useState,createRef,useEffect,Component } from 'react';
+import Header from '../Components/Headers/Header';
 
 class SupplierForm extends React.Component {
    constructor(props) {
@@ -6,6 +7,10 @@ class SupplierForm extends React.Component {
         this.state = {
             message: ''
         };
+    }
+
+    reset = () =>{
+      this.setState({message:' '});
     }
 
     add = () =>{
@@ -34,7 +39,10 @@ class SupplierForm extends React.Component {
 
     render(){
       return (
+        <div>
+        <Header />
         <div id="supplier-post">
+              <form>
                     <div className="form-group">
                         <label className="col-sm-2 control-label required" htmlFor="supplierCode">Supplier Code</label>
                         <div className="col-sm-10">
@@ -155,11 +163,15 @@ class SupplierForm extends React.Component {
                                     onClick={this.add}>
                                 Submit
                             </button>
+                            <div className="col-sm-2"></div>
+                            <input type="reset" className="btn-default btn"
+                                    onClick={this.reset} value = "Reset"/>
                         </div>
                     </div>
+            </form>
                     <p>{this.state.message}</p>
                 </div>
-
+        </div>
       );
     }
 }

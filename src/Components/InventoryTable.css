@@ -7,6 +7,14 @@
     overflow: scroll;
 }
 
+.requisitionTable{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: solid 0.5px;
+    width: 100%;
+}
+
 .tableIcons {
     padding-left: 30px;
 }
@@ -27,3 +35,4 @@
     display: flex;
     justify-content: space-evenly;
 }
+

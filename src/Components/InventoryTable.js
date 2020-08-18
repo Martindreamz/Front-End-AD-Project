@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './InventoryTable.css';
-import {domain} from '../Configurations/Config';
+import { domain } from '../Configurations/Config';
 
 
 class InventoryTable extends React.Component {
@@ -39,7 +39,7 @@ class InventoryTable extends React.Component {
                     </td>
                     : null
                 }
-            </tr>        
+            </tr>
         )
 
         return (
