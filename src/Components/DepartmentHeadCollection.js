@@ -1,36 +1,42 @@
 import React, { Component } from "react";
+import "./InventoryTable.css";
 
 class DepartmentHeadCollection extends Component {
-    constructor() {
-        super()
-        /*this.state() = {
+  constructor() {
+    super();
+    /*this.state() = {
             staff: [],
             requisition: [],
             department: ""
         }*/
-    }
+  }
 
-    render() {
+  render() {
+    return (
+      <div>
+        <div>
+          <table className="componentTable">
+            <tr className="tableHeader">
+              <th> Next Delivery</th>
+            </tr>
+            <tr className="tableRow">
+              <td> 08/08/2020</td>
+            </tr>
+          </table>
+        </div>
 
-        return (
-            <div>
-                <table style={{ textAlign: "center", verticalAlign: "baseline" }}>
-                    <tr>
-                        <td>
-                            <table style={{ textAlign: "center" }}>
-                                <tr><th> Next Delivery</th></tr>
-                                <tr><td> 08/08/2020</td></tr>
-                            </table>
-                        </td>
-                        <td>
-                            <table style={{ textAlign: "center" }}>
-                                <tr><th> Stationery Collection Point</th></tr>
-                                <tr><td> University Hospital</td></tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>)
-    }
+        <div>
+          <table className="componentTable">
+            <tr className="tableHeader">
+              <th> Stationery Collection Point</th>
+            </tr>
+            <tr className="tableRow">
+              <td> University Hospital</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    );
+  }
 }
-export default DepartmentHeadCollection
+export default DepartmentHeadCollection;

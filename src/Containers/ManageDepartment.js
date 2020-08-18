@@ -1,61 +1,61 @@
 import React, { Component } from "react";
-import Header from '../Components/Headers/Header';
-import DepartmentHeadDelegate from '../Components/DepartmentHeadDelegate'
-import DepartmentHeadCollection from '../Components/DepartmentHeadCollection'
-import DepartmentHeadEmployee from '../Components/DepartmentHeadEmployee'
-import DepartmentHeadRep from '../Components/DepartmentHeadRep'
-import DepartmentHeadApproval from '../Components/DepartmentHeadApproval'
+import Header from "../Components/Headers/Header";
+import DepartmentHeadDelegate from "../Components/DepartmentHeadDelegate";
+import DepartmentHeadCollection from "../Components/DepartmentHeadCollection";
+import DepartmentHeadEmployee from "../Components/DepartmentHeadEmployee";
+import DepartmentHeadRep from "../Components/DepartmentHeadRep";
+import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
+import "../Components/ManagerPartition.css";
 
 class ManageDepartment extends Component {
-    constructor() {
-        super()
-        /*this.state() = {
+  constructor() {
+    super();
+    /*this.state() = {
             staff: [],
             requisition: [],
             department: ""
         }*/
-    }
+  }
 
-
-    render() {
-        return (
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <div className="toppane">
+            <Header />
+            <h1>LOGIC UNIVERSITY</h1>
+            <h1>DEPARTMENT INFORMATION</h1>
+          </div>
+          <div className="leftHeader">
+            <h4>Your People</h4>
+          </div>
+          <div className="middleHeader">
+            <h4>Your Tasks</h4>
+          </div>
+          <div className="rightHeader">
+            <h4>Your Logistics</h4>
+          </div>
+          <div className="leftpane">
             <div>
-                <Header />
-                <h1 style={{ textAlign: "center" }} >LOGIC UNIVERSITY</h1>
-                <h1 style={{ textAlign: "center" }} >DEPARTMENT INFORMATION</h1>
-
-                <table cellSpacing="0" width='100%' align="center" >
-
-                    <tr ><th style={{ textAlign: "center" }} width='30%' colspan="1">Your People</th>
-                        <th style={{ textAlign: "center" }} width='40%' colspan="1">Your task</th>
-                        <th style={{ textAlign: "center" }} width='30%' colspan="1">Logistics</th>
-                    </tr>
-
-                    <tr >
-                        <td Align="center">
-                            <table>
-                                <tr  Align="center">
-                                  <DepartmentHeadDelegate/>
-                                </tr>
-                                <tr  Align="center">
-                                   
-                                </tr>
-                                <tr  Align="center">
-                                    <DepartmentHeadEmployee/>
-                                </tr>
-                            </table>
-                        </td>
-                        <td style={{ textAlign: "center", verticalAlign: "baseline" }}>
-                            <DepartmentHeadApproval/>
-                        </td>
-                        <td style={{ textAlign: "center", verticalAlign: "baseline" }}>
-                            <DepartmentHeadCollection/>
-                        </td>
-                    </tr>
-                </table>
+              <DepartmentHeadDelegate />
             </div>
-        )
-    }
+            <div>
+              <DepartmentHeadEmployee />
+            </div>
+            <div>
+              <DepartmentHeadRep />
+            </div>
+          </div>
+          <div className="middlepane">
+            <DepartmentHeadApproval />
+          </div>
+          <div className="rightpane">
+            <DepartmentHeadCollection />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default ManageDepartment
+export default ManageDepartment;

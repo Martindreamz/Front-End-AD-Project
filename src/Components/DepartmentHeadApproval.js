@@ -1,28 +1,76 @@
 import React, { Component } from "react";
+import "./InventoryTable.css";
 
 class DepartmentHeadApproval extends Component {
-    constructor() {
-        super()
-        /*this.state() = {
+  constructor() {
+    super();
+    /*this.state() = {
             staff: [],
             requisition: [],
             department: ""
         }*/
-    }
+  }
 
-    render() {
-
-        return (
-            <div>
-                <table style={{ textAlign: "center" }}>
-                    <tr><th> Pending Stationery Request</th><th colspan='2'> Action</th><th> Comments</th></tr>
-                    <tr><td> Bianca Cao</td><td>Reject</td><td>Approve</td><textarea /></tr>
-                    <tr><td> Daryl Kouk</td><td>Reject</td><td>Approve</td><textarea /></tr>
-                    <tr><td> Jane Lee</td><td>Reject</td><td>Approve</td><textarea /></tr>
-                    <tr><td> Jane Lee</td><td>Reject</td><td>Approve</td><textarea /></tr>
-                    <tr><td> Jane Lee</td><td>Reject</td><td>Approve</td><textarea /></tr>
-                </table>
-            </div>)
-    }
+  render() {
+    return (
+      <table className="componentTable">
+        <tr className="tableHeader">
+          <th> Pending Stationery Request</th>
+          <th colspan="2"> Action</th>
+          <th> Comments</th>
+        </tr>
+        <tr className="tableRow">
+          <td> Bianca Cao</td>
+          <td>
+            <button className="greenButton">Approve</button>
+            <button className="redButton">Reject</button>
+          </td>
+          <td>
+            <textarea />
+          </td>
+        </tr>
+        <tr className="tableRow">
+          <td> Daryl Kouk</td>
+          <td>
+            <button className="greenButton">Approve</button>
+            <button className="redButton">Reject</button>
+          </td>
+          <td>
+            <textarea />
+          </td>
+        </tr>
+        <tr className="tableRow">
+          <td> Jane Lee</td>
+          <td>
+            <button className="greenButton">Approve</button>
+            <button className="redButton">Reject</button>
+          </td>
+          <td>
+            <textarea />
+          </td>
+        </tr>
+        <tr className="tableRow">
+          <td> Jane Lee</td>
+          <td>
+            <button className="greenButton">Approve</button>
+            <button className="redButton">Reject</button>
+          </td>
+          <td>
+            <textarea />
+          </td>
+        </tr>
+        <tr className="tableRow">
+          <td> Jane Lee</td>
+          <td>
+            <button className="greenButton">Approve</button>
+            <button className="redButton">Reject</button>
+          </td>
+          <td>
+            <textarea />
+          </td>
+        </tr>
+      </table>
+    );
+  }
 }
-export default DepartmentHeadApproval
+export default DepartmentHeadApproval;

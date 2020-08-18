@@ -1,23 +1,27 @@
 import React, { Component } from "react";
+import "./InventoryTable.css";
 
 class DepartmentHeadDelegate extends Component {
-    constructor() {
-        super()
-        /*this.state() = {
+  constructor() {
+    super();
+    /*this.state() = {
             staff: [],
             requisition: [],
             department: ""
         }*/
-    }
+  }
 
-    render() {
-
-        return (
-            <div>
-                <table style={{ textAlign: "center" }}>
-                    <tr><th> Acting Department Head</th></tr>
-                    <tr><td> Wutt Yee</td></tr>
-                </table></div>)
-    }
+  render() {
+    return (
+      <table className="componentTable">
+        <tr className="tableHeader">
+          <th> Acting Department Head</th>
+        </tr>
+        <tr className="tableRow">
+          <td> Wutt Yee</td>
+        </tr>
+      </table>
+    );
+  }
 }
-export default DepartmentHeadDelegate
+export default DepartmentHeadDelegate;
