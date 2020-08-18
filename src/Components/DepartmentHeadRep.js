@@ -15,10 +15,15 @@ class DepartmentHeadDelegate extends Component {
 
         return (
             <div>
+                <div>
                 <table className="componentTable" >
-                    <tr className="tableHeader"><th> Acting Department Head</th></tr>
+                    <tr className="tableHeader"><th> Department Representative</th></tr>
                     <tr className="tableRow"><td> { this.props.rep}</td></tr>
-                </table></div>)
+                    </table>
+                </div><div align="right">
+                    <button > {this.props.rep === "" ? "Assign" : "Change"}</button>
+                </div>
+            </div>)
     }
 }
 export default DepartmentHeadDelegate;

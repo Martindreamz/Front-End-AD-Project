@@ -14,16 +14,15 @@ class DepartmentHeadEmployee extends Component {
     render() {
 
         return (
-            <div style={{ overflowY: "scroll", height:"100px"}}>
+            <div >
                 <table className="componentTable">
                     <tr className="tableHeader"><th> Employees under your care</th></tr>
-
+                    <div style={{ overflowY: "scroll", height: "100px" }}>
                     {this.props.staff.map(x => {
                         return (<tr className="tableRow"><td> { x.name}</td></tr>
                         )
                     })}
-                   
-                    
+                   </div>                    
                 </table>
             </div>)
     }

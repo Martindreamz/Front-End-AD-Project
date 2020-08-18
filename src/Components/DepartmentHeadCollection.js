@@ -28,6 +28,10 @@ class DepartmentHeadCollection extends Component {
                         <tr className="tableRow"><td> {this.props.department.collectionPt}</td></tr>
                     </table>
                 </div>
+                <div align="right">
+                    <button> {this.props.department.collectionPt === null ? "Assign" : "Change"}</button>
+                </div>
+                    
             </div>)
     }
 }

@@ -9,11 +9,7 @@ import "./InventoryTable.css";
 class DepartmentHeadApproval extends Component {
   constructor() {
     super();
-    /*this.state() = {
-            staff: [],
-            requisition: [],
-            department: ""
-        }*/
+    
   }
 
     render() {
