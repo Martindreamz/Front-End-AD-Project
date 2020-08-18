@@ -12,6 +12,7 @@ class SupplierTable extends React.Component {
         super(props)
         this.state = { data: []  , initial:true,}
         this.deleteSupplier = this.deleteSupplier.bind(this)
+        this.editSupplier = this.editSupplier.bind(this)
     }
     
     deleteSupplier(id) {  
@@ -24,6 +25,9 @@ class SupplierTable extends React.Component {
 
       });
         
+    } 
+    editSupplier(id) { 
+
     } 
 
     render() {
@@ -46,13 +50,12 @@ class SupplierTable extends React.Component {
         )
 
         return (
-            <table className="supplierTable">
+            <table className="supplierTable text-center">
                 <tr className="tableHeader">
                     <th>Supplier Code</th>
                     <th>Name</th>
                     <th>Contact Person</th>
                     <th>Priority</th>
-                    <th></th>
                     <th></th>
                 </tr>
                 {supplierItem}

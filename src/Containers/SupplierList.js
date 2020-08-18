@@ -24,6 +24,7 @@ class RecievedGoods extends React.Component {
         this.setState(
             {showSupplierForm: !previousState,}
         )
+        this.componentDidMount();
     }
 
     //Run once before render - lifecycle

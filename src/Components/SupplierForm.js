@@ -11,7 +11,7 @@ class SupplierForm extends React.Component {
     }
 
     reset = () =>{
-      this.setState({message:' '});
+      this.setState({message:''});
     }
 
     add = () =>{
@@ -44,6 +44,11 @@ class SupplierForm extends React.Component {
           <div class="row">
               <div class="col-md-12 mx-auto text-center">
                   <p class="display-4">Supplier Detail Form</p>
+                  {this.state.message== ''? null: 
+                    <div class="alert alert-primary" role="alert">
+                      {this.state.message}
+                    </div>
+                  }
               </div>
               <div class="col-md-12 mx-auto">
                   <form>
@@ -92,13 +97,21 @@ class SupplierForm extends React.Component {
                                          ref="phoneNumRef"
                                          className="form-control"/>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="col-sm-3">
                               <label for="fax">Fax</label>
                               <input type="text"
                                          id="fax"
                                          required="required"
                                          ref="faxRef"
                                          className="form-control"/>
+                          </div>
+                          <div class="col-sm-3">
+                              <label for="email">email</label>
+                              <input type="text"
+                                   id="email"
+                                   required="required"
+                                   ref="emailRef"
+                                   className="form-control"/>
                           </div>
                       </div>
               
@@ -121,6 +134,7 @@ class SupplierForm extends React.Component {
 
                                   </select>
                           </div>
+
                           <div class="col-sm-6">
                               <label for="address">Address</label>
                               <textarea 
@@ -131,9 +145,8 @@ class SupplierForm extends React.Component {
                                          rows="3" cols="40"/>
                           </div>
                       </div>
-              
-              <input type="reset" class="btn btn-danger px-4 float-right ml-1"
-                                          onClick={this.reset} value = "Reset"/>
+
+              <input type="reset" class="btn btn-danger px-4 float-right ml-1" onClick={this.reset} value = "Reset"/>
               <button type="button" id="supplier_post_submit"
                      class="btn btn-primary px-4 float-right mr-1"
                      onClick={this.add}> Save </button>
