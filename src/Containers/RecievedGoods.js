@@ -15,21 +15,25 @@ class RecievedGoods extends React.Component {
             data: [
                 {
                     id: 1,
+                    category: "pen",
                     name: "pen",
                     quantity: 10
                 },
                 {
                     id: 2,
+                    category: "pen",
                     name: "pencil",
                     quantity: 5
                 },
                 {
                     id: 3,
+                    category: "pen",
                     name: "pencil",
                     quantity: 15
                 },
                 {
                     id: 4,
+                    category: "pen",
                     name: "pencil",
                     quantity: 5
                 }
@@ -62,6 +66,7 @@ class RecievedGoods extends React.Component {
         await this.setState({
             popupData: {
                 id: "",
+                category: "",
                 name: "",
                 quantity: 1
             }, 

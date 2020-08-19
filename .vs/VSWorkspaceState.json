@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\Components",
+    "\\src\\Containers"
   ],
+  "SelectedNode": "\\src\\Containers\\CheckInventory.js",
   "PreviewInSolutionExplorer": false
 }
