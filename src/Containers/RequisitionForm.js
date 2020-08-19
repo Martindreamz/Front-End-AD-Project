@@ -48,13 +48,21 @@ class RequisitionForm extends React.Component {
                 {
                     id: 5,
                     category: "Eraser",
-                    description: "Eraser (soft)",
+                    description: "Eraser (soft) (doe",
                     quantity: 20,
-                    unit: "Each"
+                    unit: "Dozen"
                 }
             ],
 
-            dropdownData: [],
+            dropdownData: [
+                {
+                    clips: [
+                        {
+                            
+                        }
+                    ]
+                }
+            ],
             category: [],
 
             showPopup: false,

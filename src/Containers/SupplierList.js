@@ -6,7 +6,7 @@ import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
 import SupplierForm from '../Components/SupplierForm';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 class RecievedGoods extends React.Component {
     constructor() {

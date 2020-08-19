@@ -40,10 +40,14 @@ class InventoryPopup extends React.Component {
                                 <input type="text" id="itemCode" value={this.state.data.id} />
                             </fieldset>
                             <fieldset>
-                                Item Name:
-                                <input type="text" id="itemName" value={this.state.data.name} />
+                                Item Category:
+                                <input type="text" id="itemName" value={this.state.data.category} />
                             </fieldset>
                         </div>
+                        <fieldset>
+                            Item Name:
+                            <input type="text" id="itemName" value={this.state.data.name} />
+                        </fieldset>
                         <fieldset>
                         Quantity:
                             <input type="number" min="1" max="99" id="qty" value={this.props.data.quantity} />
