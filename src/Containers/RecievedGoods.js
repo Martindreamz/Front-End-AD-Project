@@ -27,13 +27,13 @@ class RecievedGoods extends React.Component {
                 },
                 {
                     id: 3,
-                    category: "pen",
+                    category: "pencil",
                     name: "pencil",
                     quantity: 15
                 },
                 {
                     id: 4,
-                    category: "pen",
+                    category: "pens",
                     name: "pencil",
                     quantity: 5
                 }
@@ -41,9 +41,11 @@ class RecievedGoods extends React.Component {
             showPopup: false,
             popupData: {
                 id: "",
+                category: "",
                 name: "",
                 quantity: 1
-            }
+            },
+            categoryData: []
         }
     }
 
@@ -55,6 +57,11 @@ class RecievedGoods extends React.Component {
                 const items = response.data;
                 this.setState({ data: items });
             })
+        //Generate category data for dropdown
+        const categoryName = [...new Set(this.state.data.map(item => item.category))]
+        this.setState({
+            categoryData: categoryName
+        })
     }
 
     checkInventoryAction = () => {
@@ -87,11 +94,23 @@ class RecievedGoods extends React.Component {
         })
     }
 
+    //Event handling for dropdown
+    showCat = (event) => {
+        const selected = event.target.value
+        this.setState(prevState => {
+            const popUpData = prevState.popupData
+            return {
+                ...popUpData,
+                category: selected
+            }
+        });
+    }
+
     render() {
         return (
             <div>
                 <Header />
-                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
+                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} categoryData={this.state.categoryData} showCat={this.showCat} /> : null}
                 <div className="recievedGoodsBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
                     <InventoryTable data={this.state.data} editData={this.editInventoryAction} />

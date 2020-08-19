@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import './InventoryPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 class InventoryPopup extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            data: props.data
+            data: props.data,
+            openCat: false,
+            cat: ""
         }
     }
 
@@ -26,6 +30,18 @@ class InventoryPopup extends React.Component {
             })
         }
     }
+    //event handling for dropdown
+    closeCat = () => {
+        this.setState({
+            openCat: !this.state.openCat
+        })
+    }
+
+    catOpen = () => {
+        this.setState({
+            openCat: !this.state.openCat
+        })
+    }
 
     render() {
         return (
@@ -41,7 +57,18 @@ class InventoryPopup extends React.Component {
                             </fieldset>
                             <fieldset>
                                 Item Category:
-                                <input type="text" id="itemName" value={this.state.data.category} />
+                                {/*<input type="text" id="itemName" value={this.state.data.category} />*/}
+                                <Select
+                                    labelId="demo-controlled-open-select-label"
+                                    id="demo-controlled-open-select"
+                                    value={this.state.data.category}
+                                    open={this.state.openCat}
+                                    onClose={this.closeCat}
+                                    onOpen={this.catOpen}
+                                    onChange={this.props.showCat}>
+                                    {console.log(this.props.categoryData)}
+                                    {this.props.categoryData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                                </Select>
                             </fieldset>
                         </div>
                         <fieldset>
