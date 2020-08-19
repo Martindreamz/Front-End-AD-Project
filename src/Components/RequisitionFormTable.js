@@ -38,6 +38,8 @@ class RequisitionFormTable extends React.Component {
             description: '',
             openDescription: false,
 
+            showQtyUnit: false,
+
             //test
             data: [
                 {
@@ -104,7 +106,8 @@ class RequisitionFormTable extends React.Component {
         const selected = event.target.value
         this.setState({
             description: selected,
-            openDescription: !this.state.openDescription
+            openDescription: !this.state.openDescription,
+            showQtyUnit: true
         });
     }
     closeDesc = () => {
@@ -118,6 +121,7 @@ class RequisitionFormTable extends React.Component {
             openDescription: !this.state.openDescription
         })
     }
+
 
     render() {
         //mapping data 
@@ -148,12 +152,20 @@ class RequisitionFormTable extends React.Component {
                             onOpen={this.descOpen}
                             onChange={this.showDesc}>
                             {console.log(this.props.data[Number(this.state.cat)])}
+                            {this.props.data[Number(this.state.cat)].map(item => <MenuItem value={item}>{item.description}</MenuItem>)}
                         </Select>
                         : null
                     }
                 </td>
-                <td>{item.quantity}</td>
-                <td>{item.unit}</td>
+                {this.state.showQtyUnit?
+                    <td>
+                        <input id={item.id} type="number" min="0" max="9999" />
+                    </td>
+                    :
+                    <td></td>
+                }
+                {this.state.showQtyUnit ?
+                    <td>Each</td> : <td></td>}
             </tr>
 
         )
