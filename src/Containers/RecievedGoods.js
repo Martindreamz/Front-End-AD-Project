@@ -33,7 +33,7 @@ class RecievedGoods extends React.Component {
                     name: "pencil",
                     quantity: 5
                 }
-            ], 
+            ],
             showPopup: false,
             popupData: {
                 id: "",
