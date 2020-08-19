@@ -10,6 +10,7 @@ class InventoryPopup extends React.Component {
 
         this.state = {
             data: props.data,
+            categoryData: props.categoryData,
             openCat: false,
             cat: ""
         }
@@ -17,20 +18,54 @@ class InventoryPopup extends React.Component {
 
     //handle changing field value in fields
     handleUpdatedData = (event) => {
-        let nameChange = event.target.value;
+        let update = event.target.value;
         if (event.target.id === "itemName") {
             this.setState(prevState => {
                 const data = prevState.data;
                 return {
                     data: {
                         ...data,
-                        name: nameChange
+                        name: update,
+                    }
+                }
+            })
+        }
+        if (event.target.id === "itemCode") {
+            this.setState(prevState => {
+                const data = prevState.data;
+                return {
+                    data: {
+                        ...data,
+                        id: update,
+                    }
+                }
+            })
+        }
+        if (event.target.id === "qty") {
+            this.setState(prevState => {
+                const data = prevState.data;
+                return {
+                    data: {
+                        ...data,
+                        quantity: Number(update),
                     }
                 }
             })
         }
     }
     //event handling for dropdown
+    showCat = (event) => {
+        const selected = event.target.value
+        this.setState(prevState => {
+            const data = prevState.data
+            return {
+                data: {
+                    ...data,
+                    category: selected
+                }
+            }
+        });
+    }
     closeCat = () => {
         this.setState({
             openCat: !this.state.openCat
@@ -65,8 +100,7 @@ class InventoryPopup extends React.Component {
                                     open={this.state.openCat}
                                     onClose={this.closeCat}
                                     onOpen={this.catOpen}
-                                    onChange={this.props.showCat}>
-                                    {console.log(this.props.categoryData)}
+                                    onChange={this.showCat}>
                                     {this.props.categoryData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
                                 </Select>
                             </fieldset>
@@ -76,8 +110,8 @@ class InventoryPopup extends React.Component {
                             <input type="text" id="itemName" value={this.state.data.name} />
                         </fieldset>
                         <fieldset>
-                        Quantity:
-                            <input type="number" min="1" max="99" id="qty" value={this.props.data.quantity} />
+                            Quantity:
+                            <input type="number" min="1" max="99" id="qty" value={this.state.data.quantity} />
                         </fieldset>
                         <div className="formButtons">
                             <button>Delete</button>

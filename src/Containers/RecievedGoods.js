@@ -94,17 +94,6 @@ class RecievedGoods extends React.Component {
         })
     }
 
-    //Event handling for dropdown
-    showCat = (event) => {
-        const selected = event.target.value
-        this.setState(prevState => {
-            const popUpData = prevState.popupData
-            return {
-                ...popUpData,
-                category: selected
-            }
-        });
-    }
 
     render() {
         return (
