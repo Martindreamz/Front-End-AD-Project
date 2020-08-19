@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import SupplierTable from '../Components/SupplierTable';
-import './RecievedGoods.css';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
@@ -23,7 +22,10 @@ class RecievedGoods extends React.Component {
 
     addSupplierFun(previousState) {
         this.setState(
-            {showSupplierForm: !previousState,}
+            {
+                isEdit : false,
+                showSupplierForm: !previousState,
+            }
         )
         this.componentDidMount();
     }
@@ -75,7 +77,7 @@ class RecievedGoods extends React.Component {
                         : null
                     }
                     {this.state.showSupplierForm || this.state.isEdit?
-                        <SupplierForm editSupObj={this.state.editSupObj} isEdit={true}/>
+                        <SupplierForm editSupObj={this.state.editSupObj} isEdit={this.state.isEdit}/>
                         : null
                     }
                 </div>

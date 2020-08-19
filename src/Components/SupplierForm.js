@@ -79,7 +79,7 @@ class SupplierForm extends React.Component {
                                          id="supplierCode"
                                          required="required"
                                          ref="supplierCodeRef"
-                                         value={this.state.currentSupplierObj.supplierCode}  
+                                         defaultValue={this.state.currentSupplierObj.supplierCode}  
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-6">
@@ -87,7 +87,7 @@ class SupplierForm extends React.Component {
                               <input type="text"
                                          id="gstRegisNo"
                                          ref="gstRegisNoRef"
-                                         value={this.state.currentSupplierObj.gstRegisNo} 
+                                         defaultValue={this.state.currentSupplierObj.gstRegisNo} 
                                          className="form-control"/>
                           </div>
                       </div>
@@ -98,7 +98,7 @@ class SupplierForm extends React.Component {
                                          id="name"
                                          required="required"
                                          ref="nameRef"
-                                         value={this.state.currentSupplierObj.name} 
+                                         defaultValue={this.state.currentSupplierObj.name} 
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-6">
@@ -107,7 +107,7 @@ class SupplierForm extends React.Component {
                                          id="contactPerson"
                                          required="required"
                                          ref="contactPersonRef"
-                                         value={this.state.currentSupplierObj.contactPerson} 
+                                         defaultValue={this.state.currentSupplierObj.contactPerson} 
                                          className="form-control"/>
                           </div>
                       </div>
@@ -119,7 +119,7 @@ class SupplierForm extends React.Component {
                                          id="phoneNum"
                                          required="required"
                                          ref="phoneNumRef"
-                                         value={this.state.currentSupplierObj.phoneNum} 
+                                         defaultValue={this.state.currentSupplierObj.phoneNum} 
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-3">
@@ -128,7 +128,7 @@ class SupplierForm extends React.Component {
                                          id="fax"
                                          required="required"
                                          ref="faxRef"
-                                         value={this.state.currentSupplierObj.fax} 
+                                         defaultValue={this.state.currentSupplierObj.fax} 
                                          className="form-control"/>
                           </div>
                           <div class="col-sm-3">
@@ -137,7 +137,7 @@ class SupplierForm extends React.Component {
                                    id="email"
                                    required="required"
                                    ref="emailRef"
-                                   value={this.state.currentSupplierObj.email} 
+                                   defaultValue={this.state.currentSupplierObj.email} 
                                    className="form-control"/>
                           </div>
                       </div>
@@ -168,7 +168,7 @@ class SupplierForm extends React.Component {
                                          id="address"
                                          required="required"
                                          ref="addressRef"
-                                         value={this.state.currentSupplierObj.address} 
+                                         defaultValue={this.state.currentSupplierObj.address} 
                                          className="form-control"
                                          rows="3" cols="40"/>
                           </div>
