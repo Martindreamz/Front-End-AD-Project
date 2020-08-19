@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "../Components/InventoryTable.css";
 
 class DepRepCollectTable extends Component {
   constructor() {
@@ -53,13 +54,26 @@ class DepRepCollectTable extends Component {
       </tr>
     ));
     return (
-      <table className="genericTable">
-        <tr className="tableHeader">
-          <th>Stationery Description</th>
-          <th>Quantity</th>
-        </tr>
-        {collectItem}
-      </table>
+      <div className="overallContainer">
+        <div className="tableColumn">
+          <h2>Collection Item List</h2>
+          <table className="componentTable">
+            <tr className="tableHeader">
+              <th>Stationery Description</th>
+              <th>Quantity</th>
+            </tr>
+            {collectItem}
+          </table>
+        </div>
+
+        <div className="cardColumn">
+          <div className="card">
+            <h2>Collection Point: </h2>
+            <p>Date: </p>
+            <p>Time: </p>
+          </div>
+        </div>
+      </div>
     );
   }
 }
