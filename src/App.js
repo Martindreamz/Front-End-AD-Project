@@ -13,6 +13,7 @@ import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApp
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
+import RequisitionHistory from "./Containers/RequisitionHistory";
 
 function App() {
   return (
@@ -40,8 +41,8 @@ function App() {
           <Route path="/test2">
             <DiscrepancyList />
           </Route>
-          <Route path="/requisitionForm">
-            <RequisitionForm />
+          <Route path="/requisitionHistory">
+             <RequisitionHistory />
           </Route>
           <Route path="/StoreMStockAdjustmentApproval">
             <StoreMStockAdjustmentApproval />
