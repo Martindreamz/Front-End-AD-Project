@@ -63,3 +63,9 @@
         page-break-after: always;
     }
 }
+
+.box {
+    display: flex;
+    align-items: stretch;
+    align-content: space-between
+}

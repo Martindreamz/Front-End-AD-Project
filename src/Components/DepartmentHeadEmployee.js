@@ -9,34 +9,22 @@ class DepartmentHeadEmployee extends Component {
             requisition: [],
             department: ""
         }*/
-  }
+    }
 
-  render() {
-    return (
-      <table className="componentTable">
-        <tr className="tableHeader">
-          <th> Employees under your care</th>
-        </tr>
-        <tr className="tableRow">
-          <td> Bianca Cao</td>
-        </tr>
-        <tr className="tableRow">
-          <td> Daryl Kouk</td>
-        </tr>
-        <tr className="tableRow">
-          <td> Jane Lee</td>
-        </tr>
-        <tr className="tableRow">
-          <td> Martin Ng</td>
-        </tr>
-        <tr className="tableRow">
-          <td> Theingi Aung Win</td>
-        </tr>
-        <tr className="tableRow">
-          <td> Wayne Khine Myo</td>
-        </tr>
-      </table>
-    );
-  }
+    render() {
+
+        return (
+            <div >
+                <table className="componentTable">
+                    <tr className="tableHeader"><th> Employees under your care</th></tr>
+                    <div style={{ overflowY: "scroll", height: "100px" }}>
+                    {this.props.staff.map(x => {
+                        return (<tr className="tableRow"><td> { x.name}</td></tr>
+                        )
+                    })}
+                   </div>                    
+                </table>
+            </div>)
+    }
 }
 export default DepartmentHeadEmployee;

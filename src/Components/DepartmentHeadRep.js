@@ -11,17 +11,19 @@ class DepartmentHeadDelegate extends Component {
         }*/
   }
 
-  render() {
-    return (
-      <table className="componentTable">
-        <tr className="tableHeader">
-          <th> Acting Department Head</th>
-        </tr>
-        <tr className="tableRow">
-          <td> Wutt Yee</td>
-        </tr>
-      </table>
-    );
-  }
+    render() {
+
+        return (
+            <div>
+                <div>
+                <table className="componentTable" >
+                    <tr className="tableHeader"><th> Department Representative</th></tr>
+                    <tr className="tableRow"><td> { this.props.rep}</td></tr>
+                    </table>
+                </div><div align="right">
+                    <button > {this.props.rep === "" ? "Assign" : "Change"}</button>
+                </div>
+            </div>)
+    }
 }
 export default DepartmentHeadDelegate;

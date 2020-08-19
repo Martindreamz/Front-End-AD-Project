@@ -4,18 +4,19 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import './InventoryTable.css';
 import {domain} from '../Configurations/Config';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class SupplierTable extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { data: []  , initial:true,}
+        this.state = { data: []  , initial:true, editSupObj: []}
         this.deleteSupplier = this.deleteSupplier.bind(this)
     }
     
     deleteSupplier(id) {  
      
-    axios.delete('https://localhost:5001/api/Supplier/delete/' + id).then(result=>{  
+    axios.delete('https://localhost:5001/api/Store/deleteSupplier/' + id).then(result=>{  
        this.setState({  
           data: this.state.data.filter(s=>s.id !== id), 
           initial: false,
@@ -24,7 +25,7 @@ class SupplierTable extends React.Component {
       });
         
     } 
-
+   
     render() {
         if(this.state.initial==true){
             this.state.data = this.props.data;
@@ -37,7 +38,7 @@ class SupplierTable extends React.Component {
                 <td>{item.priority}</td>
                 <td>
                     <div className="tableIcons">
-                        <EditIcon id={item.id}/>
+                        <EditIcon id={item.id} onClick={()=>this.props.editSupplier(item)}/>
                         <DeleteIcon id={item.id} onClick={() => this.deleteSupplier(item.id)}/>
                     </div>
                 </td>
@@ -45,13 +46,12 @@ class SupplierTable extends React.Component {
         )
 
         return (
-            <table className="inventoryTable">
+            <table className="supplierTable text-center">
                 <tr className="tableHeader">
                     <th>Supplier Code</th>
                     <th>Name</th>
                     <th>Contact Person</th>
                     <th>Priority</th>
-                    <th></th>
                     <th></th>
                 </tr>
                 {supplierItem}
