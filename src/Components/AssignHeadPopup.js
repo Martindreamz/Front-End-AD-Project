@@ -1,39 +1,61 @@
-import React from "react";
+import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import "./InventoryTable.css";
 
-export default () => (
-  <Popup trigger={<button className="button"> Open Modal </button>} modal>
-    {(close) => (
-      <div className="modal">
-        <a className="close" onClick={close}>
-          &times;
-        </a>
-        <div className="header"> Modal Title </div>
-        <div className="content">
-          {" "}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
-          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
-          quibusdam voluptates delectus doloremque, explicabo tempore dicta
-          adipisci fugit amet dignissimos?
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
-          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
-          alias. Vitae?
-        </div>
-        <div className="actions">
-          <button
-            className="button"
-            onClick={() => {
-              console.log("modal closed ");
-              close();
-            }}
-          >
-            close modal
-          </button>
-        </div>
-      </div>
-    )}
-  </Popup>
-);
+class AssignHeadPopup extends Component {
+  constructor() {
+    super();
+    this.state = {
+      checked: false,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange() {
+    this.setState({ checked: !this.state.checked });
+  }
+
+  render() {
+    return (
+      <Popup trigger={<button className="manageButton"> Manage </button>} modal>
+        {(close) => (
+          <div className="popupDialog">
+            <a className="close" onClick={close}>
+              &times;
+            </a>
+            <div className="dialogHeader">
+              <label class="switch">
+                <input type="checkbox" onChange={this.handleChange} />
+                <span class="slider round"></span>
+              </label>
+              <p>Delegate Mode</p>
+            </div>
+            <br />
+            {this.state.checked ? (
+              <div className="dialogContent">
+                <form>
+                  <select className="select-css" id="delegate" name="delegate">
+                    <option value="Bianca">Bianca</option>
+                    <option value="Daryl">Daryl</option>
+                    <option value="Jane">Jane</option>
+                    <option value="Martin">Martin</option>
+                  </select>
+                  <p>Start Date:</p>
+                  <input type="date" id="startDate" name="startDate" />
+                  <p>End Date:</p>
+                  <input type="date" id="endDate" name="endDate" />
+                  <br />
+                  <input type="reset" value="Clear"></input>
+                  <input type="submit"></input>
+                </form>
+              </div>
+            ) : (
+              <p>No assigned Department Delegate!</p>
+            )}
+          </div>
+        )}
+      </Popup>
+    );
+  }
+}
+export default AssignHeadPopup;
