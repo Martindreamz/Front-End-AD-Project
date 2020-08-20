@@ -13,6 +13,7 @@ import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApp
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
+import DisbursementList from "./Containers/DisbursementList";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
           </Route>
           <Route path="/placeOrderSubmit">
             <PurchaseOrderSubmit />
+          </Route>
+          
+          <Route path="/disbursementList">
+            <DisbursementList />
           </Route>
         </Switch>
       </Router>

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import SupplierTable from '../Components/SupplierTable';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import SupplierForm from '../Components/SupplierForm';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 class RecievedGoods extends React.Component {
     constructor() {
@@ -55,6 +54,8 @@ class RecievedGoods extends React.Component {
     }
 
     render() {
+
+        this.componentDidMount();
         return (
         <div>
             <Header />
