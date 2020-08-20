@@ -11,7 +11,6 @@ class AssignCollectionPtPopup extends Component {
       open: false,
     };
 
-    this.handleDelegateInput = this.handleDelegateInput.bind(this);
     this.submit = this.submit.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -27,10 +26,6 @@ class AssignCollectionPtPopup extends Component {
     } else {
       this.setState({ currentCollectionPt: "No collection point assigned." });
     }
-  }
-
-  handleDelegateInput(event) {
-    this.setState({ delegate: event.target.value });
   }
 
   submit() {}
@@ -71,23 +66,21 @@ class AssignCollectionPtPopup extends Component {
               </div>
               <br />
               <div className="dialogContent">
-                <div onChange={this.onChangeValue}>
-                  {this.props.collectionInfo.map((x) => {
-                    return (
-                      <div>
-                        <input
-                          type="radio"
-                          value={x.collectionPt}
-                          checked={
-                            x.collectionPt === this.state.currentCollectionPt
-                          }
-                          name="CollectionPt"
-                        />{" "}
-                        {x.collectionPt}
-                      </div>
-                    );
-                  })}
-                </div>
+                {this.props.collectionInfo.map((x) => {
+                  return (
+                    <div>
+                      <input
+                        type="radio"
+                        value={x.collectionPt}
+                        checked={
+                          x.collectionPt === this.state.currentCollectionPt
+                        }
+                        name="CollectionPt"
+                      />{" "}
+                      <span>{x.collectionPt}</span>
+                    </div>
+                  );
+                })}
               </div>
               <br />
               <div className="popupButtons">
