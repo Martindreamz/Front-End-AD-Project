@@ -42,9 +42,23 @@ class StoreMStockAdjustmentApproval extends Component {
 
     showPopup = (event) => {
         console.log(event.currentTarget.id)
+        const id = event.currentTarget.id
         //post request with id to retrieve stock adjustment details
         this.setState({
-            popupData: [],
+            popupData: [
+                {
+                    id: id,
+                    quantity: id * 5,
+                    amount: id * 100,
+                    reason: "lost"
+                },
+                {
+                    id: id,
+                    quantity: id * 10,
+                    amount: id * 200,
+                    reason: "missing"
+                }
+            ],
             displayPopup: true
         })
     }
