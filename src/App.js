@@ -14,10 +14,14 @@ import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
 <<<<<<< HEAD
+import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
+=======
+<<<<<<< HEAD
 import DisbursementList from "./Containers/DisbursementList";
 =======
 import RequisitionHistory from "./Containers/RequisitionHistory";
 >>>>>>> b3b408d5b6b86cfb209794a5193c8761d7936561
+>>>>>>> bf0c3c1eed709fabf42f0cf2f9da8dfc3e6e6c72
 
 function App() {
   return (
@@ -45,8 +49,8 @@ function App() {
           <Route path="/test2">
             <DiscrepancyList />
           </Route>
-          <Route path="/requisitionHistory">
-             <RequisitionHistory />
+          <Route path="/RequisitionHistoryDetailsView">
+             <RequisitionHistoryDetailsView />
           </Route>
           <Route path="/StoreMStockAdjustmentApproval">
             <StoreMStockAdjustmentApproval />
