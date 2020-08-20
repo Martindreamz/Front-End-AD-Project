@@ -1,30 +1,81 @@
 import React, { Component } from 'react';
 import './InventoryPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 class InventoryPopup extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            data: props.data
+            data: props.data,
+            categoryData: props.categoryData,
+            openCat: false,
+            cat: ""
         }
     }
 
     //handle changing field value in fields
     handleUpdatedData = (event) => {
-        let nameChange = event.target.value;
+        let update = event.target.value;
         if (event.target.id === "itemName") {
             this.setState(prevState => {
                 const data = prevState.data;
                 return {
                     data: {
                         ...data,
-                        name: nameChange
+                        name: update,
                     }
                 }
             })
         }
+        if (event.target.id === "itemCode") {
+            this.setState(prevState => {
+                const data = prevState.data;
+                return {
+                    data: {
+                        ...data,
+                        id: update,
+                    }
+                }
+            })
+        }
+        if (event.target.id === "qty") {
+            this.setState(prevState => {
+                const data = prevState.data;
+                return {
+                    data: {
+                        ...data,
+                        quantity: Number(update),
+                    }
+                }
+            })
+        }
+    }
+    //event handling for dropdown
+    showCat = (event) => {
+        const selected = event.target.value
+        this.setState(prevState => {
+            const data = prevState.data
+            return {
+                data: {
+                    ...data,
+                    category: selected
+                }
+            }
+        });
+    }
+    closeCat = () => {
+        this.setState({
+            openCat: !this.state.openCat
+        })
+    }
+
+    catOpen = () => {
+        this.setState({
+            openCat: !this.state.openCat
+        })
     }
 
     render() {
@@ -41,7 +92,17 @@ class InventoryPopup extends React.Component {
                             </fieldset>
                             <fieldset>
                                 Item Category:
-                                <input type="text" id="itemName" value={this.state.data.category} />
+                                {/*<input type="text" id="itemName" value={this.state.data.category} />*/}
+                                <Select
+                                    labelId="demo-controlled-open-select-label"
+                                    id="demo-controlled-open-select"
+                                    value={this.state.data.category}
+                                    open={this.state.openCat}
+                                    onClose={this.closeCat}
+                                    onOpen={this.catOpen}
+                                    onChange={this.showCat}>
+                                    {this.props.categoryData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                                </Select>
                             </fieldset>
                         </div>
                         <fieldset>
@@ -49,8 +110,8 @@ class InventoryPopup extends React.Component {
                             <input type="text" id="itemName" value={this.state.data.name} />
                         </fieldset>
                         <fieldset>
-                        Quantity:
-                            <input type="number" min="1" max="99" id="qty" value={this.props.data.quantity} />
+                            Quantity:
+                            <input type="number" min="1" max="99" id="qty" value={this.state.data.quantity} />
                         </fieldset>
                         <div className="formButtons">
                             <button>Delete</button>

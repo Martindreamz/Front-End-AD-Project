@@ -2,6 +2,7 @@ import React, { useState,createRef,useEffect,Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../Components/Headers/Header';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class SupplierForm extends React.Component {
    constructor(props) {
