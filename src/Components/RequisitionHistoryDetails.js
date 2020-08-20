@@ -40,8 +40,10 @@ class RequisitionHistoryDetails extends Component {
                 },
             ],
         };
+        
     }
 
+    
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request

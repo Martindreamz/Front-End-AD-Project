@@ -13,7 +13,8 @@ import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApp
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
-import RequisitionHistory from "./Containers/RequisitionHistory";
+import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
+import DisbursementList from "./Containers/DisbursementList";
 
 function App() {
   return (
@@ -41,8 +42,8 @@ function App() {
           <Route path="/test2">
             <DiscrepancyList />
           </Route>
-          <Route path="/requisitionHistory">
-             <RequisitionHistory />
+          <Route path="/RequisitionHistoryDetailsView">
+             <RequisitionHistoryDetailsView />
           </Route>
           <Route path="/StoreMStockAdjustmentApproval">
             <StoreMStockAdjustmentApproval />
@@ -58,6 +59,10 @@ function App() {
           </Route>
           <Route path="/placeOrderSubmit">
             <PurchaseOrderSubmit />
+          </Route>
+          
+          <Route path="/disbursementList">
+            <DisbursementList />
           </Route>
         </Switch>
       </Router>

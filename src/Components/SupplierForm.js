@@ -1,5 +1,7 @@
 import React, { useState,createRef,useEffect,Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../Components/Headers/Header';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class SupplierForm extends React.Component {
@@ -47,15 +49,24 @@ class SupplierForm extends React.Component {
         phoneNum : this.refs.phoneNumRef.value,
       }
 
-      fetch('https://localhost:5001/api/Store/saveSupplier', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(supplier)
-      }).then(res => res.json()).then(tom => {
-          this.setState({message:'New Supplier is Created Successfully'});
-      });
+      if(!this.props.isEdit)
+      {
+          fetch('https://localhost:5001/api/Store/saveSupplier', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(supplier)
+          }).then(res => res.json()).then(tom => {
+              this.setState({message:'New Supplier is Created Successfully'});
+          });
+      }
+      else
+      {
+          axios.put('https://localhost:5001/api/Store/updateSupplier/' + this.state.currentSupplierObj.id).then(result=>{  
+            this.setState({message:' Supplier is Edited Successfully'});
+          });
+      }
     }
 
     render(){
