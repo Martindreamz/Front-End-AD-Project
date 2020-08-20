@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "@material-ui/core";
+import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
 
 class RequisitionHistory extends Component {
     constructor() {
@@ -38,9 +39,7 @@ class RequisitionHistory extends Component {
         
     }
 
-    changeView() {
-        this.setState
-    }
+
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
@@ -53,7 +52,7 @@ class RequisitionHistory extends Component {
     render() {
         const historyItem = this.state.historyData.map((item) => (
             <tr className="tableRow">
-                <td><Link onClick="changeView">{item.ReqID}</Link></td>
+                <td><Link>{item.ReqID}</Link></td>
                 <td>{item.DateOfRequest}</td>
                 <td>{item.Status}</td>
             </tr>
