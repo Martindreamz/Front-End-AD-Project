@@ -7,7 +7,7 @@ class AssignHeadPopup extends Component {
     super(props);
 
     this.state = {
-      delegate: props.department.delegate,
+      delegate: "",
       startDate: "",
       endDate: "",
       open: false,
@@ -46,7 +46,7 @@ class AssignHeadPopup extends Component {
   }
 
   submit() {
-    this.props.handleSubmit(
+    this.props.handleDelegateSubmit(
       this.state.delegate,
       this.state.startDate,
       this.state.endDate
@@ -55,6 +55,12 @@ class AssignHeadPopup extends Component {
 
   openModal() {
     console.log("Popup called!");
+
+    this.props.employee.map((x) => {
+      if (x.role === "DELEGATE") {
+        this.setState({ delegate: x.name });
+      }
+    });
 
     this.setState({ open: true });
     this.setState({ startDate: this.props.department.DelgtStartDate });
@@ -96,7 +102,7 @@ class AssignHeadPopup extends Component {
                   value={this.state.delegate}
                   onChange={this.handleDelegateInput}
                 >
-                  {this.props.staff.map((x) => {
+                  {this.props.employee.map((x) => {
                     return <option value={x.name}>{x.name}</option>;
                   })}
                 </select>

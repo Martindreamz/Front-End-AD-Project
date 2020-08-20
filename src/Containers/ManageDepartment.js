@@ -11,13 +11,13 @@ class ManageDepartment extends Component {
   constructor() {
     super();
     this.state = {
-      staff: [
-        { name: "Bianca Cao " },
-        { name: "Daryl Kouk" },
-        { name: "Jane Lee" },
-        { name: "Martin Ng" },
-        { name: "Theingi Aung Win" },
-        { name: "Wayne Khine Myo" },
+      employee: [
+        { id: 1, name: "Bianca Cao", role: "STAFF" },
+        { id: 2, name: "Daryl Kouk", role: "DELEGATE" },
+        { id: 3, name: "Jane Lee", role: "STAFF" },
+        { id: 4, name: "Martin Ng", role: "STAFF" },
+        { id: 5, name: "Theingi Aung Win", role: "STAFF" },
+        { id: 6, name: "Wayne Khine Myo", role: "STAFF" },
       ],
       requisition: [
         {
@@ -73,19 +73,39 @@ class ManageDepartment extends Component {
         DelgtStartDate: "2020-06-13",
         DelgtEndDate: "2020-07-31",
         nextCollection: "2020-08-08",
-        collectionPt: "University Hospital",
+        collectionId: 2,
       },
+      collectionInfo: [
+        { id: 1, collectionPt: "Stationery Store - Administration Building" },
+        { id: 2, collectionPt: "Management School" },
+        { id: 3, collectionPt: "Medical School" },
+        { id: 4, collectionPt: "Engineering School" },
+        { id: 5, collectionPt: "Science School" },
+        { id: 6, collectionPt: "University Hospital" },
+      ],
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
+    this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
   }
 
-  handleSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
+  handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
     this.setState(
       Object.assign(this.state.department, {
         delegate: selectedDelegate,
         DelgtStartDate: selectedStartDate,
         DelgtEndDate: selectedEndDate,
+      }),
+      () => {
+        console.log(this.state);
+      }
+    );
+  }
+
+  handleCollectionSubmit(selectedCollectionPt) {
+    this.setState(
+      Object.assign(this.state.department, {
+        collectionPt: selectedCollectionPt,
       }),
       () => {
         console.log(this.state);
@@ -106,12 +126,12 @@ class ManageDepartment extends Component {
           <div>
             <DepartmentHeadDelegate
               department={this.state.department}
-              staff={this.state.staff}
-              handleSubmit={this.handleSubmit.bind(this)}
+              employee={this.state.employee}
+              handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
             />
           </div>
           <div>
-            <DepartmentHeadEmployee staff={this.state.staff} />
+            <DepartmentHeadEmployee employee={this.state.employee} />
           </div>
           <div>
             <DepartmentHeadRep rep={this.state.department.rep} />
@@ -123,7 +143,11 @@ class ManageDepartment extends Component {
         </div>
         <div className="rightpane">
           <h4>Your Logistics</h4>
-          <DepartmentHeadCollection department={this.state.department} />
+          <DepartmentHeadCollection
+            department={this.state.department}
+            collectionInfo={this.state.collectionInfo}
+            handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
+          />
         </div>
       </div>
     );

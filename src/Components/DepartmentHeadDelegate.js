@@ -24,8 +24,8 @@ class DepartmentHeadDelegate extends Component {
         <div align="right">
           <AssignHeadPopup
             department={this.props.department}
-            staff={this.props.staff}
-            handleSubmit={this.props.handleSubmit.bind(this)}
+            employee={this.props.employee}
+            handleDelegateSubmit={this.props.handleDelegateSubmit.bind(this)}
           />
         </div>
       </div>
