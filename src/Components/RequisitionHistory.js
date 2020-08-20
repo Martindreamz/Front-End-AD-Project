@@ -38,9 +38,9 @@ class RequisitionHistory extends Component {
         
     }
 
-    changeView() {
+    /*changeView() {
         this.setState
-    }
+    }*/
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
