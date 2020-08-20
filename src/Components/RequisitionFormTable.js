@@ -28,7 +28,8 @@ class RequisitionFormTable extends React.Component {
                 description: "",
                 quantity: "",
                 unit: ""
-            }],
+            }
+            ],
 
 
             cat: '',
@@ -40,43 +41,6 @@ class RequisitionFormTable extends React.Component {
 
             showQtyUnit: false,
 
-            //test
-            data: [
-                {
-                    Clips: [
-                        {
-                            id: 1,
-                            category: "Clip",
-                            description: "Clips Double 2",
-                            quantity: 10,
-                            unit: "Dozen"
-                        },
-                        {
-                            id: 2,
-                            category: "Clip",
-                            description: "Clips Double 1",
-                            quantity: 10,
-                            unit: "Dozen"
-                        }
-                    ],
-                    Pen: [
-                        {
-                            id: 3,
-                            category: "Pen",
-                            description: "Pen Ballpoint Black",
-                            quantity: 1,
-                            unit: "Box"
-                        },
-                        {
-                            id: 4,
-                            category: "Pen",
-                            description: "Pen Ballpoint",
-                            quantity: 1,
-                            unit: "Box"
-                        }
-                    ],
-                }
-            ]
         }
     }
     //Event Handling
