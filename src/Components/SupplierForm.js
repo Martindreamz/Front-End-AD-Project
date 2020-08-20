@@ -1,6 +1,6 @@
 import React, { useState,createRef,useEffect,Component } from 'react';
 import Header from '../Components/Headers/Header';
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class SupplierForm extends React.Component {
    constructor(props) {
