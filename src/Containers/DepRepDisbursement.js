@@ -30,7 +30,6 @@ class DepRepDisbursement extends Component {
     return (
       <div>
         <Header />
-
         <DepRepDistriCollectionList
           showDistribution={this.state.showDistribution}
         />

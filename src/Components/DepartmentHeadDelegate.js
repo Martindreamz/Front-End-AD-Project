@@ -5,11 +5,20 @@ import "./InventoryTable.css";
 class DepartmentHeadDelegate extends Component {
   constructor() {
     super();
-    /*this.state() = {
-                staff: [],
-                requisition: [],
-                department: ""
-            }*/
+    this.state = {
+      staff: [],
+      requisition: [],
+      department: "",
+      haveDelegate: true,
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.delegate === "") {
+      this.setState({ haveDelegate: false });
+    } else {
+      this.setState({ haveDelegate: true });
+    }
   }
 
   render() {
@@ -26,8 +35,7 @@ class DepartmentHeadDelegate extends Component {
           </table>
         </div>
         <div align="right">
-          <AssignHeadPopup />
-          <button> {this.props.delegate === "" ? "Assign" : "Revoke"}</button>
+          <AssignHeadPopup haveDelegate={this.state.haveDelegate} />
         </div>
       </div>
     );
