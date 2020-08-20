@@ -5,20 +5,7 @@ import "./InventoryTable.css";
 class DepartmentHeadDelegate extends Component {
   constructor() {
     super();
-    this.state = {
-      staff: [],
-      requisition: [],
-      department: "",
-      haveDelegate: true,
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.delegate === "") {
-      this.setState({ haveDelegate: false });
-    } else {
-      this.setState({ haveDelegate: true });
-    }
+    this.state = {};
   }
 
   render() {
@@ -30,12 +17,16 @@ class DepartmentHeadDelegate extends Component {
               <th> Acting Department Head</th>
             </tr>
             <tr className="tableRow">
-              <td> {this.props.delegate}</td>
+              <td> {this.props.department.delegate}</td>
             </tr>
           </table>
         </div>
         <div align="right">
-          <AssignHeadPopup haveDelegate={this.state.haveDelegate} />
+          <AssignHeadPopup
+            department={this.props.department}
+            staff={this.props.staff}
+            handleSubmit={this.props.handleSubmit.bind(this)}
+          />
         </div>
       </div>
     );

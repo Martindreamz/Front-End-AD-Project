@@ -139,7 +139,32 @@ button.manageButton:hover {
   background-color: #dfdfdf;
 }
 
+button.backButton {
+  margin-right: 2%;
+  margin-top: 0.5rem;
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+  background-color: #ededed;
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
+  display: inline-block;
+  cursor: pointer;
+  color: #777777;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 70px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
+}
+
+button.backButton:hover {
+  background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+  background-color: #dfdfdf;
+}
+
 button.greenButton {
+  margin-right: 2%;
   box-shadow: inset 0px 1px 0px 0px #caefab;
   background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
   background-color: #77d42a;
@@ -166,6 +191,7 @@ button.greenButton:active {
 }
 
 button.redButton {
+  margin-right: 2%;
   box-shadow: inset 0px 1px 0px 0px #f29c93;
   background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
   background-color: #fe1a00;
@@ -306,10 +332,6 @@ textarea {
   text-align: center;
 }
 
-.popupDialog p {
-  font-size: 20px;
-}
-
 .popupDialog > .dialogHeader {
   display: inline-block;
   margin: 0 auto;
@@ -317,74 +339,9 @@ textarea {
   font-size: 18px;
 }
 
-.popupDialog > .dialogHeader p {
+.popupDialog > .dialogHeader h2 {
   font-size: 25px;
-  float: left;
-  margin-right: 2%;
-}
-
-.popupDialog > .dialogHeader > .switch {
-  position: relative;
-  display: block;
-  width: 60px;
-  height: 34px;
-  float: left;
-  margin-top: 0.3rem;
-  margin-right: 1rem;
-  margin-left: 10%;
-}
-
-.popupDialog > .dialogHeader > .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #2196f3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+  margin-bottom: 1.5rem;
 }
 
 .popupDialog > .dialogContent {
@@ -392,16 +349,13 @@ input:checked + .slider:before {
   padding: 10px 5px;
 }
 
-.popupDialog > .dialogContent form {
-  text-align: left;
-}
-
 .popupDialog > .dialogContent p {
   margin-top: 1.5rem;
   margin-bottom: 0.2rem;
-  margin-left: 11%;
   font-size: 18px;
   font-weight: 500;
+  text-align: left;
+  margin-left: 20%;
 }
 
 .popupDialog > .dialogContent input[type="date"] {
@@ -416,7 +370,6 @@ input:checked + .slider:before {
   padding: 5px;
   display: inline-block !important;
   visibility: visible !important;
-  margin-left: 10%;
 }
 
 .popupDialog > .dialogContent input[type="date"],
@@ -425,67 +378,6 @@ focus {
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
-}
-
-.popupDialog > .dialogContent input[type="submit"] {
-  margin-left: 1.5rem;
-  margin-top: 1.5rem;
-  box-shadow: inset 0px 1px 0px 0px #caefab;
-  background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
-  background-color: #77d42a;
-  border-radius: 6px;
-  border: 1px solid #268a16;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: "Roboto", sans-serif;
-  font-size: 15px;
-  padding: 6px 36px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #aade7c;
-}
-
-.popupDialog > .dialogContent input[type="submit"]:hover {
-  background: linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
-  background-color: #5cb811;
-}
-
-.popupDialog > .dialogContent input[type="reset"] {
-  margin-left: 10%;
-  margin-top: 1.5rem;
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-  background-color: #ededed;
-  border-radius: 6px;
-  border: 1px solid #dcdcdc;
-  display: inline-block;
-  cursor: pointer;
-  color: #777777;
-  font-family: Arial;
-  font-size: 15px;
-  font-weight: bold;
-  padding: 6px 24px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #ffffff;
-}
-
-.popupDialog > .dialogContent input[type="reset"]:hover {
-  background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-  background-color: #dfdfdf;
-}
-
-.popupDialog > .dialogClose {
-  cursor: pointer;
-  position: absolute;
-  display: block;
-  padding: 2px 5px;
-  line-height: 20px;
-  right: -10px;
-  top: -10px;
-  font-size: 24px;
-  background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid #cfcece;
 }
 
 .select-css {
@@ -498,8 +390,8 @@ focus {
   padding: 0.6em 1.4em 0.5em 0.8em;
   width: 100%;
   max-width: 60%;
+  margin-left: 20%;
   box-sizing: border-box;
-  margin-left: 10%;
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
@@ -528,6 +420,10 @@ focus {
 }
 .select-css option {
   font-weight: normal;
+}
+
+.popupDialog > .dialogContent > .popupButtons {
+  padding-top: 3rem;
 }
 
 @media all and (max-width: 30em) {
@@ -560,7 +456,20 @@ focus {
     margin-top: 1.5rem;
   }
 
+  .popupDialog > .dialogHeader h2 {
+    font-size: 18px;
+  }
+
+  .popupDialog > .dialogContent p {
+    margin-left: 10%;
+  }
+
   .popupDialog > .dialogContent input[type="date"] {
     width: 80%;
+  }
+
+  .select-css {
+    max-width: 80%;
+    margin-left: 10%;
   }
 }

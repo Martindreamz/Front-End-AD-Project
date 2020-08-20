@@ -69,11 +69,28 @@ class ManageDepartment extends Component {
       department: {
         name: "hello",
         rep: "Martin",
-        delegate: "Bianca",
-        nextCollection: "08/08/2020",
+        delegate: "Bianca Cao",
+        DelgtStartDate: "2020-06-13",
+        DelgtEndDate: "2020-07-31",
+        nextCollection: "2020-08-08",
         collectionPt: "University Hospital",
       },
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
+    this.setState(
+      Object.assign(this.state.department, {
+        delegate: selectedDelegate,
+        DelgtStartDate: selectedStartDate,
+        DelgtEndDate: selectedEndDate,
+      }),
+      () => {
+        console.log(this.state);
+      }
+    );
   }
 
   render() {
@@ -87,7 +104,11 @@ class ManageDepartment extends Component {
         <div className="leftpane">
           <h4>Your People</h4>
           <div>
-            <DepartmentHeadDelegate delegate={this.state.department.delegate} />
+            <DepartmentHeadDelegate
+              department={this.state.department}
+              staff={this.state.staff}
+              handleSubmit={this.handleSubmit.bind(this)}
+            />
           </div>
           <div>
             <DepartmentHeadEmployee staff={this.state.staff} />
