@@ -13,6 +13,7 @@ import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApp
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import PlaceOrder from "./Containers/PlaceOrder";
+import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
                       <PlaceOrder />
                   </Route>
                   <Route path='/placeOrderSubmit'>
-                      <PlaceOrderSubmit />
+                      <PurchaseOrderSubmit />
                   </Route>
         </Switch>
       </Router>

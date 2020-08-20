@@ -8,7 +8,17 @@ import "./general.css"
 
 class PurchaseOrderSubmit extends Component {
 
+    constructor() {
+        super()
+        this.state = {
+            items:[]
+        }
 
+    }
+
+   
+
+    }
 
     render() {
 

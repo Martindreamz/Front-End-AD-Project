@@ -90,7 +90,11 @@ class PurchaseOrder extends Component {
                     </div>
                     <div className="pageTitle">
                         LOGIC UNIVERSITY<br />
-                        Stationery Purchase Order
+                        Stationery Purchase Order Test
+                        </div>
+                    <div className="box">
+                            <div>Supplier</div>
+                            <div>Clerk</div>
                         </div>
                 <div className="tableBody">
                     <PurchaseOrderTable data={this.state.purchaseOrderDetail} />
