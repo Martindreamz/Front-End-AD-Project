@@ -106,7 +106,7 @@ class AssignHeadPopup extends Component {
                     return <option value={x.name}>{x.name}</option>;
                   })}
                 </select>
-                <p>Start Date:</p>
+                <p>Start Date: </p>
                 <input
                   type="date"
                   name="startDate"
