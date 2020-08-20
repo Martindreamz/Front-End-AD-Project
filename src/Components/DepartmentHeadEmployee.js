@@ -32,4 +32,5 @@ class DepartmentHeadEmployee extends Component {
     );
   }
 }
+
 export default DepartmentHeadEmployee;

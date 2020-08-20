@@ -19,6 +19,7 @@ class ManageDepartment extends Component {
         { id: 5, name: "Theingi Aung Win", role: "STAFF" },
         { id: 6, name: "Wayne Khine Myo", role: "STAFF" },
       ],
+
       requisition: [
         {
           Id: 1,
@@ -66,6 +67,7 @@ class ManageDepartment extends Component {
           AuthorizerId: "",
         },
       ],
+
       department: {
         name: "hello",
         rep: "Martin",
@@ -75,6 +77,7 @@ class ManageDepartment extends Component {
         nextCollection: "2020-08-08",
         collectionId: 2,
       },
+
       collectionInfo: [
         { id: 1, collectionPt: "Stationery Store - Administration Building" },
         { id: 2, collectionPt: "Management School" },

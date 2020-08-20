@@ -102,4 +102,5 @@ class AssignCollectionPtPopup extends Component {
     );
   }
 }
+
 export default AssignCollectionPtPopup;

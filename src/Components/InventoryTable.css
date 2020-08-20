@@ -405,12 +405,15 @@ focus {
   background-position: right 0.7em top 50%, 0 0;
   background-size: 0.65em auto, 100%;
 }
+
 .select-css::-ms-expand {
   display: none;
 }
+
 .select-css:hover {
   border-color: #888;
 }
+
 .select-css:focus {
   border-color: #aaa;
   box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
@@ -418,6 +421,7 @@ focus {
   color: #222;
   outline: none;
 }
+
 .select-css option {
   font-weight: normal;
 }

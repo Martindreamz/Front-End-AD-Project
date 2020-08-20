@@ -150,4 +150,5 @@ class AssignHeadPopup extends Component {
     );
   }
 }
+
 export default AssignHeadPopup;

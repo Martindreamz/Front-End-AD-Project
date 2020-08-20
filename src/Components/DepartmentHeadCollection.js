@@ -58,4 +58,5 @@ class DepartmentHeadCollection extends Component {
     );
   }
 }
+
 export default DepartmentHeadCollection;

@@ -32,4 +32,5 @@ class DepartmentHeadDelegate extends Component {
     );
   }
 }
+
 export default DepartmentHeadDelegate;
