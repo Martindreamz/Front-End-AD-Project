@@ -63,9 +63,32 @@ class SupplierForm extends React.Component {
       }
       else
       {
-          axios.put('https://localhost:5001/api/Store/updateSupplier/' + this.state.currentSupplierObj.id).then(result=>{  
-            this.setState({message:' Supplier is Edited Successfully'});
+          //axios.post('https://localhosch:5001/api/Store/updateSupplier/' + this.state.currentSupplierObj.id).then(result=>{  
+          //  this.setState({message:' Supplier is Edited Successfully'});
+          //});
+          let supplierEdit = {
+          id: this.props.editSupObj.id, 
+          supplierCode: this.refs.supplierCodeRef.value,
+          name: this.refs.nameRef.value,
+          contactPerson :this.refs.contactPersonRef.value,
+          gstRegisNo :this.refs.gstRegisNoRef.value,
+          fax: this.refs.faxRef.value,
+          address :this.refs.addressRef.value,
+          priority: this.refs.priorityRef.value,
+          email : this.refs.emailRef.value,
+          phoneNum : this.refs.phoneNumRef.value,
+        }
+
+          fetch('https://localhost:5001/api/Store/updateSupplier', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(supplierEdit)
+            }).then(res => res.json()).then(tom => {
+                this.setState({message:'Supplier is Edited Successfully'});
           });
+
       }
     }
 

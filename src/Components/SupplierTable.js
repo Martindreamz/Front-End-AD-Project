@@ -13,15 +13,28 @@ class SupplierTable extends React.Component {
         this.deleteSupplier = this.deleteSupplier.bind(this)
     }
     
-    deleteSupplier(id) {  
+    deleteSupplier(supplier) {  
      
-    axios.delete('https://localhost:5001/api/Store/deleteSupplier/' + id).then(result=>{  
+    /*axios.delete('https://localhost:5001/api/Store/deleteSupplier/' + id).then(result=>{  
        this.setState({  
           data: this.state.data.filter(s=>s.id !== id), 
           initial: false,
         });
 
-      });
+      });*/
+
+      fetch('https://localhost:5001/api/Store/deleteSupplier', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(supplier)
+            }).then(res => res.json()).then(result => {
+                this.setState({  
+                  data: this.state.data.filter(s=>s.id !== supplier.id), 
+                  initial: false,
+                });
+          });
         
     } 
    
@@ -38,7 +51,7 @@ class SupplierTable extends React.Component {
                 <td>
                     <div className="tableIcons">
                         <EditIcon id={item.id} onClick={()=>this.props.editSupplier(item)}/>
-                        <DeleteIcon id={item.id} onClick={() => this.deleteSupplier(item.id)}/>
+                        <DeleteIcon id={item.id} onClick={() => this.deleteSupplier(item)}/>
                     </div>
                 </td>
             </tr>        
