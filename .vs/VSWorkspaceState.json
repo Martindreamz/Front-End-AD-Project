@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\Components",
+    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Components\\RequisitionFormTable.js",
+  "SelectedNode": "\\src\\Components\\RequisitionHistoryDetailsView.js",
   "PreviewInSolutionExplorer": false
 }
