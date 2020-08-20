@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "@material-ui/core";
 import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
+import { NavLink } from "react-router-dom";
 
 class RequisitionHistory extends Component {
     constructor() {
@@ -37,6 +38,7 @@ class RequisitionHistory extends Component {
             ],
         };
         
+      
     }
 
 
@@ -52,7 +54,7 @@ class RequisitionHistory extends Component {
     render() {
         const historyItem = this.state.historyData.map((item) => (
             <tr className="tableRow">
-                <td><Link>{item.ReqID}</Link></td>
+                <td><Link onClick={() => this.props.historyDetails(item)}>{item.ReqID}</Link></td>
                 <td>{item.DateOfRequest}</td>
                 <td>{item.Status}</td>
             </tr>
