@@ -48,13 +48,21 @@ class RequisitionForm extends React.Component {
                 {
                     id: 5,
                     category: "Eraser",
-                    description: "Eraser (soft)",
+                    description: "Eraser (soft) (doe",
                     quantity: 20,
-                    unit: "Each"
+                    unit: "Dozen"
                 }
             ],
 
-            dropdownData: [],
+            dropdownData: [
+                {
+                    clips: [
+                        {
+                            
+                        }
+                    ]
+                }
+            ],
             category: [],
 
             showPopup: false,
@@ -78,7 +86,6 @@ class RequisitionForm extends React.Component {
         await this.setState(prevState => {
             //get distinct category name
             const categoryName = [...new Set(prevState.reqData.map(item => item.category))]
-            console.log(categoryName)
 
             var data = []
             categoryName.forEach(name => {
@@ -90,19 +97,15 @@ class RequisitionForm extends React.Component {
                     }
                     return null
                 }).filter(item => item != null)
-                data.push({
-                    itemName: categoryData
-                })
+                data.push(categoryData)
             })
             console.log(data)
-
             return {
                 dropdownData: data,
                 category: categoryName 
             }
+            
         })
-        console.log(this.state.reqData)
-        console.log(this.state.category)
     }
 
 

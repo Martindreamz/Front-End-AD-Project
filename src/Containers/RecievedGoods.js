@@ -15,31 +15,37 @@ class RecievedGoods extends React.Component {
             data: [
                 {
                     id: 1,
+                    category: "pen",
                     name: "pen",
                     quantity: 10
                 },
                 {
                     id: 2,
+                    category: "pen",
                     name: "pencil",
                     quantity: 5
                 },
                 {
                     id: 3,
+                    category: "pencil",
                     name: "pencil",
                     quantity: 15
                 },
                 {
                     id: 4,
+                    category: "pens",
                     name: "pencil",
                     quantity: 5
                 }
-            ], 
+            ],
             showPopup: false,
             popupData: {
                 id: "",
+                category: "",
                 name: "",
                 quantity: 1
-            }
+            },
+            categoryData: []
         }
     }
 
@@ -51,6 +57,11 @@ class RecievedGoods extends React.Component {
                 const items = response.data;
                 this.setState({ data: items });
             })
+        //Generate category data for dropdown
+        const categoryName = [...new Set(this.state.data.map(item => item.category))]
+        this.setState({
+            categoryData: categoryName
+        })
     }
 
     checkInventoryAction = () => {
@@ -62,6 +73,7 @@ class RecievedGoods extends React.Component {
         await this.setState({
             popupData: {
                 id: "",
+                category: "",
                 name: "",
                 quantity: 1
             }, 
@@ -82,11 +94,12 @@ class RecievedGoods extends React.Component {
         })
     }
 
+
     render() {
         return (
             <div>
                 <Header />
-                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} /> : null}
+                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} categoryData={this.state.categoryData} showCat={this.showCat} /> : null}
                 <div className="recievedGoodsBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
                     <InventoryTable data={this.state.data} editData={this.editInventoryAction} />

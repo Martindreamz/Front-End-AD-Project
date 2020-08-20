@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import DepRepDistriTable from "../Components/DepRepDistriTable";
+import DepRepCollectTable from "../Components/DepRepCollectTable";
 
 class DepRepDistriCollectionList extends Component {
   constructor() {
@@ -9,14 +11,16 @@ class DepRepDistriCollectionList extends Component {
   render() {
     if (this.props.showDistribution) {
       return (
-        <div>
+        <div className="inventoryBody">
           <h1>Distribution</h1>
+          <DepRepDistriTable />
         </div>
       );
     }
     return (
-      <div>
+      <div className="inventoryBody">
         <h1>Collection</h1>
+        <DepRepCollectTable />
       </div>
     );
   }

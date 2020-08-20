@@ -1,5 +1,10 @@
-﻿.button {
+﻿body {
+    background-color: #F5F5F5
+}
+
+.button {
     border: none;
+    background-color: skyblue;
     color: white;
     padding: 15px;
     text-align: center;
@@ -8,6 +13,7 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+    min-width: 60px;
 }
 
 .disabled {
@@ -21,7 +27,7 @@
     justify-Content: center;
     flex-direction: column;
     padding: 50px 0px 0px 0px;
-    min-width: 300px;
+    min-width:300px;
 }
 
 .tablebottom {
@@ -48,5 +54,5 @@
     }
 
     .btn-group .button:hover {
-        color: deepskyblue;
+        color:deepskyblue;
     }

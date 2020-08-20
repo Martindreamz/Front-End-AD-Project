@@ -3,9 +3,8 @@
     "",
     "\\src",
     "\\src\\Components",
-    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Containers\\PurchaseOrderSubmit.js",
+  "SelectedNode": "\\src\\Components\\StockAdjustmentPopup.js",
   "PreviewInSolutionExplorer": false
 }

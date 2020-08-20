@@ -2,41 +2,37 @@ import React, { Component } from "react";
 import "./InventoryTable.css";
 
 class DepartmentHeadCollection extends Component {
-  constructor() {
-    super();
-    /*this.state() = {
-            staff: [],
-            requisition: [],
-            department: ""
-        }*/
-  }
+    constructor() {
+        super();
+        /*this.state() = {
+                staff: [],
+                requisition: [],
+                department: ""
+            }*/
+    }
 
-  render() {
-    return (
-      <div>
-        <div>
-          <table className="componentTable">
-            <tr className="tableHeader">
-              <th> Next Delivery</th>
-            </tr>
-            <tr className="tableRow">
-              <td> 08/08/2020</td>
-            </tr>
-          </table>
-        </div>
+    render() {
 
-        <div>
-          <table className="componentTable">
-            <tr className="tableHeader">
-              <th> Stationery Collection Point</th>
-            </tr>
-            <tr className="tableRow">
-              <td> University Hospital</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    );
-  }
+        return (
+            <div>
+                <div>
+
+                    <table className="componentTable">
+                        <tr className="tableHeader"><th> Next Delivery</th></tr>
+                        <tr className="tableRow"><td> {this.props.department.nextCollection}</td></tr>
+                    </table>
+                </div>
+                <div>
+                    <table className="componentTable">
+                        <tr className="tableHeader"><th> Stationery Collection Point</th></tr>
+                        <tr className="tableRow"><td> {this.props.department.collectionPt}</td></tr>
+                    </table>
+                </div>
+                <div align="right">
+                    <button> {this.props.department.collectionPt === null ? "Assign" : "Change"}</button>
+                </div>
+                    
+            </div>)
+    }
 }
 export default DepartmentHeadCollection;

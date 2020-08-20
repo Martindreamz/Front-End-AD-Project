@@ -23,6 +23,7 @@ class InventoryTable extends React.Component {
         const inventoryItem = this.props.data.map(item =>
             <tr className="tableRow" >
                 <td>{item.id}</td>
+                {this.state.isCheckInvTable ? null : <td>{item.category}</td>}
                 <td>{item.name}</td>
                 <td className="tableQuantity">
                     {item.quantity}
@@ -46,6 +47,7 @@ class InventoryTable extends React.Component {
             <table className="inventoryTable">
                 <tr className="tableHeader">
                     <th>Item Code</th>
+                    {this.state.isCheckInvTable ? null : <th>Category</th>}
                     <th>Description</th>
                     <th>Total Quantity</th>
                     {this.state.isCheckInvTable ? <th>Inventory Quantity</th> : null}

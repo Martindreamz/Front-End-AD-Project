@@ -4,16 +4,17 @@ import "./App.css";
 import Header from "./Components/Headers/Header";
 import Login from "./Components/Login";
 import RecievedGoods from "./Containers/RecievedGoods";
-import SupplierList from "./Containers/SupplierList";
+import PlaceOrder from "./Containers/PlaceOrder";
+import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
 import CheckInventory from "./Containers/CheckInventory";
 import DiscrepancyList from "./Containers/DiscrepancyList";
 import RequisitionForm from "./Containers/RequisitionForm";
-import SupplierForm from './Components/SupplierForm';
 import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApproval";
 import ManageDepartment from "./Containers/ManageDepartment";
 import DepRepDisbursement from "./Containers/DepRepDisbursement";
-import PlaceOrder from "./Containers/PlaceOrder";
-import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
+import SupplierList from "./Containers/SupplierList";
+import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
+import DisbursementList from "./Containers/DisbursementList";
 
 function App() {
   return (
@@ -41,28 +42,28 @@ function App() {
           <Route path="/test2">
             <DiscrepancyList />
           </Route>
-          <Route path="/requisitionForm">
-            <RequisitionForm />
+          <Route path="/RequisitionHistoryDetailsView">
+             <RequisitionHistoryDetailsView />
           </Route>
-          <Route path="/StoreMstockAdjustmentApproval">
+          <Route path="/StoreMStockAdjustmentApproval">
             <StoreMStockAdjustmentApproval />
+          </Route>
+          <Route path="/DepRepDisbursement">
+            <DepRepDisbursement />
           </Route>
           <Route path="/manager">
             <ManageDepartment />
           </Route>
-          <Route path="/depRepDisbursement">
-            <DepRepDisbursement />
+          <Route path="/placeOrder">
+            <PlaceOrder />
           </Route>
-
-          <Route path='/supplier-form'>
-              <SupplierForm />
-                  </Route>
-                  <Route path='/PlaceOrder'>
-                      <PlaceOrder />
-                  </Route>
-                  <Route path='/placeOrderSubmit'>
-                      <PurchaseOrderSubmit />
-                  </Route>
+          <Route path="/placeOrderSubmit">
+            <PurchaseOrderSubmit />
+          </Route>
+          
+          <Route path="/disbursementList">
+            <DisbursementList />
+          </Route>
         </Switch>
       </Router>
     </div>

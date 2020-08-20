@@ -8,6 +8,7 @@ class DepRepDisbursement extends Component {
     super();
     this.state = {
       showDistribution: false,
+      class: "collectView",
     };
     this.changeView = this.changeView.bind(this);
   }
@@ -18,6 +19,11 @@ class DepRepDisbursement extends Component {
         showDistribution: !prevState.showDistribution,
       };
     });
+    if (this.state.showDistribution) {
+      this.setState({ class: "collectView" });
+    } else {
+      this.setState({ class: "distriView" });
+    }
   }
 
   render() {
@@ -27,11 +33,13 @@ class DepRepDisbursement extends Component {
         <DepRepDistriCollectionList
           showDistribution={this.state.showDistribution}
         />
-        <button className="changeView" onClick={this.changeView}>
-          {this.state.showDistribution
-            ? "Show Collection"
-            : "Show Distribution"}
-        </button>
+        <div className={this.state.class}>
+          <button onClick={this.changeView}>
+            {this.state.showDistribution
+              ? "Show Collection"
+              : "Show Distribution"}
+          </button>
+        </div>
       </div>
     );
   }

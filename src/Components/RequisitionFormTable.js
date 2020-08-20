@@ -28,7 +28,8 @@ class RequisitionFormTable extends React.Component {
                 description: "",
                 quantity: "",
                 unit: ""
-            }],
+            }
+            ],
 
 
             cat: '',
@@ -36,7 +37,10 @@ class RequisitionFormTable extends React.Component {
 
             showDescription: false,
             description: '',
-            openDescription: false
+            openDescription: false,
+
+            showQtyUnit: false,
+
         }
     }
     //Event Handling
@@ -66,20 +70,22 @@ class RequisitionFormTable extends React.Component {
         const selected = event.target.value
         this.setState({
             description: selected,
-            openDescription: !this.state.openCat
+            openDescription: !this.state.openDescription,
+            showQtyUnit: true
         });
     }
     closeDesc = () => {
         this.setState({
-            openDescription: !this.state.openCat
+            openDescription: !this.state.openDescription
         })
     }
 
     descOpen = () => {
         this.setState({
-            openDescription: !this.state.openCat
+            openDescription: !this.state.openDescription
         })
     }
+
 
     render() {
         //mapping data 
@@ -95,7 +101,7 @@ class RequisitionFormTable extends React.Component {
                         onClose={this.closeCat}
                         onOpen={this.catOpen}
                         onChange={this.showCat}>
-                        {this.props.category.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                        {this.props.category.map((item,index) => <MenuItem value={index}>{item}</MenuItem>)}
                     </Select>
 
                 </td>
@@ -109,13 +115,21 @@ class RequisitionFormTable extends React.Component {
                             onClose={this.closeDesc}
                             onOpen={this.descOpen}
                             onChange={this.showDesc}>
-                            {this.props.category.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                            {console.log(this.props.data[Number(this.state.cat)])}
+                            {this.props.data[Number(this.state.cat)].map(item => <MenuItem value={item}>{item.description}</MenuItem>)}
                         </Select>
                         : null
                     }
                 </td>
-                <td>{item.quantity}</td>
-                <td>{item.unit}</td>
+                {this.state.showQtyUnit?
+                    <td>
+                        <input id={item.id} type="number" min="0" max="9999" />
+                    </td>
+                    :
+                    <td></td>
+                }
+                {this.state.showQtyUnit ?
+                    <td>Each</td> : <td></td>}
             </tr>
 
         )
