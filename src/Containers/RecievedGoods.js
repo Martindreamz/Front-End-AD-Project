@@ -12,38 +12,13 @@ class RecievedGoods extends React.Component {
         super()
         this.state = {
             //test data
-            data: [
-                {
-                    id: 1,
-                    category: "pen",
-                    name: "pen",
-                    quantity: 10
-                },
-                {
-                    id: 2,
-                    category: "pen",
-                    name: "pencil",
-                    quantity: 5
-                },
-                {
-                    id: 3,
-                    category: "pencil",
-                    name: "pencil",
-                    quantity: 15
-                },
-                {
-                    id: 4,
-                    category: "pens",
-                    name: "pencil",
-                    quantity: 5
-                }
-            ],
+            data: [],
             showPopup: false,
             popupData: {
-                id: "",
+                Id: "",
                 category: "",
-                name: "",
-                quantity: 1
+                desc: "",
+                inventoryQty: 1
             },
             categoryData: []
         }
@@ -52,16 +27,21 @@ class RecievedGoods extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/invt')
+        axios.get('https://localhost:5001/api/store/stationeries')
             .then(response => {
-                const items = response.data;
-                this.setState({ data: items });
+                const items = response.data.map(item => {
+                    return {
+                        Id: item.id,
+                        category: item.category,
+                        desc: item.desc,
+                        inventoryQty: item.inventoryQty
+                    }
+                });
+                console.log(items)
+                //Generate category dropdown data
+                const categoryName = [...new Set(items.map(item => item.category))]
+                this.setState({ data: items, categoryData: categoryName });
             })
-        //Generate category data for dropdown
-        const categoryName = [...new Set(this.state.data.map(item => item.category))]
-        this.setState({
-            categoryData: categoryName
-        })
     }
 
     checkInventoryAction = () => {
@@ -72,10 +52,10 @@ class RecievedGoods extends React.Component {
         //show popup
         await this.setState({
             popupData: {
-                id: "",
+                Id: "",
                 category: "",
-                name: "",
-                quantity: 1
+                desc: "",
+                inventoryQty: 1
             }, 
             showPopup: !this.state.showPopup
         })
@@ -89,7 +69,7 @@ class RecievedGoods extends React.Component {
     }
     editInventoryAction = async (event) => {
         await this.setState({
-            popupData: this.state.data.find(item => item.id == event.currentTarget.id),
+            popupData: this.state.data.find(item => item.Id == event.currentTarget.id),
             showPopup: !this.state.showPopup
         })
     }

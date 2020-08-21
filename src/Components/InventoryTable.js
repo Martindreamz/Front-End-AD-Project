@@ -22,21 +22,21 @@ class InventoryTable extends React.Component {
     render() {
         const inventoryItem = this.props.data.map(item =>
             <tr className="tableRow" >
-                <td>{item.id}</td>
+                <td>{item.Id}</td>
                 {this.state.isCheckInvTable ? null : <td>{item.category}</td>}
-                <td>{item.name}</td>
+                <td>{item.desc}</td>
                 <td className="tableQuantity">
-                    {item.quantity}
+                    {item.inventoryQty}
                     {this.state.isCheckInvTable ? null :
                         <div className="tableIcons">
-                            <EditIcon id={item.id} onClick={this.props.editData} />
+                            <EditIcon id={item.Id} onClick={this.props.editData} />
                             <DeleteIcon onClick={this.deleteButton} />
                         </div>
                     }
                 </td>
                 {this.state.isCheckInvTable ?
                     <td>
-                        <input id={item.id} type="number" min="0" max="9999" onChange={this.props.handleQtyInput} />
+                        <input id={item.Id} type="number" min="0" max="9999" onChange={this.props.handleQtyInput} />
                     </td>
                     : null
                 }

@@ -11,14 +11,15 @@ class ManageDepartment extends Component {
   constructor() {
     super();
     this.state = {
-      staff: [
-        { name: "Bianca Cao " },
-        { name: "Daryl Kouk" },
-        { name: "Jane Lee" },
-        { name: "Martin Ng" },
-        { name: "Theingi Aung Win" },
-        { name: "Wayne Khine Myo" },
+      employee: [
+        { id: 1, name: "Bianca Cao", role: "STAFF" },
+        { id: 2, name: "Daryl Kouk", role: "DELEGATE" },
+        { id: 3, name: "Jane Lee", role: "STAFF" },
+        { id: 4, name: "Martin Ng", role: "STAFF" },
+        { id: 5, name: "Theingi Aung Win", role: "STAFF" },
+        { id: 6, name: "Wayne Khine Myo", role: "STAFF" },
       ],
+
       requisition: [
         {
           Id: 1,
@@ -66,14 +67,72 @@ class ManageDepartment extends Component {
           AuthorizerId: "",
         },
       ],
+
       department: {
         name: "hello",
-        rep: "Martin",
-        delegate: "Bianca",
-        nextCollection: "08/08/2020",
-        collectionPt: "University Hospital",
+        rep: "Martin Ng",
+        delegate: "Bianca Cao",
+        DelgtStartDate: "2020-06-13",
+        DelgtEndDate: "2020-07-31",
+        nextCollection: "2020-08-08",
+        collectionId: 2,
       },
+
+      collectionInfo: [
+        { id: 1, collectionPt: "Stationery Store - Administration Building" },
+        { id: 2, collectionPt: "Management School" },
+        { id: 3, collectionPt: "Medical School" },
+        { id: 4, collectionPt: "Engineering School" },
+        { id: 5, collectionPt: "Science School" },
+        { id: 6, collectionPt: "University Hospital" },
+      ],
     };
+
+    this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
+    this.handleRepSubmit = this.handleRepSubmit.bind(this);
+    this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
+  }
+
+  handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
+    this.setState(
+      Object.assign(this.state.department, {
+        delegate: selectedDelegate,
+        DelgtStartDate: selectedStartDate,
+        DelgtEndDate: selectedEndDate,
+      }),
+      () => {
+        console.log(this.state);
+      }
+    );
+  }
+
+  handleRepSubmit(selectedRep) {
+    this.setState(
+      Object.assign(this.state.department, {
+        rep: selectedRep,
+      }),
+      () => {
+        console.log(this.state);
+      }
+    );
+  }
+
+  handleCollectionSubmit(selectedCollectionPt) {
+    let updatedCollectionId = null;
+    this.state.collectionInfo.map((x) => {
+      if (x.collectionPt === selectedCollectionPt) {
+        console.log("Found it! " + x.collectionPt);
+        updatedCollectionId = x.id;
+      }
+    });
+    this.setState(
+      Object.assign(this.state.department, {
+        collectionId: updatedCollectionId,
+      }),
+      () => {
+        console.log(this.state);
+      }
+    );
   }
 
   render() {
@@ -87,13 +146,21 @@ class ManageDepartment extends Component {
         <div className="leftpane">
           <h4>Your People</h4>
           <div>
-            <DepartmentHeadDelegate delegate={this.state.department.delegate} />
+            <DepartmentHeadDelegate
+              department={this.state.department}
+              employee={this.state.employee}
+              handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
+            />
           </div>
           <div>
-            <DepartmentHeadEmployee staff={this.state.staff} />
+            <DepartmentHeadEmployee employee={this.state.employee} />
           </div>
           <div>
-            <DepartmentHeadRep rep={this.state.department.rep} />
+            <DepartmentHeadRep
+              department={this.state.department}
+              employee={this.state.employee}
+              handleRepSubmit={this.handleRepSubmit.bind(this)}
+            />
           </div>
         </div>
         <div className="middlepane">
@@ -102,7 +169,11 @@ class ManageDepartment extends Component {
         </div>
         <div className="rightpane">
           <h4>Your Logistics</h4>
-          <DepartmentHeadCollection department={this.state.department} />
+          <DepartmentHeadCollection
+            department={this.state.department}
+            collectionInfo={this.state.collectionInfo}
+            handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
+          />
         </div>
       </div>
     );
