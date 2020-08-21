@@ -9,28 +9,7 @@ class CheckInventory extends React.Component {
         super()
         this.state = {
             //test data
-            data: [
-                {
-                    id: 1,
-                    name: "pen",
-                    quantity: 10
-                },
-                {
-                    id: 2,
-                    name: "pencil",
-                    quantity: 5
-                },
-                {
-                    id: 3,
-                    name: "pencil",
-                    quantity: 15
-                },
-                {
-                    id: 4,
-                    name: "pencil",
-                    quantity: 5
-                }
-            ],
+            data: [],
             discrepancy: []
         }
     }
@@ -39,39 +18,44 @@ class CheckInventory extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get(/* api here */)
+        axios.get('https://localhost:5001/api/store/stationeries')
             .then(response => {
-                const items = response.data;
+                const items = response.data.map(item => {
+                    return {
+                        Id: item.id,
+                        desc: item.desc,
+                        inventoryQty: item.inventoryQty
+                    }
+                });
                 this.setState({ data: items });
+                //Generate Discrepancy state base data
+                this.setState(prevState => {
+                    const generateDiscrepancy = prevState.data.map(item => {
+                        return {
+                            Id: item.Id,
+                            discpQty: null,
+                            comment: ""
+                        }
+                    })
+                    return {
+                        discrepancy: generateDiscrepancy
+                    }
+                })
             })
-        //Generate Discrepancy state base data
-        this.setState(prevState => {
-            const generateDiscrepancy = prevState.data.map(item => {
-                return {
-                    ...item,
-                    quantity: null,
-                    reason: ""
-                }
-            })
-            console.log(generateDiscrepancy)
-            return {
-                discrepancy: generateDiscrepancy
-            }
-        })
     }
 
     //Save input qty to discrepancy state
     handleInput = (event) => {
-        const targetData = this.state.data.find(item => item.id == event.currentTarget.id)
+        const targetData = this.state.data.find(item => item.Id == event.currentTarget.id)
         let id = event.target.id
-        let qty = event.target.value - targetData.quantity
+        let qty = event.target.value - targetData.inventoryQty
         //Update discrepancy data
         this.setState(prevState => {
             const updatedDiscrepancy = prevState.discrepancy.map(item => {
-                if (item.id == id) {
+                if (item.Id == id) {
                     return {
                         ...item,
-                        quantity: qty
+                        discpQty: qty
                     }
                 }
                 return item
