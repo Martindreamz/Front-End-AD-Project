@@ -1,21 +1,16 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
-import RequisitionFormTable from '../Components/RequisitionFormTable';
-import './RecievedGoods.css';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
-import InventoryPopup from "../Components/InventoryPopup";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import RequisitionApplyForm from '../Components/RequisitionApplyForm';
+import RequisitionFormTable from '../Components/RequisitionFormTable';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-// const styles = {
-//     addButton: 
-// }
-
-class RequisitionForm extends React.Component {
+class RequisitionFormNew extends React.Component {
     constructor() {
         super()
         this.state = {
-            //test data
             reqData: [
                 {
                     id: 1,
@@ -48,7 +43,7 @@ class RequisitionForm extends React.Component {
                 {
                     id: 5,
                     category: "Eraser",
-                    description: "Eraser (soft) (doe",
+                    description: "Eraser (soft)",
                     quantity: 20,
                     unit: "Dozen"
                 }
@@ -58,20 +53,36 @@ class RequisitionForm extends React.Component {
                 {
                     clips: [
                         {
-                            
+
                         }
                     ]
                 }
             ],
             category: [],
-
-            showPopup: false,
-            popupData: {
-                id: "",
-                name: "",
-                quantity: 1
-            }
+            //data: [],
+            editSupObj: [], isEdit: false,
+            showRequestForm: false,
         }
+        this.addRequisition = this.addRequisition.bind(this)
+        this.editRequestForm = this.editRequestForm.bind(this)
+    }
+
+    addRequisition(previousState) {
+        this.setState(
+            {
+                isEdit: false,
+                showRequestForm: !previousState,
+            }
+        )
+        this.componentDidMount();
+    }
+
+    editRequestForm(requisition) {
+        this.setState({
+            editSupObj: requisition,
+            isEdit: true,
+            showRequestForm: true,
+        });
     }
 
     //Run once before render - lifecycle
@@ -102,26 +113,39 @@ class RequisitionForm extends React.Component {
             console.log(data)
             return {
                 dropdownData: data,
-                category: categoryName 
+                category: categoryName
             }
-            
+
         })
     }
 
-
-
     render() {
+        //this.componentDidMount();
         return (
             <div>
                 <Header />
                 <div className="requisitionFormBody">
-                    <AddCircleIcon onClick={this.addInventoryAction} />
-                    <RequisitionFormTable data={this.state.dropdownData} category={this.state.category} />
-                    <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
+                    {!this.state.showRequestForm ?
+                        <div>
+                            <AddCircleIcon onClick={() => this.addRequisition(this.state.showRequestForm)} /> {"Add Item Here"}</div>
+                        : null}
+                </div>
+                <div className="row" >
+                    {!this.state.showRequestForm ?
+                        <div className="col-sm-12  ">
+                            <RequisitionFormTable reqData={this.state.reqData} editRequestForm={this.editRequestForm} />
+                        </div>
+                        : null
+                    }
+                    {this.state.showRequestForm || this.state.isEdit ?
+                        <RequisitionApplyForm editSupObj={this.state.editSupObj} isEdit={this.state.isEdit} data={this.state.dropdownData} category={this.state.category} />
+                        : null
+                    }
                 </div>
             </div>
+
         )
     }
 }
 
-export default RequisitionForm;
+export default RequisitionFormNew;
