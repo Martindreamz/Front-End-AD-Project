@@ -67,13 +67,25 @@ class CheckInventory extends React.Component {
         })
     }
 
+    submitForm = () => {
+        console.log("post")
+        //axios.post('https://localhost:5001/api/store/stkAd', this.state.discrepancy)
+        fetch('https://localhost:5001/api/store/stkAd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.discrepancy)
+        });
+    }
+
     render() {
         return (
             <div>
                 <Header />
                 <div className="inventoryBody">
                     <InventoryTable type={true} data={this.state.data} handleQtyInput={this.handleInput} />
-                    <button className="inventoryButton" >Submit</button>
+                    <button className="inventoryButton" onClick={this.submitForm} >Submit</button>
                 </div>
             </div>
         )
