@@ -106,9 +106,17 @@ class ManageDepartment extends Component {
   }
 
   handleCollectionSubmit(selectedCollectionPt) {
+    let updatedCollectionId = null;
+    alert("You selected" + selectedCollectionPt);
+    this.state.collectionInfo.map((x) => {
+      if (x.collectionPt === selectedCollectionPt) {
+        console.log("Found it! " + x.collectionPt);
+        updatedCollectionId = x.id;
+      }
+    });
     this.setState(
       Object.assign(this.state.department, {
-        collectionPt: selectedCollectionPt,
+        collectionId: updatedCollectionId,
       }),
       () => {
         console.log(this.state);

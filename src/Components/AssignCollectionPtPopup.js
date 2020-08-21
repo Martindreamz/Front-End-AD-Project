@@ -8,15 +8,22 @@ class AssignCollectionPtPopup extends Component {
 
     this.state = {
       currentCollectionPt: "",
+      updatedCollectionPt: "",
       open: false,
     };
 
     this.submit = this.submit.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleCollectionPtInput = this.handleCollectionPtInput.bind(this);
   }
 
-  componentDidMount() {
+  handleCollectionPtInput(event) {
+    this.setState({ updatedCollectionPt: event.target.value });
+  }
+
+  submit() {
+    this.props.handleCollectionSubmit(this.state.updatedCollectionPt);
     if (this.props.department.collectionId != null) {
       this.props.collectionInfo.map((x) => {
         if (x.id === this.props.department.collectionId) {
@@ -28,11 +35,17 @@ class AssignCollectionPtPopup extends Component {
     }
   }
 
-  submit() {}
-
   openModal() {
-    console.log("Popup called!");
     this.setState({ open: true });
+    if (this.props.department.collectionId != null) {
+      this.props.collectionInfo.map((x) => {
+        if (x.id === this.props.department.collectionId) {
+          this.setState({ currentCollectionPt: x.collectionPt });
+        }
+      });
+    } else {
+      this.setState({ currentCollectionPt: "No collection point assigned." });
+    }
   }
 
   closeModal() {
@@ -68,13 +81,13 @@ class AssignCollectionPtPopup extends Component {
               <div className="dialogContent">
                 {this.props.collectionInfo.map((x) => {
                   return (
-                    <div>
+                    <div onChange={this.handleCollectionPtInput}>
                       <input
                         type="radio"
                         value={x.collectionPt}
-                        checked={
+                        /*checked={
                           x.collectionPt === this.state.currentCollectionPt
-                        }
+                        }*/
                         name="CollectionPt"
                       />{" "}
                       <span>{x.collectionPt}</span>
@@ -82,12 +95,12 @@ class AssignCollectionPtPopup extends Component {
                   );
                 })}
               </div>
-              <br />
               <div className="popupButtons">
                 <button className="greenButton" onClick={this.submit}>
                   Submit
                 </button>
               </div>
+              <br />
             </div>
           )}
         </Popup>

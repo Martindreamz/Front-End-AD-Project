@@ -5,24 +5,22 @@ import "./InventoryTable.css";
 class DepartmentHeadCollection extends Component {
   constructor() {
     super();
-    this.state = {
-      collectionPt: "",
-    };
+    this.state = {};
   }
 
-  componentDidMount() {
+  componentDidMount() {}
+
+  render() {
+    let collectionPoint = null;
     if (this.props.department.collectionId != null) {
       this.props.collectionInfo.map((x) => {
         if (x.id === this.props.department.collectionId) {
-          this.setState({ collectionPt: x.collectionPt });
+          collectionPoint = x.collectionPt;
         }
       });
     } else {
-      this.setState({ collectionPt: "No collection point assigned." });
+      collectionPoint = "No collection point assigned.";
     }
-  }
-
-  render() {
     return (
       <div>
         <div>
@@ -41,7 +39,7 @@ class DepartmentHeadCollection extends Component {
               <th> Stationery Collection Point</th>
             </tr>
             <tr className="tableRow">
-              <td> {this.state.collectionPt}</td>
+              <td> {collectionPoint}</td>
             </tr>
           </table>
         </div>
