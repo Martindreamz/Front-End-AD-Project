@@ -5,6 +5,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import './InventoryTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Label } from 'reactstrap';
 
 class RequisitionApplyForm extends React.Component {
     constructor(props) {
@@ -97,12 +98,13 @@ class RequisitionApplyForm extends React.Component {
                     <div class="col-md-12 mx-auto text-center">
                         <p class="display-4">Requisition Form</p>
                     </div>
-                    <div class="col-md-12 mx-auto">
+                    <div class="col-md-12">
                         <form>
                             <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Category</label>
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6">Category</label>
                                     <Select
+                                        class="col-sm-6"
                                         labelId="demo-controlled-open-select-label"
                                         key={item.id}
                                         value={this.state.cat}
@@ -113,10 +115,11 @@ class RequisitionApplyForm extends React.Component {
                                         {this.props.category.map((item, index) => <MenuItem value={index}>{item}</MenuItem>)}
                                     </Select>
                                 </div>
-                                <div class="col-sm-6">
-                                    <label>Description</label>
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6">Description</label>
                                     {this.state.showDescription ?
                                         <Select
+                                            class="col-sm-6"
                                             labelId="demo-controlled-open-select-label"
                                             key={item.id}
                                             value={this.state.description}
@@ -132,26 +135,26 @@ class RequisitionApplyForm extends React.Component {
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label>Quantity</label>
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6">Quantity</label>
                                     {this.state.showQtyUnit ?
-                                        <td class="col-8">
-                                            <input id={item.id} type="number" min="0" max="9999" />
-                                        </td>
+                                        <input id={item.id} type="number" min="0" max="9999" class="col-sm-6" />
                                         :
-                                        <td></td>
+                                        null
                                     }
                                 </div>
-                                <div class="col-sm-6">
-                                    <label>Unit</label>
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6">Unit</label>
                                     {this.state.showQtyUnit ?
-                                        <td class="col-8">Each</td> : <td></td>}
+                                        <Label class="col-sm-6">Each</Label> : null}
                                 </div>
                             </div>
 
+                            <div class="col-sm-12">
                             <button type="button" id="submit"
                                 class="btn btn-primary px-4 float-right mr-1"
-                                onClick={this.save}> Submit </button>
+                                    onClick={this.save}> Submit </button>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -159,9 +162,9 @@ class RequisitionApplyForm extends React.Component {
         )
 
         return (
-            <form>
+            <div>
                     {ReqItem}
-            </form>
+            </div>
         )
     }
 }
