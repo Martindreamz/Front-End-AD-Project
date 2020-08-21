@@ -21,7 +21,7 @@ class RequisitionFormTableNew extends React.Component {
             //data: [],
             initial: true, editSupObj: []
         }
-        //this.deleteSupplier = this.deleteSupplier.bind(this)
+       
     }
 
     render() {
@@ -44,7 +44,7 @@ class RequisitionFormTableNew extends React.Component {
         )
 
         return (
-            <table className="supplierTable text-center">
+            <table className="requisitionTable">
                 <tr className="tableHeader">
                     <th>Category</th>
                     <th>Description</th>

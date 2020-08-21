@@ -7,7 +7,7 @@ import RequisitionApplyForm from '../Components/RequisitionApplyForm';
 import RequisitionFormTable from '../Components/RequisitionFormTable';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-class RequisitionFormNew extends React.Component {
+class RequisitionForm extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -120,7 +120,6 @@ class RequisitionFormNew extends React.Component {
     }
 
     render() {
-        //this.componentDidMount();
         return (
             <div>
                 <Header />
@@ -148,4 +147,4 @@ class RequisitionFormNew extends React.Component {
     }
 }
 
-export default RequisitionFormNew;
+export default RequisitionForm;

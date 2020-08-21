@@ -38,7 +38,7 @@ class RequisitionApplyForm extends React.Component {
         if (props.isEdit) {
             this.state.currentFormObj = props.editSupObj
         } else {
-            this.state.currentFormObj = this.initialState;
+            this.state.currentFormObj = this.requestData;
         }
     }
 
@@ -88,23 +88,6 @@ class RequisitionApplyForm extends React.Component {
 
         })
         
-
-        /*if (!this.props.isEdit) {
-            fetch('https://localhost:5001/api/Store/saveSupplier', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(supplier)
-            }).then(res => res.json()).then(tom => {
-                this.setState({ message: 'New Supplier is Created Successfully' });
-            });
-        }
-        else {
-            axios.put('' + this.state.currentSupplierObj.id).then(result => {
-                this.setState({ message: ' Supplier is Edited Successfully' });
-            });
-        }*/
     }
 
     render() {
@@ -118,7 +101,7 @@ class RequisitionApplyForm extends React.Component {
                         <form>
                             <div class="form-group row">
                                 <div class="col-sm-6">
-                                    <label for="supplierCode">Category</label>
+                                    <label>Category</label>
                                     <Select
                                         labelId="demo-controlled-open-select-label"
                                         key={item.id}
@@ -131,7 +114,7 @@ class RequisitionApplyForm extends React.Component {
                                     </Select>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="inputLastname">Description</label>
+                                    <label>Description</label>
                                     {this.state.showDescription ?
                                         <Select
                                             labelId="demo-controlled-open-select-label"
@@ -150,7 +133,7 @@ class RequisitionApplyForm extends React.Component {
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6">
-                                    <label for="name">Quantity</label>
+                                    <label>Quantity</label>
                                     {this.state.showQtyUnit ?
                                         <td class="col-8">
                                             <input id={item.id} type="number" min="0" max="9999" />
@@ -160,13 +143,13 @@ class RequisitionApplyForm extends React.Component {
                                     }
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="contactPerson">Unit</label>
+                                    <label>Unit</label>
                                     {this.state.showQtyUnit ?
                                         <td class="col-8">Each</td> : <td></td>}
                                 </div>
                             </div>
 
-                            <button type="button" id="supplier_post_submit"
+                            <button type="button" id="submit"
                                 class="btn btn-primary px-4 float-right mr-1"
                                 onClick={this.save}> Submit </button>
                         </form>
