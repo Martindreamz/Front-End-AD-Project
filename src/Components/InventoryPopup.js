@@ -3,6 +3,7 @@ import './InventoryPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Axios from 'axios';
 
 class InventoryPopup extends React.Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class InventoryPopup extends React.Component {
                 return {
                     data: {
                         ...data,
-                        name: update,
+                        desc: update,
                     }
                 }
             })
@@ -36,7 +37,7 @@ class InventoryPopup extends React.Component {
                 return {
                     data: {
                         ...data,
-                        id: update,
+                        Id: update,
                     }
                 }
             })
@@ -47,7 +48,7 @@ class InventoryPopup extends React.Component {
                 return {
                     data: {
                         ...data,
-                        quantity: Number(update),
+                        inventoryQty: Number(update),
                     }
                 }
             })
@@ -78,17 +79,23 @@ class InventoryPopup extends React.Component {
         })
     }
 
+    //Event Handling for submitting form
+    submitForm = () => {
+        Axios.post('https://localhost:5001/api/store/stationery/post/', this.state.data)
+        //Axios.post()
+    }
+
     render() {
         return (
             <div className="popup">
                 <div className="popupInner">
-                    <form className="form" onChange={this.handleUpdatedData}>
+                    <div className="form" onChange={this.handleUpdatedData}>
                         <h1>Inventory Record</h1>
                         <HighlightOffIcon onClick={this.props.closePopup} />
                         <div className="formSection">
                             <fieldset>
                                 Item Code:
-                                <input type="text" id="itemCode" value={this.state.data.id} />
+                                <input type="text" id="itemCode" value={this.state.data.Id} />
                             </fieldset>
                             <fieldset>
                                 Item Category:
@@ -107,17 +114,17 @@ class InventoryPopup extends React.Component {
                         </div>
                         <fieldset>
                             Item Name:
-                            <input type="text" id="itemName" value={this.state.data.name} />
+                            <input type="text" id="itemName" value={this.state.data.desc} />
                         </fieldset>
                         <fieldset>
                             Quantity:
-                            <input type="number" min="1" max="99" id="qty" value={this.state.data.quantity} />
+                            <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} />
                         </fieldset>
                         <div className="formButtons">
                             <button>Delete</button>
-                            <button>Save</button>
+                            <button onClick={this.submitForm}>Save</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         )
