@@ -4,6 +4,8 @@ import DisbursementRow from '../Components/DisbursementRow';
 import './RecievedGoods.css';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
+import Pdf from "react-to-pdf";
+const ref = React.createRef();
 
 class RecievedGoods extends React.Component {
     constructor() {
@@ -53,21 +55,35 @@ class RecievedGoods extends React.Component {
             <div>
                 <Header/>
                 <div className="container">
-                    <div className="row mt-1 pt-10">
-                        <div className="col-sm-6">
-                            <p>Date:  {this.date}</p>
-                            <p>Collection point :  {this.collectionPoint}</p>
+                    <div className="mt-1" ref={ref}>
+                        <div class="col-md-12 mx-auto text-center">
+                          <p class="display-4">Disbursement List</p>
                         </div>
-                        <div className="col-sm-6">
-                            <div className="float-right">
-                                <p>Department name:   {this.department}</p>
-                                <p>Department representative:   {this.deptRept}</p>
+                        <div className="row mt-1 pt-10">
+                            <div className="col-sm-6">
+                                <p>Date:  {this.date}</p>
+                                <p>Collection point :  {this.collectionPoint}</p>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="float-right">
+                                    <p>Department name:   {this.department}</p>
+                                    <p>Department representative:   {this.deptRept}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="row">
-                        <DisbursementRow data={this.state.data} />
+                        <div className="row">
+                            <DisbursementRow data={this.state.data} />
+                        </div>
+                    </div>
+                    <div className="row float-right">
+                        <Pdf targetRef={ref} filename="DisbursementList.pdf">
+                            {({ toPdf }) => (
+                              <button class="button" onClick={toPdf}>
+                                Print
+                              </button>
+                            )}
+                        </Pdf>
                     </div>
                 </div>
             </div>
