@@ -40,7 +40,7 @@ class AssignHeadPopup extends Component {
       this.setState({ delegate: "" });
       this.setState({ startDate: "" });
       this.setState({ endDate: "" });
-      this.props.handleSubmit("", "", "");
+      this.props.handleDelegateSubmit("", "", "");
       this.closeModal();
     }
   }

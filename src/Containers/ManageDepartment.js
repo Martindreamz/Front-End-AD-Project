@@ -70,7 +70,7 @@ class ManageDepartment extends Component {
 
       department: {
         name: "hello",
-        rep: "Martin",
+        rep: "Martin Ng",
         delegate: "Bianca Cao",
         DelgtStartDate: "2020-06-13",
         DelgtEndDate: "2020-07-31",
@@ -89,6 +89,7 @@ class ManageDepartment extends Component {
     };
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
+    this.handleRepSubmit = this.handleRepSubmit.bind(this);
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
   }
 
@@ -105,9 +106,19 @@ class ManageDepartment extends Component {
     );
   }
 
+  handleRepSubmit(selectedRep) {
+    this.setState(
+      Object.assign(this.state.department, {
+        rep: selectedRep,
+      }),
+      () => {
+        console.log(this.state);
+      }
+    );
+  }
+
   handleCollectionSubmit(selectedCollectionPt) {
     let updatedCollectionId = null;
-    alert("You selected" + selectedCollectionPt);
     this.state.collectionInfo.map((x) => {
       if (x.collectionPt === selectedCollectionPt) {
         console.log("Found it! " + x.collectionPt);
@@ -145,7 +156,11 @@ class ManageDepartment extends Component {
             <DepartmentHeadEmployee employee={this.state.employee} />
           </div>
           <div>
-            <DepartmentHeadRep rep={this.state.department.rep} />
+            <DepartmentHeadRep
+              department={this.state.department}
+              employee={this.state.employee}
+              handleRepSubmit={this.handleRepSubmit.bind(this)}
+            />
           </div>
         </div>
         <div className="middlepane">

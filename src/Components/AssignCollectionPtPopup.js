@@ -85,9 +85,6 @@ class AssignCollectionPtPopup extends Component {
                       <input
                         type="radio"
                         value={x.collectionPt}
-                        /*checked={
-                          x.collectionPt === this.state.currentCollectionPt
-                        }*/
                         name="CollectionPt"
                       />{" "}
                       <span>{x.collectionPt}</span>
