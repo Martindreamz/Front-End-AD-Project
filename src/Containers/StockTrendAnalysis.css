@@ -1,0 +1,16 @@
+.StockTrendBody {
+    display: flex;
+    justify-content: space-evenly;
+}
+.dropDownMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.graphSection {
+    width: 60%;
+    padding: 5rem;
+}
+.chartjs-render-monitor {
+    height: 500px;
+}
