@@ -37,6 +37,13 @@ class AssignRepPopup extends Component {
   }
 
   render() {
+    let deptRep = "No Department Representative assigned.";
+    this.props.employee.map((x) => {
+      if (x.role === "REPRESENTATIVE") {
+        deptRep = x.name;
+      }
+    });
+
     return (
       <div>
         <button className="manageButton" onClick={this.openModal}>
@@ -59,7 +66,7 @@ class AssignRepPopup extends Component {
                     ? "Assign Representative"
                     : "Current Representative"}{" "}
                 </h2>
-                <h4>{this.props.department.rep}</h4>
+                <h4>{deptRep}</h4>
               </div>
               <br />
               <div className="dialogContent">

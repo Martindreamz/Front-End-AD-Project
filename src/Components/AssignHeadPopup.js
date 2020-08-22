@@ -32,7 +32,11 @@ class AssignHeadPopup extends Component {
   }
 
   handleEndDateInput(event) {
-    this.setState({ endDate: event.target.value });
+    if (event.target.value.before(this.state.startDate)) {
+      window.alert("End date must be after start date!");
+    } else {
+      this.setState({ endDate: event.target.value });
+    }
   }
 
   revoke() {
