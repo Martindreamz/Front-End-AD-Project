@@ -41,7 +41,12 @@ class PlaceOrderTable extends Component {
                 <td>{item.desc}</td>
                 <td> {this.props.onEdit ?
 
-                    <input type="number" placeholder={item.qty} />
+                    <input type="number"
+                        id="qty"
+                        placeholder={item.qty}
+                        name="qty"
+                        onChange={event => this.props.handleChange(event, index)}
+                    />
                     :
                      item.qty }
                     

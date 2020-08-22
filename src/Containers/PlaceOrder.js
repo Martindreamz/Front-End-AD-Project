@@ -5,7 +5,7 @@ import './RecievedGoods.css';
 import './general.css';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import user from '../UserProfile';
 
 
@@ -13,6 +13,7 @@ class PlaceOrder extends Component {
     constructor() {
         super()
         this.state = {
+            recommended:[],
             today: "",
             subTotal: 0,
             //get data
@@ -77,14 +78,13 @@ class PlaceOrder extends Component {
                                 //nest supplier items
                                 supplierItems: sitems
                             };
-                            reorder.push(order);
-
-
+                            reorder.push(order)
                         })
                 })
 
                 this.setState({
                     data: reorder,
+                    recommended:reorder,
                     today: date,
                     //isEditing:true
                 })
@@ -92,7 +92,6 @@ class PlaceOrder extends Component {
             })
 
     }
-
 
     updateSubtotal() {
         const dict = this.state.selected;
@@ -137,6 +136,8 @@ class PlaceOrder extends Component {
                 return { data: reorder }
             })
         }
+
+        
 
         if (name == "submit") {
             console.log('handle submit')
@@ -220,13 +221,39 @@ class PlaceOrder extends Component {
             )
             console.log('purchaseOrders',this.state.purchaseOrders)
             //console.log('podetails',podetails)
-           
+            return <Redirect to="/placeOrderSubmit" />
 
         }
 
-        this.setState({
-            [name]: value
-        })
+        if (name == "qty") {
+            this.setState(prevState => {
+                const reorder = [...prevState.data];
+
+                //set state
+                reorder[index] = {
+                    ...reorder[index],
+                    [name]: value
+                }
+                return { data: reorder }
+            })
+
+        }
+
+        if (name == "reset") {
+            const Recdata = this.state.recommended
+            this.setState({ data: Recdata, isEditing: false })
+           
+        }
+
+        if (name == "save") {
+            this.setState({ isEditing: false })
+        }
+
+        else {
+            this.setState({
+                [name]: value
+            })
+        }
 
         console.log([name], value)
     }
@@ -314,7 +341,8 @@ class PlaceOrder extends Component {
                         {this.state.isEditing?
                             <div>
                                 <button className="button">Add Items</button>
-                                < button name="isEditing" value={false} className="button" onClick={this.handleChange}>Save</button>
+                                <button name="reset" className="button" onClick={this.handleChange}>Cancel</button>
+                                < button name="save" value={false} className="button" onClick={this.handleChange}>Save</button>
                             </div>
                             :
                             <div>
