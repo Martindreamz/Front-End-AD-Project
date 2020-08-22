@@ -46,7 +46,10 @@ class StockTrendAnalysis extends React.Component {
             openCat: false,
             //state for department dropdown
             selectedDepartment: null,
-            openDept: false
+            openDept: false,
+            //state for graph dropdown
+            selectedGraph: "Requisition",
+            openGraph: false
         }
     }
 
@@ -159,6 +162,47 @@ class StockTrendAnalysis extends React.Component {
             openDept: !this.state.openDept
         })
     }
+    //event handling for graph dropdown
+    showGraph = (event) => {
+        let selected = event.target.value
+        if (selected === "Requisition") {
+            this.componentDidMount()
+            this.setState({ selectedGraph: selected })
+        }
+        else {
+            axios.get(/*reorder api here*/)
+                .then(response => {
+                    const items = response.data.map(item => {
+                        return {
+                            category: item.category,
+                            departmentName: item.departmentName,
+                            dateOfAuthorizing: item.date,
+                            reqQty: item.qty
+                        }
+                    });
+                    this.setState({ data: items })
+                })
+            this.setState(
+                {
+                    chartData: this.buildChartData(this.state.data),
+                    categoryData: [...new Set(this.state.data.map(item => item.category))],
+                    departmentData: [...new Set(this.state.data.map(item => item.departmentName))],
+                    selectedGraph: selected
+                }
+            )
+        }
+    }
+    closeGraph = () => {
+        this.setState({
+            openGraph: !this.state.openGraph
+        })
+    }
+
+    graphOpen = () => {
+        this.setState({
+            openGraph: !this.state.openGraph
+        })
+    }
 
     render() {
         return (
@@ -166,6 +210,18 @@ class StockTrendAnalysis extends React.Component {
                 <Header />
                 <div className="StockTrendBody">
                     <div className="dropDownMenu">
+                        Graph:
+                        <Select
+                            labelId="demo-controlled-open-select-label"
+                            id="demo-controlled-open-select"
+                            value={this.state.selectedGraph}
+                            open={this.state.openGraph}
+                            onClose={this.closeGraph}
+                            onOpen={this.graphOpen}
+                            onChange={this.showGraph}>
+                            <MenuItem value="Requisition">Requisition</MenuItem>
+                            <MenuItem value="Reorder">Reorder</MenuItem>
+                        </Select>
                         Category:
                         <Select
                             labelId="demo-controlled-open-select-label"
@@ -175,7 +231,7 @@ class StockTrendAnalysis extends React.Component {
                             onClose={this.closeCat}
                             onOpen={this.catOpen}
                             onChange={this.showCat}>
-                            <MenuItem value="all">all</MenuItem>
+                            <MenuItem value="all">select all</MenuItem>
                             {this.state.categoryData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
                         </Select>
                         Department:
@@ -187,7 +243,7 @@ class StockTrendAnalysis extends React.Component {
                             onClose={this.closeDept}
                             onOpen={this.deptOpen}
                             onChange={this.showDept}>
-                            <MenuItem value="all">all</MenuItem>
+                            <MenuItem value="all">select all</MenuItem>
                             {this.state.departmentData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
                         </Select>
                     </div>

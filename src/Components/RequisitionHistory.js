@@ -11,8 +11,6 @@ class RequisitionHistory extends Component {
             //test data
             data: [],
         };
-        
-      
     }
 
 

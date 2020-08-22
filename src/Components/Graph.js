@@ -39,7 +39,7 @@ class Graph extends React.Component {
                     {
                         type: "time",
                         time: {
-                            format: "MM/DD/YY",
+                            format: "MM/DD/YYYY",
                             tooltipFormat: "ll"
                         },
                     },
@@ -47,7 +47,7 @@ class Graph extends React.Component {
                 yAxes: [
                     {
                         gridLines: {
-                            display: false,
+                            display: true,
                         },
                         ticks: {
                             callback: function (value, index, values) {
