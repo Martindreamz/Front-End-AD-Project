@@ -157,7 +157,10 @@ class ManageDepartment extends Component {
         </div>
         <div className="middlepane">
           <h4>Your Tasks</h4>
-          <DepartmentHeadApproval requisition={this.state.requisition} />
+          <DepartmentHeadApproval
+            employee={this.state.employee}
+            requisition={this.state.requisition}
+          />
         </div>
         <div className="rightpane">
           <h4>Your Logistics</h4>
