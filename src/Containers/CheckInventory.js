@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import './RecievedGoods.css';
 import InventoryTable from '../Components/InventoryTable';
+import ErrorPopup from '../Components/ErrorPopup';
 import axios from 'axios';
 
 class CheckInventory extends React.Component {
@@ -10,7 +11,8 @@ class CheckInventory extends React.Component {
         this.state = {
             //test data
             data: [],
-            discrepancy: []
+            discrepancy: [],
+            displayPopup: false
         }
     }
 
@@ -69,20 +71,43 @@ class CheckInventory extends React.Component {
 
     submitForm = () => {
         console.log("post")
-        //axios.post('https://localhost:5001/api/store/stkAd', this.state.discrepancy)
-        fetch('https://localhost:5001/api/store/stkAd', {
+        let flag = false
+        this.state.discrepancy.forEach(item => {
+            if (item.discpQty == null || item.discpQty == "") {
+                flag = true
+            }
+        })
+
+        if (flag) {
+            this.setState({
+                displayPopup: true
+            })
+        }
+        else {
+            axios.post('https://localhost:5001/api/store/stkAd/1', this.state.discrepancy)
+        }
+
+        /*fetch('https://localhost:5001/api/store/stkAd/1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.state.discrepancy)
-        });
+        }).then(res => res.json()).then(tom => {
+            console.log(tom)
+        });*/
+    }
+    closePopup = () => {
+        this.setState({
+            displayPopup: false
+        })
     }
 
     render() {
         return (
             <div>
                 <Header />
+                {this.state.displayPopup ? <ErrorPopup message="Please fill in all the inventory quantity" closePopup={this.closePopup} /> : null}
                 <div className="inventoryBody">
                     <InventoryTable type={true} data={this.state.data} handleQtyInput={this.handleInput} />
                     <button className="inventoryButton" onClick={this.submitForm} >Submit</button>
