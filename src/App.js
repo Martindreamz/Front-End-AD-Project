@@ -15,6 +15,7 @@ import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
 import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
 import DisbursementList from "./Containers/DisbursementList";
+import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
 
 function App() {
   return (
@@ -42,6 +43,9 @@ function App() {
           <Route path="/test2">
             <DiscrepancyList />
           </Route>
+            <Route path="/test3">
+                <StockTrendAnalysis />
+            </Route>
           <Route path="/RequisitionHistoryDetailsView">
              <RequisitionHistoryDetailsView />
           </Route>
