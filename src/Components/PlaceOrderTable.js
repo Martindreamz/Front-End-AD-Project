@@ -2,6 +2,7 @@ import React, { Component, createRef } from "react";
 import "./InventoryTable.css";
 import CurrencyFormat from "react-currency-format";
 import { AddCircle, RemoveCircle } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
 
 class PlaceOrderTable extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class PlaceOrderTable extends Component {
 
     componentDidMount() {
         this.setState({ data: this.props.data })
+        
     }
 
 
@@ -37,9 +39,12 @@ class PlaceOrderTable extends Component {
                 </td>
                 <td>{item.id}</td>
                 <td>{item.desc}</td>
-                <td> {this.props.onEdit ?<AddCircle/>:null}
-                    {item.qty}
-                    {this.props.onEdit ? <RemoveCircle /> : null}
+                <td> {this.props.onEdit ?
+
+                    <input type="number" placeholder={item.qty} />
+                    :
+                     item.qty }
+                    
                 </td>
                 <td>
                     <CurrencyFormat
@@ -65,7 +70,7 @@ class PlaceOrderTable extends Component {
                 <td>
                     
 
-                    {this.props.onEdit ? item.supplierItems === null ?
+                    {this.props.onEdit? item.supplierItems === null ?
                         <p>No suppliers carrying item</p> :
                         <select
                             id={item.id}
@@ -90,24 +95,23 @@ class PlaceOrderTable extends Component {
 
         return (
             <table className="placeOrderTable">
-                <thead className="tableHeader">
-                    <tr>
-                    <th>
-                        <input
-                            name="selectAll"
-                            type="checkbox"
-                            checked={this.props.all}
-                            onChange={event => this.props.addItem(event)}
-                        />
-                    </th>
-                    <th>Item Code</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Amount</th>
+                <tr className="tableHeader">
+                        <th >
+                            <input
+                                name="selectAll"
+                                type="checkbox"
+                                checked={this.props.all}
+                                onChange={event => this.props.addItem(event)}
+                            />
+                        </th>
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
                         <th>Supplier</th>
-                        </tr>
-                </thead>
+                    </tr>
+        
                 <tbody className="tbody">{orderItem}</tbody>
             </table>
         );

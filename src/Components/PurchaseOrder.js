@@ -80,7 +80,6 @@ class PurchaseOrder extends Component {
     }
 
     render() {
-        var CurrencyFormat = require('react-currency-format')
         //const
         return (
             <div className="page">
