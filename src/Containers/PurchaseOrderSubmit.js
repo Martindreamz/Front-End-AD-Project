@@ -16,9 +16,6 @@ class PurchaseOrderSubmit extends Component {
 
     }
 
-   
-
-    }
 
     render() {
 

@@ -39,6 +39,20 @@
   border: solid 0.5px;
   width: 60%;
   overflow: scroll;
+  
+}
+
+.placeOrderTable {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: solid 0.5px;
+    width: 60%;
+    max-height: 500px;
+}
+
+.tbody {
+    overflow: scroll;
 }
 
 .requisitionTable {
@@ -51,10 +65,6 @@
 
 tr:nth-child(even) {
   background-color: #f4f5f6;
-}
-
-th {
-  width: 100%;
 }
 
 td {
@@ -87,6 +97,7 @@ td {
   display: flex;
   justify-content: space-evenly;
   text-align: center;
+  width: 100%
 }
 
 .tableRow {

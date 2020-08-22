@@ -9,121 +9,95 @@ class PlaceOrderTable extends Component {
         this.state = {
             selected: {},
             selectAll: 2,
-            onEdit: this.props.onEdit
+            onEdit: this.props.onEdit,
+            data:[]
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.selectAll = this.selectAll.bind(this);
+
     }
-
-    handleChange(event) {
-        const { name, value, type, checked } = event.target;
-
-        if ([name] === "suppliers") {
-            //reorder supplier list
-
-        }
-
-        if ([name] === "chkbox") {
-            const newSelected = Object.assign({}, this.state.selected);
-            newSelected[value] = !this.state.selected[value];
-
-            this.setState({
-                selected: newSelected,
-                selectAll: 0,
-            });
-            //send data to parent
-            this.props.onSelect(newSelected);
-        }
-
-        //type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
-    }
-
 
 
     componentDidMount() {
-        this.setState({ selected: {}})
-
+        this.setState({ data: this.props.data })
     }
 
-    selectAll() {
-        let newSelected = {};
-        if (this.state.selectAll === 0) {
-            this.props.data.map((item) => {
-                newSelected[item.id] = true;
-            });
-        }
-
-        this.setState({
-            selected: newSelected,
-            selectAll: this.state.selectAll === 0 ? 1 : 0,
-        });
-        //send data to parent
-        this.props.onSelect(newSelected);
-    }
 
     render() {
         var CurrencyFormat = require("react-currency-format");
-        const orderItem = this.props.data.map((item) => (
-
+        const orderItem = this.props.data.map((item,index) => (
+           
             <tr className="tableRow" key={item.id}>
                 <td>
                     <input
-                        name="chkbox"
+                        name="select"
                         type="checkbox"
-                        checked={this.state.selected[item.id] === true}
+                        checked={this.props.selected[item.id] === true}
                         value={item.id}
-                        onChange={this.handleChange}
+                        onChange={event => this.props.addItem(event)}
                     />
                 </td>
-                <td>{item.stationery.id}</td>
-                <td>{item.stationery.desc}</td>
+                <td>{item.id}</td>
+                <td>{item.desc}</td>
                 <td> {this.props.onEdit ?<AddCircle/>:null}
-                    {item.stationery.reOrderQty}
+                    {item.qty}
                     {this.props.onEdit ? <RemoveCircle /> : null}
                 </td>
                 <td>
                     <CurrencyFormat
-                        value={item.suppliers==null?0:item.suppliers[0].supplierItems.map(x => x.id === item.stationery.id ? x.price : null) * 1}
+                        value={item.selectedSupplier === null ? 0 : item.selectedSupplier.price}
                         decimalScale={2}
                         fixedDecimalScale={true}
                         displayType={"text"}
                         prefix={"$"}
                     />
                     /
-                    {item.suppliers == null ?0:item.suppliers[0].supplierItems.map(x => x.id === item.stationery.id ? x.unit : null)}
+                    {item.unit}
                 </td>
                 <td>
                     <CurrencyFormat
-                        value={item.suppliers === null ?0:item.suppliers[0].supplierItems.map(x => x.id === item.stationery.id ? x.price : null) * item.stationery.reOrderQty}
+                        value={item.selectedSupplier === null ? 0 : item.selectedSupplier.price * item.qty}
                         decimalScale={2}
+                        thousandSeparator={true} 
                         fixedDecimalScale={true}
                         displayType={"text"}
                         prefix={"$"}
                     />
                 </td>
                 <td>
-                    {this.props.onEdit ?
-                        <select name="suppliers" value={item.suppliers[0]} onChange={this.handleChange}>
-                            {item.suppliers.map(supplier => (
-                                <option value={supplier}>{supplier.name}</option>
-                                ))}
+                    
+
+                    {this.props.onEdit ? item.supplierItems === null ?
+                        <p>No suppliers carrying item</p> :
+                        <select
+                            id={item.id}
+                            name="selectedSupplier"
+                            value={item.selectedSupplier}
+                            onChange={event => this.props.handleChange(event,index)}>
+
+                            {item.supplierItems.map(supplier => (
+                                <option
+                                    key={supplier.supplierId}
+                                    value={supplier.supplierId}>
+                                    {supplier.supplierName}
+                                </option>
+                            ))}
                         </select>
-                        : 
-                    item.suppliers === null ? "" : item.suppliers[0].name}
+                        :
+                        item.selectedSupplier.supplierName
+                        }
                 </td>
             </tr>
         ));
 
         return (
-            <table className="inventoryTable">
+            <table className="placeOrderTable">
                 <thead className="tableHeader">
                     <tr>
                     <th>
                         <input
-                            name="chkboxAll"
+                            name="selectAll"
                             type="checkbox"
-                            checked={this.state.selectAll === 1}
-                            onChange={this.selectAll}
+                            checked={this.props.all}
+                            onChange={event => this.props.addItem(event)}
                         />
                     </th>
                     <th>Item Code</th>
@@ -134,7 +108,7 @@ class PlaceOrderTable extends Component {
                         <th>Supplier</th>
                         </tr>
                 </thead>
-                <tbody>{orderItem}</tbody>
+                <tbody className="tbody">{orderItem}</tbody>
             </table>
         );
     }

@@ -6,8 +6,8 @@ import './general.css';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import user from '../UserProfile';
 
-import PurchaseOrder from "../Components/PurchaseOrder";
 
 class PlaceOrder extends Component {
     constructor() {
@@ -15,65 +15,94 @@ class PlaceOrder extends Component {
         this.state = {
             today: "",
             subTotal: 0,
+            //get data
+            stationeries: [],
+            suppliers:[],
+            //formatted data
             data: [],
-            selected: [],
-            clerk: {},
+            selected: {},
+            selectAll: 0,
             purchaseOrders: [],
-            isEditing:false  
+            isEditing:false 
         }
         this.handleChange = this.handleChange.bind(this);
-
-
+        this.addItem = this.addItem.bind(this)
     }
 
     //Run once before render - lifecycle
-    componentDidMount() {
+    async componentDidMount() {
         var date = new Date().toLocaleString()
 
-        //HTTP get request
-        axios.get('https://localhost:5001/api/Store/placeOrder')
+        //HTTP get all suppliers
+        axios.get('https://localhost:5001/api/Store/Suppliers')
             .then(response => {
                 const items = response.data;
-                this.setState({ data: items });
-
+                this.setState({ suppliers: items });
+                //console.log(response)
             })
-        //HTTP get clerk Id
-        axios.get('https://localhost:5001/api/Store/clerk')
+        
+        //HTTP get reorderItems
+        axios.get('https://localhost:5001/api/Store/ItemsNeedOrder')
             .then(response => {
-                const currentClerk = response.data;
-                this.setState({ clerk: currentClerk  });
+                const supplieritems = response.data;
+                this.setState({ stationeries: supplieritems });
+                var reorder = []
+                //var data = items
+                supplieritems.forEach(item => {
+                    const sitems = []
+                    const url = 'https://localhost:5001/api/Store/getSupplierItems/' + item.id
+                    axios.get(url)
+                        .then(response => {
+                            const items = response.data;
+                            
+                            items.forEach(sItem => {
+                                const newsitem = {
+                                    supplierId: sItem.supplierId,
+                                    //map in suppliername
+                                    supplierName: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).name,
+                                    priority: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).priority,
+                                    price: sItem.price,
+                                    unit: item.unit
+                                };
+                                sitems.push(newsitem)  
+                            })
+                          
+                                const order = {
+                                    id: item.id,
+                                    desc: item.desc,
+                                    qty: item.reOrderQty,
+                                    unit: item.unit,
+                                    selectedSupplier: sitems[0],
+                                    //nest supplier items
+                                    supplierItems: sitems
+                                };
+                            reorder.push(order);
+                           
+                            
+                            })
+                })
 
-            })
-        //var total = this.state.data.map(item => item.suppliers==null?1:item.suppliers[0].supplierItems[0].price * item.stationery.reOrderQty).reduce((total, price) => total + price)
-        this.setState({
-            //subTotal: total,
-            today: date
-        })
+                this.setState({
+                    data: reorder,
+                    today: date
+                })
+
+                })
 
     }
-
-
-    addItem(value) {
-        console.log("add item")
-        console.log(value)
-        this.setState({
-            //selected: [...this.state.selected, { value }]
-            selected: value
-        })
-        this.updateSubtotal()
-    }
+       
 
     updateSubtotal() {
-        //console.log("updateSubtotal")
         const dict = this.state.selected;
-        const newSubtotal = 0;
+        console.log(this.state.selected)
+        var newSubtotal = 0;
         for (var key in dict) {
-            //console.log(dict[key])
-            if (dict[key] === true) {
-                var price = this.state.data.map(item => item.id === dict[key] ?
-                    item.suppliers == null ? 0 : item.suppliers[0].supplierItems.map(x => x.id === item.stationery.id ? x.price : null) * 1 : null)
-                if (!price === null) {
-                    newSubtotal+=price
+            if (dict[key]) {
+                var price = this.state.data.find(item => item.id == key).selectedSupplier.price
+                var qty = this.state.data.find(item => item.id == key).qty
+                 
+                if (price != null&& qty!=0) {
+                    newSubtotal+=(price*qty)
                 }
             }
 
@@ -83,28 +112,86 @@ class PlaceOrder extends Component {
 
     }
 
-    handleChange(event) {
+    handleChange(event,index) {
         const { name, value } = event.target;
+
+        if (name == "selectedSupplier") {
+            this.setState(prevState => {
+                const reorder = [...prevState.data];
+
+                //reorder array
+                const newSupplierItems = []
+                const selectedSupplier = reorder[index].supplierItems.find(s => s.supplierId == value)
+                newSupplierItems.push(selectedSupplier)
+                reorder[index].supplierItems.forEach(supplierItem => supplierItem.supplierId != value && newSupplierItems.push(supplierItem))
+                //set state
+                reorder[index] = {
+                    ...reorder[index],
+                    selectedSupplier: selectedSupplier,
+                    supplierItems: newSupplierItems
+                }
+
+
+                newSupplierItems.forEach(x=>console.log(x.supplierName))
+                return { data: reorder }
+            })
+        }
+
         this.setState({
             [name]: value
         })
+
+        console.log([name],value)
+    }
+
+
+    addItem(event) {
+        const { name, value } = event.target;
+        if (name == "selectAll") {
+            console.log('selectAll')
+            let newSelected = {};
+            if (this.state.selectAll === 0) {
+                this.state.data.map((item) => {
+                    newSelected[item.id] = true;
+                });
+            }
+
+            this.setState({
+                selected: newSelected,
+                selectAll: this.state.selectAll === 0 ? 1 : 0,
+            }, () => { this.updateSubtotal() });
+            console.log(this.state.selectAll)
+        }
+
+        if (name == "select") {
+            console.log('select')
+            const newSelected = Object.assign({}, this.state.selected);
+            newSelected[value] = !this.state.selected[value];
+
+            this.setState({
+                selected: newSelected,
+                selectAll: 0,
+            }, () => { this.updateSubtotal() });
+
+            console.log(this.state.selected)
+        }
+
     }
 
     onSubmit() {
         const dict = this.state.selected;
         var newSelectedItems = [];
         for (var key in dict) {
-            //console.log(dict[key])
             if (dict[key] === true) {
                 var item = this.state.data.map(item => item.id === dict[key] ? item : null)
                 if (!item === null) {
-                    //populate all items into an array
                     newSelectedItems.push(item)
                 }
             }
         }
         //get all unique supplier ids
-        var suppliers = new Set(newSelectedItems.map(item => item.suppliers[0]))
+        var suppliers = new Set(newSelectedItems.map(item => item.selectedSupplier))
+        console.log(suppliers)
         
 
         //group all selectedItems by supplier Id and create PO
@@ -132,7 +219,7 @@ class PlaceOrder extends Component {
             }
             var purchaseOrder = {
                 id: POId,
-                clerkId: this.state.clerk.id,
+                clerkId: user.getId(),
                 SupplierId: supplier.id,
                 dateOfOrder: date,
                 status: "ordered",
@@ -158,24 +245,44 @@ class PlaceOrder extends Component {
         return (
             <div>
                 <Header />
-                <h1>{this.state.today}</h1>
+                <h1>{this.state.isEditing}</h1>
                 <div className="tableBody">
                     <PlaceOrderTable
                         data={this.state.data}
-                        onSelect={value => this.addItem(value)}
                         onEdit={this.state.isEditing}
-        
+                        handleChange={this.handleChange}
+                        addItem={this.addItem}
+                        all={this.state.selectAll}
+                        selected={this.state.selected}
                     />
                     <br />
                     <div className="tablebottom">
                         <h3>Sub total:
-                        <CurrencyFormat value={this.state.subTotal} decimalScale={2} fixedDecimalScale={true} displayType={'text'} prefix={'$'} />
+                        <CurrencyFormat
+                                value={this.state.subTotal}
+                                decimalScale={2}
+                                thousandSeparator={true} 
+                                fixedDecimalScale={true}
+                                displayType={'text'}
+                                prefix={'$'} />
                         </h3>
                         <br />
-                        <button name="isEditing" value={true} className="button" onClick={this.handleChange}>Edit</button>
-                        <Link to="/placeOrderSubmit">
-                            <button className="button" name="submit">Submit</button>
-                        </Link>
+                        {this.state.isEditing ?
+
+                            
+                            <div>
+                                <button className="button">Add Items</button>
+                                < button name="isEditing" value={false} className="button" onClick={this.handleChange}>Save</button>
+                            </div>
+                            :
+                            <div>
+          
+                                < button name="isEditing" value={true} className="button" onClick={this.handleChange}>Edit</button>
+                                <Link to="/placeOrderSubmit">
+                                    <button className="button" name="submit" onClick={this.onSubmit}>Submit</button>
+
+                                </Link>
+                            </div>}
                     </div>
                 </div>
             </div>
