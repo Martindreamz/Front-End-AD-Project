@@ -88,7 +88,7 @@ class RequisitionForm extends React.Component {
     //Run once before render - lifecycle
     async componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/dept/req')
+        axios.get('api here')
             .then(response => {
                 const items = response.reqData;
                 this.setState({ reqData: items });
