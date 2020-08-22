@@ -98,13 +98,15 @@ class RequisitionApplyForm extends React.Component {
                     <div class="col-md-12 mx-auto text-center">
                         <p class="display-4">Requisition Form</p>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 mx-auto" className="reqForm">
                         <form>
                             <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <label class="col-sm-6">Category</label>
+                                <div class="col-sm-6" className="colReqForm">
+                                    <label>Category</label>
+                                </div>
+                                <div class="col-sm-6">
                                     <Select
-                                        class="col-sm-6"
+                                        className="form-control"
                                         labelId="demo-controlled-open-select-label"
                                         key={item.id}
                                         value={this.state.cat}
@@ -115,11 +117,15 @@ class RequisitionApplyForm extends React.Component {
                                         {this.props.category.map((item, index) => <MenuItem value={index}>{item}</MenuItem>)}
                                     </Select>
                                 </div>
-                                <div class="col-sm-12">
-                                    <label class="col-sm-6">Description</label>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6" className="colReqForm">
+                                        <label>Description</label>
+                                    </div>
+                                    <div class="col-sm-6">
                                     {this.state.showDescription ?
                                         <Select
-                                            class="col-sm-6"
+                                            className="form-control"
                                             labelId="demo-controlled-open-select-label"
                                             key={item.id}
                                             value={this.state.description}
@@ -131,30 +137,39 @@ class RequisitionApplyForm extends React.Component {
                                             {this.props.data[Number(this.state.cat)].map(item => <MenuItem value={item}>{item.description}</MenuItem>)}
                                         </Select>
                                         : null
-                                    }
-                                </div>
+                                        }
+                                    </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <label class="col-sm-6">Quantity</label>
+                                <div class="col-sm-6" className="colReqForm">
+                                        <label>Quantity</label>
+                                    </div>
+                                    <div class="col-sm-6">
                                     {this.state.showQtyUnit ?
-                                        <input id={item.id} type="number" min="0" max="9999" class="col-sm-6" />
+                                            <input id={item.id} type="number" min="0" max="9999" className="form-control" />
                                         :
                                         null
-                                    }
-                                </div>
-                                <div class="col-sm-12">
-                                    <label class="col-sm-6">Unit</label>
+                                        }
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6" className="colReqForm">  
+                                        <label>Unit</label>
+                                    </div>
+                                    <div class="col-sm-6">  
                                     {this.state.showQtyUnit ?
-                                        <Label class="col-sm-6">Each</Label> : null}
-                                </div>
+                                            <Label>Each</Label> : null}
+                                    </div>
                             </div>
 
                             <div class="col-sm-12">
-                            <button type="button" id="submit"
-                                class="btn btn-primary px-4 float-right mr-1"
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6">  
+                                <button type="button" id="submit"
+                                    class="btn btn-primary" className="submitReqForm"
                                     onClick={this.save}> Submit </button>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>

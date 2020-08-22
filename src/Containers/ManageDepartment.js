@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Header from "../Components/Headers/Header";
 import DepartmentHeadDelegate from "../Components/DepartmentHeadDelegate";
 import DepartmentHeadCollection from "../Components/DepartmentHeadCollection";
@@ -12,85 +13,98 @@ class ManageDepartment extends Component {
     super();
     this.state = {
       employee: [
-        { id: 1, name: "Bianca Cao", role: "STAFF" },
-        { id: 2, name: "Daryl Kouk", role: "DELEGATE" },
-        { id: 3, name: "Jane Lee", role: "STAFF" },
-        { id: 4, name: "Martin Ng", role: "STAFF" },
-        { id: 5, name: "Theingi Aung Win", role: "STAFF" },
-        { id: 6, name: "Wayne Khine Myo", role: "STAFF" },
+        { Id: 1, name: "Bianca Cao", role: "REPRESENTATIVE" },
+        { Id: 2, name: "Daryl Kouk", role: "DELEGATE" },
+        { Id: 3, name: "Jane Lee", role: "STAFF" },
       ],
 
       requisition: [
         {
           Id: 1,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
+          EmployeeId: 1,
+          dateOfRequest: "2020-08-17 08:00:00.0000000",
+          dateOfAuthorizing: null,
+          AuthorizerId: 2,
+          status: "Applied",
           comment: "",
-          EmployeeId: "Bianca Cao",
-          AuthorizerId: "",
         },
         {
           Id: 2,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
+          EmployeeId: 1,
+          dateOfRequest: "2020-08-17 09:30:52.0000000",
+          dateOfAuthorizing: null,
+          AuthorizerId: 2,
+          status: "Applied",
           comment: "",
-          EmployeeId: "Daryl Kouk",
-          AuthorizerId: "",
         },
         {
           Id: 3,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
+          EmployeeId: 3,
+          dateOfRequest: "2020-08-18 10:30:00.0000000",
+          dateOfAuthorizing: null,
+          AuthorizerId: 2,
+          status: "Applied",
           comment: "",
-          EmployeeId: "Jane Lee",
-          AuthorizerId: "",
-        },
-        {
-          Id: 4,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Jane Lee",
-          AuthorizerId: "",
-        },
-        {
-          Id: 5,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Jane Lee",
-          AuthorizerId: "",
         },
       ],
 
       department: {
-        name: "hello",
-        rep: "Martin Ng",
-        delegate: "Bianca Cao",
-        DelgtStartDate: "2020-06-13",
-        DelgtEndDate: "2020-07-31",
-        nextCollection: "2020-08-08",
+        Id: 1,
+        deptName: "Zoology Dept",
+        deptCode: "ZOOL",
+        delgtStartDate: "2019-12-20 00:00:00.0000000",
+        delgtEndDate: "2020-01-03 00:00:00.0000000",
         collectionId: 2,
       },
 
       collectionInfo: [
-        { id: 1, collectionPt: "Stationery Store - Administration Building" },
-        { id: 2, collectionPt: "Management School" },
-        { id: 3, collectionPt: "Medical School" },
-        { id: 4, collectionPt: "Engineering School" },
-        { id: 5, collectionPt: "Science School" },
-        { id: 6, collectionPt: "University Hospital" },
+        {
+          Id: 1,
+          collectionTime: "2020-08-01 09:30:00.0000000",
+          collectionPoint: "Stationery Store - Administration Building",
+        },
+        {
+          Id: 2,
+          collectionTime: "2020-08-01 11:00:00.0000000",
+          collectionPoint: "Management School",
+        },
+        {
+          Id: 3,
+          collectionTime: "2020-08-02 09:30:00.0000000",
+          collectionPoint: "Medical School",
+        },
       ],
     };
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
     this.handleRepSubmit = this.handleRepSubmit.bind(this);
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
+  }
+
+  //Run once before render - lifecycle
+  componentDidMount() {
+    //HTTP get request
+    axios.get("https://localhost:5001/api/Dept/1").then((response) => {
+      const items = response.data;
+      this.setState({ department: items });
+    });
+
+    axios.get("https://localhost:5001/api/Dept/deptEmp/1").then((response) => {
+      const items = response.data;
+      this.setState({ employee: items });
+    });
+
+    axios
+      .get("https://localhost:5001/api/Dept/allCollectionpt")
+      .then((response) => {
+        const items = response.data;
+        this.setState({ collectionInfo: items });
+      });
+
+    axios.get("https://localhost:5001/api/Dept/pendingReq").then((response) => {
+      const items = response.data;
+      this.setState({ requisition: items });
+    });
   }
 
   handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
@@ -106,23 +120,13 @@ class ManageDepartment extends Component {
     );
   }
 
-  handleRepSubmit(selectedRep) {
-    this.setState(
-      Object.assign(this.state.department, {
-        rep: selectedRep,
-      }),
-      () => {
-        console.log(this.state);
-      }
-    );
-  }
+  handleRepSubmit(selectedRep) {}
 
-  handleCollectionSubmit(selectedCollectionPt) {
+  handleCollectionSubmit(selectedCollectionPoint) {
     let updatedCollectionId = null;
     this.state.collectionInfo.map((x) => {
-      if (x.collectionPt === selectedCollectionPt) {
-        console.log("Found it! " + x.collectionPt);
-        updatedCollectionId = x.id;
+      if (x.collectionPoint === selectedCollectionPoint) {
+        updatedCollectionId = x.Id;
       }
     });
     this.setState(
