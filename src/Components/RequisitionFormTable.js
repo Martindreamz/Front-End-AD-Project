@@ -10,29 +10,29 @@ class RequisitionFormTableNew extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            requestData: [{
-                id: "",
-                category: "",
-                description: "",
-                quantity: "",
-                unit: ""
-            }
-            ],
-            //data: [],
+            //requestData: [],
+            data: [],
             initial: true, editSupObj: []
         }
-       
+
+    }
+
+    //Run once before render - lifecycle
+    async componentDidMount() {
+        //HTTP get request
+        axios.get('api here')
+            .then(response => {
+                const items = response.data;
+                this.setState({ data: items });
+            })
     }
 
     render() {
-        if (this.state.initial == true) {
-            this.state.data = this.props.data;
-        }
-        const reqItem = this.state.requestData.map(item =>
+        const reqItem = this.state.data.map(item =>
             <tr className="tableRow" key={item.id}>
                 <td>{item.category}</td>
-                <td>{item.description}</td>
-                <td>{item.quantity}</td>
+                <td>{item.desc}</td>
+                <td>{item.reqQty}</td>
                 <td>{item.unit}</td>
                 <td>
                     <div className="tableIcons">
