@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './StockAdjustmentPopup.css';
+import './ErrorPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 class ErrorPopup extends React.Component {
@@ -14,7 +14,7 @@ class ErrorPopup extends React.Component {
                 <div className="container">
                     <div className="popupInner">
                         <HighlightOffIcon onClick={this.props.closePopup} />
-                        <p>{this.props.message}</p>
+                        <p className="popupMessage">{this.props.message}</p>
                     </div>
                 </div>
             </div>

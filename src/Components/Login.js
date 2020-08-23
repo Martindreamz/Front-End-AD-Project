@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Login.css';
 import { Container, CssBaseline, Button, TextField, Typography } from '@material-ui/core';
 import Header from '../Components/Headers/Header';
+import axios from 'axios';
+import userprofile from '../UserProfile';
 //import classes from '*.module.scss';
 
 const styles = {
@@ -24,13 +26,58 @@ class Login extends React.Component {
 	constructor() {
 		super()
 
+		this.state = {
+			identity: {
+				username: "",
+				password: ""
+			},
+			displayError: false
+        }
+
 		this.loginAction = this.loginAction.bind(this)
 	}
 
-	loginAction() {
-		//actions
-		console.log("hi")
+	usernameInput = (event) => {
+		const result = event.target.value
+		this.setState(prevState => {
+			const record = prevState.identity
+			return {
+				identity: {
+					...record,
+					username: result
+                }
+            }
+		})
+		console.log(this.state.identity)
 	}
+	passwordInput = (event) => {
+		const result = event.target.value
+		this.setState(prevState => {
+			const record = prevState.identity
+			return {
+				identity: {
+					...record,
+					password: result
+				}
+			}
+		})
+	}
+
+	loginAction(event) {
+		//actions
+		axios.post(/*api here*/"", this.state.identity)
+			.then(response => {
+				if (response === "invalid") {
+					//actions here
+					this.setState({ displayError: true })
+				}
+				else {
+					userprofile.setSession(response.id, response.name, response.role)
+					//redirect
+                }
+            })
+	}
+
 
 
 	render() {
@@ -38,12 +85,11 @@ class Login extends React.Component {
 
 			<React.Fragment>
 				<Header />
-
 				<Container component="main" maxWidth="xs">
 					<CssBaseline />
 					
 					<Typography component="h1" variant="h5" style={styles.title}>Logic University</Typography>
-					<form style={styles.form} noValidate onClick={this.loginAction}>
+					<div style={styles.form} noValidate>
 						<TextField
 							variant="outlined"
 							margin="normal"
@@ -53,7 +99,8 @@ class Login extends React.Component {
 							label="Email Address"
 							name="email"
 							autoComplete="email"
-							autofocus />
+							autofocus
+							onChange={this.usernameInput} />
 						<TextField
 							variant="outlined"
 							margin="normal"
@@ -63,14 +110,16 @@ class Login extends React.Component {
 							label="Password"
 							type="password"
 							name="password"
-							autoComplete="current-password" />
+							autoComplete="current-password"
+							onChange={this.passwordInput} />
+						{this.state.displayError ? <p>Invalid username or password</p> : null}
 						<Button
-							type="submit"
 							fullWidth
 							variant="contained"
 							color="primary"
-							style={styles.submit} > Log In</Button>
-					</form>
+							style={styles.submit}
+							onClick={this.loginAction}> Log In</Button>
+					</div>
 				</Container>
 			</React.Fragment>
 		)
