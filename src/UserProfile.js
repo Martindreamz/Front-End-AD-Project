@@ -1,3 +1,4 @@
+
 //A wrapper to manage user session
 
 var UserProfile = (function () {
