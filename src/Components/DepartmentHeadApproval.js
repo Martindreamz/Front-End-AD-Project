@@ -43,7 +43,7 @@ class DepartmentHeadApproval extends Component {
                       <textarea />
                     </td>
                   </AccordionSummary>
-                  <AccordionDetails>Testing details</AccordionDetails>
+                  <AccordionDetails>Test Details</AccordionDetails>
                 </Accordion>
               </tr>
             );

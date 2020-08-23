@@ -14,6 +14,8 @@ class ManageDepartment extends Component {
     this.state = {
       employee: [],
       requisition: [],
+      requisitionDetail: [],
+      requisitionListWithDetail: [],
       department: {},
       collectionInfo: [],
     };
@@ -48,6 +50,13 @@ class ManageDepartment extends Component {
       .then((response) => {
         const items = response.data;
         this.setState({ requisition: items });
+      });
+
+    axios
+      .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
+      .then((response) => {
+        const items = response.data;
+        this.setState({ requisitionDetail: items });
       });
   }
 
@@ -160,6 +169,7 @@ class ManageDepartment extends Component {
           <DepartmentHeadApproval
             employee={this.state.employee}
             requisition={this.state.requisition}
+            requisitionDetail={this.state.requisitionDetail}
           />
         </div>
         <div className="rightpane">
