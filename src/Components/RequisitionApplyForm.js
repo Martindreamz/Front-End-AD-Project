@@ -31,11 +31,24 @@ class RequisitionApplyForm extends React.Component {
 
             showRow: false,
         };
+        /*this.initialState = {
+            id: '',
+            category: '',
+            desc: '',
+            reqQty: ,
+            unit: '',
+        } */ 
+        this.showCat = this.showCat.bind(this);
+        this.closeCat = this.closeCat.bind(this);
+        this.catOpen = this.catOpen.bind(this);
+        this.showDesc = this.showDesc.bind(this);
+        this.closeDesc = this.closeDesc.bind(this);
+        this.descOpen = this.descOpen.bind(this);
 
         if (props.isEdit) {
             this.state.currentFormObj = props.editSupObj
         } else {
-            this.state.currentFormObj = this.requestData;
+            this.state.currentFormObj = this.initialState;
         }
     }
 
@@ -78,9 +91,32 @@ class RequisitionApplyForm extends React.Component {
     }
 
     save = () => {
-        this.setState({
+        let requestForm = {
+            category: this.state.cat,
+            desc: this.state.description,
+            reqQty: this.refs.qtyRef.value,
+            unit: "Each"
+        }
+        console.log(requestForm)
 
-        })
+        if (!this.props.isEdit) {
+            fetch('https://localhost:5001/api/Dept/ApplyRequisition', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    category: this.state.cat,
+                    desc: this.state.description,
+                    reqQty: this.refs.qtyRef.value,
+                    unit: "Each"
+                })
+
+            }).then(res => res.json())
+                .then(requestForm => {
+                    console.log(requestForm)
+                });
+        }
 
     }
 
@@ -98,9 +134,7 @@ class RequisitionApplyForm extends React.Component {
                         unit: item.unit
                     }
                 });
-                // const categoryName = [...new Set(items.map(item => item.category))]
-                //const descName = [...new Set(items.map(item => item.desc))]
-                //this.setState({ data: items, category: categoryName, desc: descName });
+
                 this.setState(prevState => {
                     const categoryName = [...new Set(items.map(item => item.category))]
                     var data1 = []
@@ -139,6 +173,7 @@ class RequisitionApplyForm extends React.Component {
                                 </div>
                                 <div class="col-sm-6">
                                     <Select
+                                        ref="catRef"
                                         className="form-control"
                                         id={this.state.data.id}
                                         value={this.state.cat}
@@ -157,9 +192,10 @@ class RequisitionApplyForm extends React.Component {
                                 <div class="col-sm-6">
                                     {this.state.showDescription ?
                                         <Select
+                                            ref="descRef"
                                             className="form-control"
                                             id={this.state.data.id}
-                                            value={this.state.description}
+                                            value={this.state.data.id}
                                             open={this.state.openDescription}
                                             onClose={this.closeDesc}
                                             onOpen={this.descOpen}
@@ -176,7 +212,7 @@ class RequisitionApplyForm extends React.Component {
                                 </div>
                                 <div class="col-sm-6">
                                     {this.state.showQtyUnit ?
-                                        <input id="qty" value={this.state.data.inventoryQty} type="number" min="0" max="9999" className="form-control" />
+                                        <input id="qty" value={this.state.data.inventoryQty} ref="qtyRef" type="number" min="0" max="9999" className="form-control" />
                                         :
                                         null
                                     }
@@ -188,7 +224,7 @@ class RequisitionApplyForm extends React.Component {
                                 </div>
                                 <div class="col-sm-6">
                                     {this.state.showQtyUnit ?
-                                        <Label>Each</Label> : null}
+                                        <Label><p ref="unitRef">Each</p></Label> : null}
                                 </div>
                             </div>
 
