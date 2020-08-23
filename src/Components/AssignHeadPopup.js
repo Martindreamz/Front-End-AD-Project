@@ -10,6 +10,7 @@ class AssignHeadPopup extends Component {
       delegate: "",
       startDate: "",
       endDate: "",
+      availEmployees: null,
       open: false,
     };
 
@@ -32,11 +33,7 @@ class AssignHeadPopup extends Component {
   }
 
   handleEndDateInput(event) {
-    if (event.target.value.before(this.state.startDate)) {
-      window.alert("End date must be after start date!");
-    } else {
-      this.setState({ endDate: event.target.value });
-    }
+    this.setState({ endDate: event.target.value });
   }
 
   revoke() {
@@ -55,10 +52,14 @@ class AssignHeadPopup extends Component {
       this.state.startDate,
       this.state.endDate
     );
+    this.closeModal();
   }
 
+  //$ npm install dateformat
   openModal() {
     console.log("Popup called!");
+    console.log(this.props.employee);
+    this.setState({ open: true });
 
     this.props.employee.map((x) => {
       if (x.role === "DELEGATE") {
@@ -66,9 +67,27 @@ class AssignHeadPopup extends Component {
       }
     });
 
-    this.setState({ open: true });
-    this.setState({ startDate: this.props.department.DelgtStartDate });
-    this.setState({ endDate: this.props.department.DelgtEndDate });
+    var dateFormat = require("dateformat");
+    this.setState({
+      startDate: dateFormat(
+        this.props.department.delgtStartDate,
+        "yyyy-mm-dd"
+      ).toString(),
+    });
+    this.setState({
+      endDate: dateFormat(
+        this.props.department.delgtEndDate,
+        "yyyy-mm-dd"
+      ).toString(),
+    });
+
+    let empList = [];
+    this.props.employee.map((x) => {
+      if (x.role === "STAFF" || x.role === "DELEGATE") {
+        empList.push(x);
+      }
+    });
+    this.setState({ availEmployees: empList });
   }
 
   closeModal() {
@@ -106,7 +125,7 @@ class AssignHeadPopup extends Component {
                   value={this.state.delegate}
                   onChange={this.handleDelegateInput}
                 >
-                  {this.props.employee.map((x) => {
+                  {this.state.availEmployees.map((x) => {
                     return <option value={x.name}>{x.name}</option>;
                   })}
                 </select>

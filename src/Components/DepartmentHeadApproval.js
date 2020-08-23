@@ -28,7 +28,13 @@ class DepartmentHeadApproval extends Component {
               <tr className="tableRow">
                 <Accordion style={accordionStyle}>
                   <AccordionSummary>
-                    <td> {x.employeeId}</td>
+                    <td>
+                      {this.props.employee.map((y) => {
+                        if (x.employeeId === y.id) {
+                          return y.name;
+                        }
+                      })}
+                    </td>
                     <td>
                       <button className="redButton">Reject</button>
                       <button className="greenButton">Approve</button>
