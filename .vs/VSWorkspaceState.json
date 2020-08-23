@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\Components",
+    "\\src\\Components\\Headers",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Containers\\RecievedGoods.js",
+  "SelectedNode": "\\src\\Containers\\SupplierList.js",
   "PreviewInSolutionExplorer": false
 }

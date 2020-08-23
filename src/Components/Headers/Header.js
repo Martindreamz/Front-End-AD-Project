@@ -10,8 +10,7 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: "Daryl",
-      logState: "Login",
+        identity: JSON.parse(sessionStorage.getItem("mySession"))
     };
   }
 
@@ -23,7 +22,13 @@ class Header extends React.Component {
     document
       .getElementsByClassName("navbar-links")[0]
       .classList.toggle("active");
-  };
+    };
+
+    //Logout event handling
+    logoutAction = () => {
+        sessionStorage.clear()
+        window.location.href = domain
+    }
 
   render() {
     const iconStyle = {
@@ -48,12 +53,12 @@ class Header extends React.Component {
         <div className="navbar-links">
           <ul>
             <li>
-              <AccountBoxIcon style={iconStyle} />
-              <a href="#">{this.state.name}</a>
+                        <AccountBoxIcon style={iconStyle} />
+                        <a href="#">{this.state.identity != null ? this.state.identity.name : null}</a>
             </li>
             <li>
-              <ExitToAppIcon style={iconStyle} />
-              <a href="#">{this.state.logState}</a>
+                        <ExitToAppIcon style={iconStyle} />
+                        <a href="#" onClick={this.logoutAction}>{this.state.identity != null ? "Logout" : "Login"}</a>
             </li>
           </ul>
         </div>

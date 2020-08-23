@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { Container, CssBaseline, Button, TextField, Typography } from '@material-ui/core';
-import Header from '../Components/Headers/Header';
+//import Header from '../Components/Headers/Header';
 import axios from 'axios';
-import userprofile from '../UserProfile';
+import { domain } from '../Configurations/Config';
 //import classes from '*.module.scss';
 
 const styles = {
@@ -27,10 +27,6 @@ class Login extends React.Component {
 		super()
 
 		this.state = {
-			identity: {
-				username: "",
-				password: ""
-			},
 			displayError: false
         }
 
@@ -44,11 +40,10 @@ class Login extends React.Component {
 			return {
 				identity: {
 					...record,
-					username: result
+					email: result
                 }
             }
 		})
-		console.log(this.state.identity)
 	}
 	passwordInput = (event) => {
 		const result = event.target.value
@@ -65,17 +60,19 @@ class Login extends React.Component {
 
 	loginAction(event) {
 		//actions
-		axios.post(/*api here*/"", this.state.identity)
+		axios.post('https://localhost:5001/api/login/post', this.state.identity)
 			.then(response => {
-				if (response === "invalid") {
+				console.log(response)
+				if (response.data === "invalid") {
 					//actions here
 					this.setState({ displayError: true })
 				}
 				else {
-					userprofile.setSession(response.id, response.name, response.role)
-					//redirect
+					let obj = { id: response.data.id, name: response.data.name, role: response.data.role }
+					sessionStorage.setItem("mySession", JSON.stringify(obj));
+					window.location.href = domain
                 }
-            })
+			})
 	}
 
 
@@ -84,7 +81,7 @@ class Login extends React.Component {
 		return (
 
 			<React.Fragment>
-				<Header />
+				{/*<Header />*/}
 				<Container component="main" maxWidth="xs">
 					<CssBaseline />
 					
