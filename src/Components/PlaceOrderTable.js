@@ -1,8 +1,6 @@
 import React, { Component, createRef } from "react";
 import "./InventoryTable.css";
-import CurrencyFormat from "react-currency-format";
-import { AddCircle, RemoveCircle } from "@material-ui/icons";
-import { IconButton } from "@material-ui/core";
+
 
 class PlaceOrderTable extends Component {
     constructor(props) {
@@ -10,8 +8,7 @@ class PlaceOrderTable extends Component {
         this.state = {
             selected: {},
             selectAll: 2,
-            onEdit: this.props.onEdit,
-            data:[]
+            data: this.props.data
         };
 
     }
@@ -25,8 +22,9 @@ class PlaceOrderTable extends Component {
 
     render() {
         var CurrencyFormat = require("react-currency-format");
-        const orderItem = this.props.data.map((item,index) => (
-           
+        const orderItem = this.props.data != null &&
+            this.props.data.map((item, index) => (
+            
             <tr className="tableRow" key={item.id}>
                 <td>
                     <input
@@ -99,6 +97,7 @@ class PlaceOrderTable extends Component {
         ));
 
         return (
+            this.props.data!=null&&
             <table className="placeOrderTable">
                 <tr className="tableHeader">
                         <th >
