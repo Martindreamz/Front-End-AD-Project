@@ -7,7 +7,7 @@ import InventoryPopup from "../Components/InventoryPopup";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SupplierForm from '../Components/SupplierForm';
 
-class RecievedGoods extends React.Component {
+class SupplierList extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -88,4 +88,4 @@ class RecievedGoods extends React.Component {
     }
 }
 
-export default RecievedGoods;
+export default SupplierList;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component} from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Headers/Header";
@@ -15,63 +15,85 @@ import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
 import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
 import DisbursementList from "./Containers/DisbursementList";
+import SupervisorStockAdjustmentApproval from "./Containers/SupervisorStockAdjustmentApproval";
+import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
+import Home from './Containers/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Login />
-          </Route>
-          <Route path="/clerk">
-            <Header />
-          </Route>
-          <Route path="/test">
-            <RecievedGoods />
-          </Route>
-          <Route path="/requisitionForm">
-            <RequisitionForm />
-          </Route>
-          <Route path="/supplier">
-            <SupplierList />
-          </Route>
-          <Route path="/test1">
-            <CheckInventory />
-          </Route>
-          <Route path="/test2">
-            <DiscrepancyList />
-          </Route>
-            <Route path="/test3">
-                <StockTrendAnalysis />
-            </Route>
-          <Route path="/RequisitionHistoryDetailsView">
-             <RequisitionHistoryDetailsView />
-          </Route>
-          <Route path="/StoreMStockAdjustmentApproval">
-            <StoreMStockAdjustmentApproval />
-          </Route>
-          <Route path="/DepRepDisbursement">
-            <DepRepDisbursement />
-          </Route>
-          <Route path="/manager">
-            <ManageDepartment />
-          </Route>
-          <Route path="/placeOrder">
-            <PlaceOrder />
-          </Route>
-          <Route path="/placeOrderSubmit">
-            <PurchaseOrderSubmit />
-          </Route>
-          
-          <Route path="/disbursementList">
-            <DisbursementList />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+class App extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            identity: JSON.parse(sessionStorage.getItem("mySession"))
+        }
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <Router>
+                    <Switch>
+                        <Route path="/" exact>
+                            {this.state.identity != null ? <Home /> : < Login />}
+                        </Route>
+                        <Route path="/home">
+                            <Home />
+                        </Route>
+                        <Route path="/clerk">
+                            <Header />
+                        </Route>
+                        <Route path="/test">
+                            <RecievedGoods />
+                        </Route>
+                        <Route path="/requisitionForm">
+                            <RequisitionForm />
+                        </Route>
+                        <Route path="/supplier">
+                            <SupplierList />
+                        </Route>
+                        <Route path="/test1">
+                            <CheckInventory />
+                        </Route>
+                        <Route path="/test2">
+                            <DiscrepancyList />
+                        </Route>
+                        <Route path="/test3">
+                            <StockTrendAnalysis />
+                        </Route>
+                        <Route path="/RequisitionHistoryDetailsView">
+                            <RequisitionHistoryDetailsView />
+                        </Route>
+                        <Route path="/StoreMStockAdjustmentApproval">
+                            <StoreMStockAdjustmentApproval />
+                        </Route>
+                        <Route path="/DepRepDisbursement">
+                            <DepRepDisbursement />
+                        </Route>
+                        <Route path="/manager">
+                            <ManageDepartment />
+                        </Route>
+                        <Route path="/placeOrder">
+                            <PlaceOrder />
+                        </Route>
+                        <Route path="/placeOrderSubmit">
+                            <PurchaseOrderSubmit />
+                        </Route>
+
+                        <Route path="/disbursementList">
+                          <DisbursementList />
+                        </Route>
+                        <Route path="/supervisorAdjustReqList">
+                          <SupervisorStockAdjustmentApproval />
+                        </Route>
+                        <Route path="/DisbursementByDeptList">
+                          <DisbursementByDeptList />
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
+        )
+    }
 }
 
 export default App;

@@ -37,7 +37,24 @@ class RecievedGoods extends React.Component {
                         inventoryQty: item.inventoryQty
                     }
                 });
-                console.log(items)
+                //Generate category dropdown data
+                const categoryName = [...new Set(items.map(item => item.category))]
+                this.setState({ data: items, categoryData: categoryName });
+            })
+    }
+    //Run when any change to backend data
+    componentDidUpdate() {
+        //HTTP get request
+        axios.get('https://localhost:5001/api/store/stationeries')
+            .then(response => {
+                const items = response.data.map(item => {
+                    return {
+                        Id: item.id,
+                        category: item.category,
+                        desc: item.desc,
+                        inventoryQty: item.inventoryQty
+                    }
+                });
                 //Generate category dropdown data
                 const categoryName = [...new Set(items.map(item => item.category))]
                 this.setState({ data: items, categoryData: categoryName });
@@ -74,12 +91,18 @@ class RecievedGoods extends React.Component {
         })
     }
 
+    //Event Handling for submitting form
+    closeForm = async () => {
+        this.setState({
+            showPopup: !this.state.showPopup
+        })
+    }
 
     render() {
         return (
             <div>
                 <Header />
-                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} categoryData={this.state.categoryData} showCat={this.showCat} /> : null}
+                {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} categoryData={this.state.categoryData} showCat={this.showCat} closeForm={this.closeForm} /> : null}
                 <div className="recievedGoodsBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
                     <InventoryTable data={this.state.data} editData={this.editInventoryAction} />

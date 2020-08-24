@@ -29,9 +29,9 @@ class AssignCollectionPtPopup extends Component {
 
   openModal() {
     this.setState({ open: true });
-    if (this.props.department.collectionId != null) {
+    if (this.props.department.collection != null) {
       this.props.collectionInfo.map((x) => {
-        if (x.Id === this.props.department.collectionId) {
+        if (x.Id === this.props.department.collection) {
           this.setState({ currentCollectionPt: x.collectionPoint });
         }
       });
@@ -48,7 +48,7 @@ class AssignCollectionPtPopup extends Component {
     return (
       <div>
         <button className="manageButton" onClick={this.openModal}>
-          {this.props.department.collectionId === null ? "Set" : "Change"}{" "}
+          {this.props.department.collection === null ? "Set" : "Change"}{" "}
         </button>
         <Popup
           open={this.state.open}
@@ -63,7 +63,7 @@ class AssignCollectionPtPopup extends Component {
               </a>
               <div className="dialogHeader">
                 <h2>
-                  {this.props.department.collectionId === null
+                  {this.props.department.collection === null
                     ? "Select Stationery Collection Point"
                     : "Current Stationery Collection Point"}{" "}
                 </h2>

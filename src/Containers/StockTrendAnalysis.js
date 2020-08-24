@@ -1,43 +1,26 @@
 import React, { Component } from 'react';
 import Header from '../Components/Headers/Header';
 import Graph from '../Components/Graph';
+import BarChart from '../Components/BarChart';
+import DataTable from '../Components/DataTable';
+import TabPanel, { a11yProps } from '../Components/TabPanel';
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import "./StockTrendAnalysis.css";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 class StockTrendAnalysis extends React.Component {
     constructor() {
         super()
 
         this.state = {
-            data: [
-                {
-                    category: "pen",
-                    departmentName: "store",
-                    dateOfAuthorizing: new Date('08/15/2020'),
-                    reqQty: 3
-                },
-                {
-                    category: "pencil",
-                    departmentName: "store",
-                    dateOfAuthorizing: new Date('08/15/2020'),
-                    reqQty: 7
-                },
-                {
-                    category: "pencil",
-                    departmentName: "store",
-                    dateOfAuthorizing: new Date('08/16/2020'),
-                    reqQty: 10
-                },
-                {
-                    category: "pencil",
-                    departmentName: "hr",
-                    dateOfAuthorizing: new Date('08/16/2020'),
-                    reqQty: 5
-                }
-            ],
+            value: 'one',
+            data: [],
             chartData: [],
+            barData: [],
             categoryData: [],
             departmentData: [],
 
@@ -54,22 +37,24 @@ class StockTrendAnalysis extends React.Component {
     }
 
     //Run once before render - lifecycle
-    componentDidMount() {
+    componentDidMount(url = 'https://localhost:5001/api/report') {
         //HTTP get request
-        axios.get(/*api here*/)
+        axios.get(url)
             .then(response => {
-                this.setState({ data: response })
+                console.log(response.data)
+                this.setState({ data: response.data })
+                this.setState(
+                    {
+                        chartData: this.buildChartData(this.state.data),
+                        categoryData: [...new Set(this.state.data.map(item => item.category))],
+                        departmentData: [...new Set(this.state.data.map(item => item.departmentName))]
+                    }
+                )
             })
-        this.setState(
-            {
-                chartData: this.buildChartData(this.state.data),
-                categoryData: [...new Set(this.state.data.map(item => item.category))],
-                departmentData: [...new Set(this.state.data.map(item => item.departmentName))]
-            }
-        )
+        
     }
 
-    //Format graph data function
+    //Format line graph data function
     buildChartData = (data, category = null, department = null) => {
         let processData = [];
 
@@ -85,12 +70,12 @@ class StockTrendAnalysis extends React.Component {
 
         data.forEach((key, value) => {
             if (processData.filter(i =>
-                i.x.getTime() === key.dateOfAuthorizing.getTime()
+                i.x === key.dateOfAuthorizing
             ).length > 0
                 ? true
                 : false) {
                 let temp = processData.map(item => {
-                    if (item.x.getTime() === key.dateOfAuthorizing.getTime()) {
+                    if (item.x === key.dateOfAuthorizing) {
                         console.log(key.reqQty)
                         return {
                             ...item,
@@ -165,31 +150,13 @@ class StockTrendAnalysis extends React.Component {
     //event handling for graph dropdown
     showGraph = (event) => {
         let selected = event.target.value
+        this.setState({ selectedGraph: selected })
         if (selected === "Requisition") {
             this.componentDidMount()
-            this.setState({ selectedGraph: selected })
         }
         else {
-            axios.get(/*reorder api here*/)
-                .then(response => {
-                    const items = response.data.map(item => {
-                        return {
-                            category: item.category,
-                            departmentName: item.departmentName,
-                            dateOfAuthorizing: item.date,
-                            reqQty: item.qty
-                        }
-                    });
-                    this.setState({ data: items })
-                })
-            this.setState(
-                {
-                    chartData: this.buildChartData(this.state.data),
-                    categoryData: [...new Set(this.state.data.map(item => item.category))],
-                    departmentData: [...new Set(this.state.data.map(item => item.departmentName))],
-                    selectedGraph: selected
-                }
-            )
+            this.setState({ selectedCategory: null, selectedDepartment: null })
+            this.componentDidMount('https://localhost:5001/api/report/reorder')
         }
     }
     closeGraph = () => {
@@ -203,6 +170,10 @@ class StockTrendAnalysis extends React.Component {
             openGraph: !this.state.openGraph
         })
     }
+
+    handleChange = (event, newValue) => {
+        this.setState({ value: newValue })
+    };
 
     render() {
         return (
@@ -248,7 +219,26 @@ class StockTrendAnalysis extends React.Component {
                         </Select>
                     </div>
                     <div className="graphSection">
-                        <Graph data={this.state.chartData} />
+                        <AppBar position="static">
+                            <Tabs value={this.state.value} onChange={this.handleChange} aria-label="wrapped label tabs example">
+                                <Tab
+                                    value="one"
+                                    label="Line Graph"
+                                    {...a11yProps('one')}
+                                />
+                                <Tab value="two" label="Bar Chart" {...a11yProps('two')} />
+                                <Tab value="three" label="Data Table" {...a11yProps('three')} />
+                            </Tabs>
+                        </AppBar>
+                        <TabPanel value={this.state.value} index="one">
+                            <Graph data={this.state.chartData} />
+                        </TabPanel>
+                        <TabPanel value={this.state.value} index="two">
+                            <BarChart data={this.state.chartData} />
+                         </TabPanel>
+                        <TabPanel value={this.state.value} index="three">
+                            <DataTable data={this.state.chartData} />
+                        </TabPanel>
                     </div>
                 </div>
             </div>

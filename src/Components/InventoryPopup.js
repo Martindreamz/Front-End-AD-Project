@@ -4,6 +4,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Axios from 'axios';
+import { domain } from '../Configurations/Config'
 
 class InventoryPopup extends React.Component {
     constructor(props) {
@@ -82,7 +83,6 @@ class InventoryPopup extends React.Component {
     //Event Handling for submitting form
     submitForm = () => {
         Axios.post('https://localhost:5001/api/store/stationery/post/', this.state.data)
-        //Axios.post()
     }
 
     render() {
@@ -122,7 +122,7 @@ class InventoryPopup extends React.Component {
                         </fieldset>
                         <div className="formButtons">
                             <button>Delete</button>
-                            <button onClick={this.submitForm}>Save</button>
+                            <button onClick={async () => { await this.submitForm(); await this.props.closeForm(); }}>Save</button>
                         </div>
                     </div>
                 </div>

@@ -13,9 +13,9 @@ class DepartmentHeadCollection extends Component {
 
   render() {
     let collectionPoint = null;
-    if (this.props.department.collectionId != null) {
+    if (this.props.department.collection != null) {
       this.props.collectionInfo.map((x) => {
-        if (x.Id === this.props.department.collectionId) {
+        if (x.id === this.props.department.collection) {
           collectionPoint = x.collectionPoint;
         }
       });
@@ -24,9 +24,9 @@ class DepartmentHeadCollection extends Component {
     }
 
     let collectionTime = null;
-    if (this.props.department.collectionId != null) {
+    if (this.props.department.collection != null) {
       this.props.collectionInfo.map((x) => {
-        if (x.Id === this.props.department.collectionId) {
+        if (x.id === this.props.department.collection) {
           collectionTime = x.collectionTime;
         }
       });

@@ -8,6 +8,7 @@ class AssignRepPopup extends Component {
 
     this.state = {
       rep: "",
+      availEmployees: null,
       open: false,
     };
 
@@ -23,13 +24,27 @@ class AssignRepPopup extends Component {
 
   submit() {
     this.props.handleRepSubmit(this.state.rep);
+    this.setState({ open: false });
   }
 
   openModal() {
     console.log("Popup called!");
+    console.log(this.props.employee);
 
     this.setState({ open: true });
-    this.setState({ rep: this.props.department.rep });
+    this.props.employee.map((x) => {
+      if (x.role === "REPRESENTATIVE") {
+        this.setState({ rep: x.name });
+      }
+    });
+
+    let empList = [];
+    this.props.employee.map((x) => {
+      if (x.role === "STAFF" || x.role === "REPRESENTATIVE") {
+        empList.push(x);
+      }
+    });
+    this.setState({ availEmployees: empList });
   }
 
   closeModal() {
@@ -75,7 +90,7 @@ class AssignRepPopup extends Component {
                   value={this.state.rep}
                   onChange={this.handleRepInput}
                 >
-                  {this.props.employee.map((x) => {
+                  {this.state.availEmployees.map((x) => {
                     return <option value={x.name}>{x.name}</option>;
                   })}
                 </select>

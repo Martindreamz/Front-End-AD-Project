@@ -7,7 +7,7 @@ import axios from 'axios';
 import Pdf from "react-to-pdf";
 const ref = React.createRef();
 
-class RecievedGoods extends React.Component {
+class DisbursementList extends React.Component {
     constructor() {
         super()
         this.date="12 Dec 2019"
@@ -91,4 +91,4 @@ class RecievedGoods extends React.Component {
     }
 }
 
-export default RecievedGoods;
+export default DisbursementList;
