@@ -4,8 +4,6 @@ import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RequisitionApplyForm from '../Components/RequisitionApplyForm';
-import RequisitionFormTable from '../Components/RequisitionFormTable';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 class RequisitionForm extends React.Component {
     constructor() {
@@ -123,23 +121,10 @@ class RequisitionForm extends React.Component {
         return (
             <div>
                 <Header />
-                <div className="requisitionFormBody">
-                    {!this.state.showRequestForm ?
-                        <div>
-                            <AddCircleIcon onClick={() => this.addRequisition(this.state.showRequestForm)} /> {"Add Item Here"}</div>
-                        : null}
-                </div>
                 <div className="row" >
-                    {!this.state.showRequestForm ?
-                        <div className="col-sm-12  ">
-                            <RequisitionFormTable reqData={this.state.reqData} editRequestForm={this.editRequestForm} />
-                        </div>
-                        : null
-                    }
-                    {this.state.showRequestForm || this.state.isEdit ?
-                        <RequisitionApplyForm editSupObj={this.state.editSupObj} isEdit={this.state.isEdit} data={this.state.dropdownData} category={this.state.category} />
-                        : null
-                    }
+
+                    <RequisitionApplyForm editSupObj={this.state.editSupObj} isEdit={this.state.isEdit} data={this.state.dropdownData} category={this.state.category} />
+
                 </div>
             </div>
 

@@ -1,17 +1,18 @@
 import React, { useState, createRef, useEffect, Component } from 'react';
-import Header from '../Components/Headers/Header';
 import axios from 'axios';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import './InventoryTable.css';
+import '../Components/InventoryTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Label } from 'reactstrap';
+import Header from '../Components/Headers/Header';
 
 class RequisitionApplyForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
+            newData: [],
             category: [],
             desc: [],
 
@@ -30,6 +31,8 @@ class RequisitionApplyForm extends React.Component {
             add: false,
 
             showRow: false,
+
+            isAdd: false
         };
         /*this.initialState = {
             id: '',
@@ -37,7 +40,7 @@ class RequisitionApplyForm extends React.Component {
             desc: '',
             reqQty: ,
             unit: '',
-        } */ 
+        } */
         this.showCat = this.showCat.bind(this);
         this.closeCat = this.closeCat.bind(this);
         this.catOpen = this.catOpen.bind(this);
@@ -90,6 +93,14 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
+    changeView() {
+        this.setState({
+            showReqList: true,
+            showForm: false
+        });
+    }
+
+
     save = () => {
         let requestForm = {
             category: this.state.cat,
@@ -98,25 +109,41 @@ class RequisitionApplyForm extends React.Component {
             unit: "Each"
         }
         console.log(requestForm)
-
-        if (!this.props.isEdit) {
-            fetch('https://localhost:5001/api/Dept/ApplyRequisition', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+        this.setState({
+            newData: [
+                ...this.state.newData,
+                {
                     category: this.state.cat,
                     desc: this.state.description,
                     reqQty: this.refs.qtyRef.value,
                     unit: "Each"
-                })
+                }
+            ]
+        });
+        this.setState({
+            isAdd: true,
+        })
 
-            }).then(res => res.json())
-                .then(requestForm => {
-                    console.log(requestForm)
-                });
-        }
+    }
+
+    saveRequisition = () => {
+        console.log(this.state.newData)
+
+        //if (!this.props.isEdit) {
+        fetch('https://localhost:5001/api/Dept/ApplyRequisition', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.newData)
+
+        }).then(res => res.json())
+            .then(requestForm => {
+                this.setState({ message: 'New requested item is successfully applied.' });
+            });
+        //}
+
+
 
     }
 
@@ -160,9 +187,15 @@ class RequisitionApplyForm extends React.Component {
     render() {
         return (
             <div class="container .bg-light" >
+
                 <div class="row">
                     <div class="col-md-12 mx-auto text-center">
                         <p class="display-4">Requisition Form</p>
+                        {this.state.message == '' ? null :
+                            <div class="alert alert-primary" role="alert">
+                                {this.state.message}
+                            </div>
+                        }
                     </div>
 
                     <div class="col-md-12 mx-auto" className="reqForm">
@@ -229,17 +262,59 @@ class RequisitionApplyForm extends React.Component {
                             </div>
 
                             <div class="col-sm-12">
-                                <div class="col-sm-6"></div>
+
                                 <div class="col-sm-6">
                                     <button type="button" id="submit"
                                         class="btn btn-primary" className="submitReqForm"
-                                        onClick={this.save}> Submit </button>
+                                        onClick={this.save} > Add Item </button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
                 </div>
+                <div class="row"></div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="requisitionTable">
+
+                            <tr className="tableHeader">
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Requested Quantity</th>
+                                <th>Unit</th>
+                            </tr>
+                            {this.state.newData.map(i => {
+                                return (
+                                    <tr className="tableRow">
+                                        <td>{i.category}</td>
+                                        <td>{i.desc}</td>
+                                        <td>{i.reqQty}</td>
+                                        <td>{i.unit}</td>
+                                    </tr>
+                                )
+                            })}
+                            {(this.state.newData && this.state.newData.length) ?
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <button className="btn btn-primary" className="submitReqForm" onClick={() => this.changeView(this.state.showReqList)}>
+                                            BACK
+                                </button>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <button type="button" id="submit"
+                                            class="btn btn-primary" className="submitReqForm"
+                                            onClick={this.saveRequisition} > Submit Requisition </button>
+                                    </div>
+                                </div>
+                                : null
+                            }
+
+                        </table>
+                    </div>
+                </div>
+
             </div>
         )
 
