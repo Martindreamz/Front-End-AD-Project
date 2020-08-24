@@ -16,7 +16,6 @@ import SupplierList from "./Containers/SupplierList";
 import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
 import DisbursementList from "./Containers/DisbursementList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
-import userprofile from './UserProfile';
 import Home from './Containers/Home';
 
 class App extends Component {
