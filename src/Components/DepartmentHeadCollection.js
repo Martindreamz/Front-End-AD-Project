@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Moment from "react-moment"; //need npm install --save moment react-moment
 import AssignCollectionPtPopup from "../Components/AssignCollectionPtPopup";
 import "./InventoryTable.css";
 
@@ -12,24 +13,38 @@ class DepartmentHeadCollection extends Component {
 
   render() {
     let collectionPoint = null;
-    if (this.props.department.collectionId != null) {
+    if (this.props.department.collection != null) {
       this.props.collectionInfo.map((x) => {
-        if (x.id === this.props.department.collectionId) {
-          collectionPoint = x.collectionPt;
+        if (x.id === this.props.department.collection) {
+          collectionPoint = x.collectionPoint;
         }
       });
     } else {
       collectionPoint = "No collection point assigned.";
     }
+
+    let collectionTime = null;
+    if (this.props.department.collection != null) {
+      this.props.collectionInfo.map((x) => {
+        if (x.id === this.props.department.collection) {
+          collectionTime = x.collectionTime;
+        }
+      });
+    } else {
+      collectionTime = "No collection point assigned.";
+    }
+
     return (
       <div>
         <div>
           <table className="componentTable">
             <tr className="tableHeader">
-              <th> Next Delivery</th>
+              <th>Collection Time</th>
             </tr>
             <tr className="tableRow">
-              <td> {this.props.department.nextCollection}</td>
+              <td>
+                <Moment format="HH:mm">{collectionTime}</Moment>
+              </td>
             </tr>
           </table>
         </div>

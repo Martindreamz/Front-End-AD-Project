@@ -1,106 +1,126 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import "./InventoryTable.css";
 import CurrencyFormat from "react-currency-format";
+import { AddCircle, RemoveCircle } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
 
 class PlaceOrderTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: {},
-      selectAll: 2,
-      items: this.props.data,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.selectAll = this.selectAll.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected: {},
+            selectAll: 2,
+            onEdit: this.props.onEdit,
+            data:[]
+        };
 
-  handleChange(event) {
-    const { name, value, type, checked } = event.target;
-    //type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
-
-    const newSelected = Object.assign({}, this.state.selected);
-    newSelected[value] = !this.state.selected[value];
-    this.setState({
-      selected: newSelected,
-      selectAll: 2,
-    });
-  }
-
-  selectAll() {
-    let newSelected = {};
-    if (this.state.selectAll === 0) {
-      this.state.items.map((x) => {
-        newSelected[x.itemCode] = true;
-      });
     }
 
-    this.setState({
-      selected: newSelected,
-      selectAll: this.state.selectAll === 0 ? 1 : 0,
-    });
-  }
 
-  render() {
-    var CurrencyFormat = require("react-currency-format");
-    const orderItem = this.props.data.map((item) => (
-      <tr className="tableRow">
-        <td>
-          <input
-            name="chkbox"
-            type="checkbox"
-            checked={this.state.selected[item.itemCode] === true}
-            value={item.itemCode}
-            onChange={this.handleChange}
-          />
-        </td>
-        <td>{item.itemCode}</td>
-        <td>{item.desc}</td>
-        <td>{item.reOrderQty}</td>
-        <td>
-          <CurrencyFormat
-            value={item.price}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            displayType={"text"}
-            prefix={"$"}
-          />{" "}
-          /{item.unit}
-        </td>
-        <td>
-          <CurrencyFormat
-            value={item.price * item.reOrderQty}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            displayType={"text"}
-            prefix={"$"}
-          />
-        </td>
-        <td>{item.supplier}</td>
-      </tr>
-    ));
+    componentDidMount() {
+        this.setState({ data: this.props.data })
+        
+    }
 
-    return (
-      <table className="inventoryTable">
-        <thead className="tableHeader">
-          <th>
-            <input
-              name="chkboxAll"
-              type="checkbox"
-              checked={this.state.selectAll === 1}
-              onChange={this.selectAll}
-            />
-          </th>
-          <th>Item Code</th>
-          <th>Description</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Amount</th>
-          <th>Supplier</th>
-        </thead>
-        <tbody>{orderItem}</tbody>
-      </table>
-    );
-  }
+
+    render() {
+        var CurrencyFormat = require("react-currency-format");
+        const orderItem = this.props.data.map((item,index) => (
+           
+            <tr className="tableRow" key={item.id}>
+                <td>
+                    <input
+                        name="select"
+                        type="checkbox"
+                        checked={this.props.selected[item.id] === true}
+                        value={item.id}
+                        onChange={event => this.props.addItem(event)}
+                    />
+                </td>
+                <td>{item.id}</td>
+                <td>{item.desc}</td>
+                <td> {this.props.onEdit ?
+
+                    <input type="number"
+                        id="qty"
+                        placeholder={item.qty}
+                        name="qty"
+                        onChange={event => this.props.handleChange(event, index)}
+                    />
+                    :
+                     item.qty }
+                    
+                </td>
+                <td>
+                    <CurrencyFormat
+                        value={item.selectedSupplier === null ? 0 : item.selectedSupplier.price}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        displayType={"text"}
+                        prefix={"$"}
+                    />
+                    /
+                    {item.unit}
+                </td>
+                <td>
+                    <CurrencyFormat
+                        value={item.selectedSupplier === null ? 0 : item.selectedSupplier.price * item.qty}
+                        decimalScale={2}
+                        thousandSeparator={true} 
+                        fixedDecimalScale={true}
+                        displayType={"text"}
+                        prefix={"$"}
+                    />
+                </td>
+                <td>
+                    
+
+                    {this.props.onEdit? item.supplierItems === null ?
+                        <p>No suppliers carrying item</p> :
+                        <select
+                            id={item.id}
+                            name="selectedSupplier"
+                            value={item.selectedSupplier}
+                            onChange={event => this.props.handleChange(event,index)}>
+
+                            {item.supplierItems.map(supplier => (
+                                <option
+                                    key={supplier.supplierId}
+                                    value={supplier.supplierId}>
+                                    {supplier.supplierName}
+                                </option>
+                            ))}
+                        </select>
+                        :
+                        item.selectedSupplier.supplierName
+                        }
+                </td>
+            </tr>
+        ));
+
+        return (
+            <table className="placeOrderTable">
+                <tr className="tableHeader">
+                        <th >
+                            <input
+                                name="selectAll"
+                                type="checkbox"
+                                checked={this.props.all}
+                                onChange={event => this.props.addItem(event)}
+                            />
+                        </th>
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Supplier</th>
+                    </tr>
+        
+                <tbody className="tbody">{orderItem}</tbody>
+            </table>
+        );
+    }
 }
 
 export default PlaceOrderTable;

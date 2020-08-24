@@ -28,7 +28,13 @@ class DepartmentHeadApproval extends Component {
               <tr className="tableRow">
                 <Accordion style={accordionStyle}>
                   <AccordionSummary>
-                    <td> {x.EmployeeId}</td>
+                    <td>
+                      {this.props.employee.map((y) => {
+                        if (x.employeeId === y.id) {
+                          return y.name;
+                        }
+                      })}
+                    </td>
                     <td>
                       <button className="redButton">Reject</button>
                       <button className="greenButton">Approve</button>
@@ -37,7 +43,7 @@ class DepartmentHeadApproval extends Component {
                       <textarea />
                     </td>
                   </AccordionSummary>
-                  <AccordionDetails>Testing details</AccordionDetails>
+                  <AccordionDetails>Test Details</AccordionDetails>
                 </Accordion>
               </tr>
             );

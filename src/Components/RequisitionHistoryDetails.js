@@ -7,59 +7,28 @@ class RequisitionHistoryDetails extends Component {
         super();
         this.state = {
             //test data
-            hisDetailsData: [
-                {
-                    Description: "Clip Double 2",
-                    Quantity: 10,
-                    Unit: "Dozen",
-                    Status: "Pending"
-                },
-                {
-                    Description: "Clip Double 2",
-                    Quantity: 10,
-                    Unit: "Dozen",
-                    Status: "Pending"
-                },
-                {
-                    Description: "Clip Double 2",
-                    Quantity: 10,
-                    Unit: "Dozen",
-                    Status: "Pending"
-                },
-                {
-                    Description: "Clip Double 2",
-                    Quantity: 10,
-                    Unit: "Dozen",
-                    Status: "Pending"
-                },
-                {
-                    Description: "Clip Double 2",
-                    Quantity: 10,
-                    Unit: "Dozen",
-                    Status: "Pending"
-                },
-            ],
+            hisDetailsData: [],
         };
-        
+
     }
 
-    
+
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get(/* api here */).then((response) => {
+        axios.get('api here').then((response) => {
             const items = response.hisDetailsData;
             this.setState({ hisDetailsData: items });
         });
     }
 
     render() {
-        const hisDetailsItem = this.state.hisDetailsData.map((item) => (
+        const hisDetailsItem = this.props.details.map((item) => (
             <tr className="tableRow">
-                <td>{item.Description}</td>
-                <td>{item.Quantity}</td>
-                <td>{item.Unit}</td>
-                <td>{item.Status}</td>
+                <td>{item.description}</td>
+                <td>{item.quantity}</td>
+                <td>{item.unit}</td>
+                <td>{item.status}</td>
             </tr>
         ));
         return (

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Header from "../Components/Headers/Header";
 import DepartmentHeadDelegate from "../Components/DepartmentHeadDelegate";
 import DepartmentHeadCollection from "../Components/DepartmentHeadCollection";
@@ -11,81 +12,12 @@ class ManageDepartment extends Component {
   constructor() {
     super();
     this.state = {
-      employee: [
-        { id: 1, name: "Bianca Cao", role: "STAFF" },
-        { id: 2, name: "Daryl Kouk", role: "DELEGATE" },
-        { id: 3, name: "Jane Lee", role: "STAFF" },
-        { id: 4, name: "Martin Ng", role: "STAFF" },
-        { id: 5, name: "Theingi Aung Win", role: "STAFF" },
-        { id: 6, name: "Wayne Khine Myo", role: "STAFF" },
-      ],
-
-      requisition: [
-        {
-          Id: 1,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Bianca Cao",
-          AuthorizerId: "",
-        },
-        {
-          Id: 2,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Daryl Kouk",
-          AuthorizerId: "",
-        },
-        {
-          Id: 3,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Jane Lee",
-          AuthorizerId: "",
-        },
-        {
-          Id: 4,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Jane Lee",
-          AuthorizerId: "",
-        },
-        {
-          Id: 5,
-          dateOfRequest: "08 / 08 / 2020",
-          dateOfAuthorizing: "08 / 08 / 2020",
-          status: "pending",
-          comment: "",
-          EmployeeId: "Jane Lee",
-          AuthorizerId: "",
-        },
-      ],
-
-      department: {
-        name: "hello",
-        rep: "Martin Ng",
-        delegate: "Bianca Cao",
-        DelgtStartDate: "2020-06-13",
-        DelgtEndDate: "2020-07-31",
-        nextCollection: "2020-08-08",
-        collectionId: 2,
-      },
-
-      collectionInfo: [
-        { id: 1, collectionPt: "Stationery Store - Administration Building" },
-        { id: 2, collectionPt: "Management School" },
-        { id: 3, collectionPt: "Medical School" },
-        { id: 4, collectionPt: "Engineering School" },
-        { id: 5, collectionPt: "Science School" },
-        { id: 6, collectionPt: "University Hospital" },
-      ],
+      employee: [],
+      requisition: [],
+      requisitionDetail: [],
+      requisitionListWithDetail: [],
+      department: {},
+      collectionInfo: [],
     };
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
@@ -93,10 +25,44 @@ class ManageDepartment extends Component {
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
   }
 
+  //Run once before render - lifecycle
+  componentDidMount() {
+    //HTTP get request
+    axios.get("https://localhost:5001/api/Dept/3").then((response) => {
+      const items = response.data;
+      this.setState({ department: items });
+    });
+
+    axios.get("https://localhost:5001/api/Dept/deptEmp/3").then((response) => {
+      const items = response.data;
+      this.setState({ employee: items });
+    });
+
+    axios
+      .get("https://localhost:5001/api/Dept/allCollectionpt")
+      .then((response) => {
+        const items = response.data;
+        this.setState({ collectionInfo: items });
+      });
+
+    axios
+      .get("https://localhost:5001/api/Dept/deptPendingReq/3")
+      .then((response) => {
+        const items = response.data;
+        this.setState({ requisition: items });
+      });
+
+    axios
+      .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
+      .then((response) => {
+        const items = response.data;
+        this.setState({ requisitionDetail: items });
+      });
+  }
+
   handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
     this.setState(
       Object.assign(this.state.department, {
-        delegate: selectedDelegate,
         DelgtStartDate: selectedStartDate,
         DelgtEndDate: selectedEndDate,
       }),
@@ -104,34 +70,69 @@ class ManageDepartment extends Component {
         console.log(this.state);
       }
     );
+
+    let oldDelegate = null;
+
+    this.state.employee.map((x) => {
+      if (x.role === "DELEGATE") {
+        oldDelegate = x;
+        oldDelegate.role = "STAFF";
+        this.setState({ x: oldDelegate });
+      }
+    });
+
+    let newDelegate = null;
+    this.state.employee.map((x) => {
+      if (x.name === selectedDelegate) {
+        newDelegate = x;
+        newDelegate.role = "DELEGATE";
+        this.setState({ x: newDelegate });
+      }
+    });
   }
 
   handleRepSubmit(selectedRep) {
-    this.setState(
-      Object.assign(this.state.department, {
-        rep: selectedRep,
-      }),
-      () => {
-        console.log(this.state);
+    let oldRepresentative = null;
+
+    this.state.employee.map((x) => {
+      if (x.role === "REPRESENTATIVE") {
+        oldRepresentative = x;
+        oldRepresentative.role = "STAFF";
+        this.setState({ x: oldRepresentative });
       }
-    );
+    });
+
+    let newRepresentative = null;
+    this.state.employee.map((x) => {
+      if (x.name === selectedRep) {
+        newRepresentative = x;
+        newRepresentative.role = "REPRESENTATIVE";
+        this.setState({ x: newRepresentative });
+      }
+    });
   }
 
-  handleCollectionSubmit(selectedCollectionPt) {
+  handleCollectionSubmit(selectedCollectionPoint) {
     let updatedCollectionId = null;
     this.state.collectionInfo.map((x) => {
-      if (x.collectionPt === selectedCollectionPt) {
-        console.log("Found it! " + x.collectionPt);
+      if (x.collectionPoint === selectedCollectionPoint) {
         updatedCollectionId = x.id;
       }
     });
     this.setState(
       Object.assign(this.state.department, {
-        collectionId: updatedCollectionId,
+        collection: updatedCollectionId,
       }),
       () => {
         console.log(this.state);
       }
+    );
+
+    //this needs to modify further!
+    console.log("Post");
+    axios.post(
+      "https://localhost:5001/api/Dept/updateDeptInfo/3",
+      this.state.department
     );
   }
 
@@ -165,7 +166,11 @@ class ManageDepartment extends Component {
         </div>
         <div className="middlepane">
           <h4>Your Tasks</h4>
-          <DepartmentHeadApproval requisition={this.state.requisition} />
+          <DepartmentHeadApproval
+            employee={this.state.employee}
+            requisition={this.state.requisition}
+            requisitionDetail={this.state.requisitionDetail}
+          />
         </div>
         <div className="rightpane">
           <h4>Your Logistics</h4>

@@ -8,6 +8,7 @@ class AssignRepPopup extends Component {
 
     this.state = {
       rep: "",
+      availEmployees: null,
       open: false,
     };
 
@@ -23,13 +24,27 @@ class AssignRepPopup extends Component {
 
   submit() {
     this.props.handleRepSubmit(this.state.rep);
+    this.setState({ open: false });
   }
 
   openModal() {
     console.log("Popup called!");
+    console.log(this.props.employee);
 
     this.setState({ open: true });
-    this.setState({ rep: this.props.department.rep });
+    this.props.employee.map((x) => {
+      if (x.role === "REPRESENTATIVE") {
+        this.setState({ rep: x.name });
+      }
+    });
+
+    let empList = [];
+    this.props.employee.map((x) => {
+      if (x.role === "STAFF" || x.role === "REPRESENTATIVE") {
+        empList.push(x);
+      }
+    });
+    this.setState({ availEmployees: empList });
   }
 
   closeModal() {
@@ -37,6 +52,13 @@ class AssignRepPopup extends Component {
   }
 
   render() {
+    let deptRep = "No Department Representative assigned.";
+    this.props.employee.map((x) => {
+      if (x.role === "REPRESENTATIVE") {
+        deptRep = x.name;
+      }
+    });
+
     return (
       <div>
         <button className="manageButton" onClick={this.openModal}>
@@ -59,7 +81,7 @@ class AssignRepPopup extends Component {
                     ? "Assign Representative"
                     : "Current Representative"}{" "}
                 </h2>
-                <h4>{this.props.department.rep}</h4>
+                <h4>{deptRep}</h4>
               </div>
               <br />
               <div className="dialogContent">
@@ -68,7 +90,7 @@ class AssignRepPopup extends Component {
                   value={this.state.rep}
                   onChange={this.handleRepInput}
                 >
-                  {this.props.employee.map((x) => {
+                  {this.state.availEmployees.map((x) => {
                     return <option value={x.name}>{x.name}</option>;
                   })}
                 </select>

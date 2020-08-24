@@ -24,23 +24,15 @@ class AssignCollectionPtPopup extends Component {
 
   submit() {
     this.props.handleCollectionSubmit(this.state.updatedCollectionPt);
-    if (this.props.department.collectionId != null) {
-      this.props.collectionInfo.map((x) => {
-        if (x.id === this.props.department.collectionId) {
-          this.setState({ currentCollectionPt: x.collectionPt });
-        }
-      });
-    } else {
-      this.setState({ currentCollectionPt: "No collection point assigned." });
-    }
+    this.setState({ open: false });
   }
 
   openModal() {
     this.setState({ open: true });
-    if (this.props.department.collectionId != null) {
+    if (this.props.department.collection != null) {
       this.props.collectionInfo.map((x) => {
-        if (x.id === this.props.department.collectionId) {
-          this.setState({ currentCollectionPt: x.collectionPt });
+        if (x.Id === this.props.department.collection) {
+          this.setState({ currentCollectionPt: x.collectionPoint });
         }
       });
     } else {
@@ -56,7 +48,7 @@ class AssignCollectionPtPopup extends Component {
     return (
       <div>
         <button className="manageButton" onClick={this.openModal}>
-          {this.props.department.collectionId === null ? "Set" : "Change"}{" "}
+          {this.props.department.collection === null ? "Set" : "Change"}{" "}
         </button>
         <Popup
           open={this.state.open}
@@ -71,7 +63,7 @@ class AssignCollectionPtPopup extends Component {
               </a>
               <div className="dialogHeader">
                 <h2>
-                  {this.props.department.collectionId === null
+                  {this.props.department.collection === null
                     ? "Select Stationery Collection Point"
                     : "Current Stationery Collection Point"}{" "}
                 </h2>
@@ -84,10 +76,10 @@ class AssignCollectionPtPopup extends Component {
                     <div onChange={this.handleCollectionPtInput}>
                       <input
                         type="radio"
-                        value={x.collectionPt}
-                        name="CollectionPt"
+                        value={x.collectionPoint}
+                        name="CollectionPoint"
                       />{" "}
-                      <span>{x.collectionPt}</span>
+                      <span>{x.collectionPoint}</span>
                     </div>
                   );
                 })}
