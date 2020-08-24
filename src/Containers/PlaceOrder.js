@@ -123,7 +123,7 @@ class PlaceOrder extends Component {
 
     handleChange(event, index) {
         const { name, value } = event.target;
-
+        console.log('name',name,'value',value)
         if (name == "selectedSupplier") {
             this.setState(prevState => {
                 const reorder = [...prevState.data];
@@ -310,7 +310,24 @@ class PlaceOrder extends Component {
             console.log(this.state.selected)
         }
 
+        if (name == "addNewItem") {
+            this.setState(prevState => {
+                const CurrData = prevState.data
+                CurrData.push(value)
+                return { data: CurrData }
+            })
+        }
+
     }
+
+    addNewItem = (item) => {
+        console.log('parent get data',item)
+    this.setState(prevState => {
+        const CurrData = prevState.data
+        CurrData.push(item)
+        return { data: CurrData }
+    })
+}
 
     render() {
         var CurrencyFormat = require('react-currency-format')
@@ -320,8 +337,9 @@ class PlaceOrder extends Component {
                 {this.state.displayPopup ?
                     <PlaceOrderPopup
                         data={this.state.data}
-                        handleSubmit={this.handleSubmit}
-                        closePopup={this.closePopup} /> : null}
+                        closePopup={this.closePopup}
+                        newItem={this.addNewItem}
+                    /> : null}
                 <div className="tableBody">
                     <PlaceOrderTable
                         data={this.state.data}
