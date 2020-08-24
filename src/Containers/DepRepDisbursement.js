@@ -9,28 +9,69 @@ class DepRepDisbursement extends Component {
     this.state = {
       showDistribution: false,
       class: "collectView",
-      department: {},
-      collectionInfo: [],
     };
     this.changeView = this.changeView.bind(this);
   }
 
-  //Run once before render - lifecycle
   componentDidMount() {
-    //HTTP get request
-    axios.get("https://localhost:5001/api/Dept/3").then((response) => {
+    axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
       const items = response.data;
-      this.setState({ department: items });
+      this.setState({ stationery: items });
+    });
+
+    axios.get("https://localhost:5001/api/Dept/reqDetails").then((response) => {
+      const items = response.data;
+
+      const sItems = [];
+      items.forEach((item) => {
+        const newItem = {
+          id: item.id,
+          stationeryId: item.stationeryId,
+          desc: this.state.stationery.find(
+            (stat) => stat.id === item.stationeryId
+          ).desc,
+        };
+        sItems.push(newItem);
+      });
+
+      this.setState({ requisitionDetail: sItems });
     });
 
     axios
-      .get("https://localhost:5001/api/Dept/allCollectionpt")
+      .get("https://localhost:5001/api/Dept/disbursementDetailByDept/3")
       .then((response) => {
-        const items = response.data;
-        this.setState({ collectionInfo: items });
+        const disDetailItems = response.data;
+
+        const sItems = [];
+        disDetailItems.forEach((disDetailItem) => {
+          const newItem = {
+            id: disDetailItem.id,
+            disbursementListId: disDetailItem.disbursementListId,
+            requisitionDetailId: disDetailItem.requisitionDetailId,
+            stationeryDesc: this.state.requisitionDetail.find(
+              (req) => req.id === disDetailItem.requisitionDetailId
+            ).desc,
+            qty: disDetailItem.qty,
+          };
+          sItems.push(newItem);
+        });
+
+        this.setState({ disbursementDetail: sItems });
+      });
+
+    axios
+      .get("https://localhost:5001/api/Dept/latestDisbursementByDept/3")
+      .then((response) => {
+        const item = {
+          id: response.data.id,
+          departmentId: response.data.departmentId,
+          date: response.data.date,
+          deliveryPoint: response.data.deliveryPoint,
+        };
+
+        this.setState({ disbursement: item });
       });
   }
-
   changeView() {
     this.setState((prevState) => {
       return {
@@ -50,8 +91,6 @@ class DepRepDisbursement extends Component {
         <Header />
         <DepRepDistriCollectionList
           showDistribution={this.state.showDistribution}
-          department={this.state.department}
-          collectionInfo={this.state.collectionInfo}
         />
         <div className={this.state.class}>
           <button onClick={this.changeView}>

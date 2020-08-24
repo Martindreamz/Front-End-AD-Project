@@ -89,7 +89,7 @@ class ManageDepartment extends Component {
           const newItem = {
             id: item.id,
             requisitionId: item.requisitionId,
-            stationeryId: item.authorizerId,
+            stationeryId: item.stationeryId,
             stationery: this.state.stationery.find(
               (stat) => stat.id === item.stationeryId
             ),

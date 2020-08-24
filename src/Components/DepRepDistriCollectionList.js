@@ -20,10 +20,7 @@ class DepRepDistriCollectionList extends Component {
     return (
       <div className="inventoryBody">
         <h1>Collection</h1>
-        <DepRepCollectTable
-          department={this.props.department}
-          collectionInfo={this.props.collectionInfo}
-        />
+        <DepRepCollectTable />
       </div>
     );
   }
