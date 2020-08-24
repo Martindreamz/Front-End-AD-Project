@@ -15,6 +15,8 @@ import DepRepDisbursement from "./Containers/DepRepDisbursement";
 import SupplierList from "./Containers/SupplierList";
 import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
 import DisbursementList from "./Containers/DisbursementList";
+import SupervisorStockAdjustmentApproval from "./Containers/SupervisorStockAdjustmentApproval";
+import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 
 function App() {
   return (
@@ -63,6 +65,12 @@ function App() {
           
           <Route path="/disbursementList">
             <DisbursementList />
+          </Route>
+          <Route path="/supervisorAdjustReqList">
+            <SupervisorStockAdjustmentApproval />
+          </Route>
+          <Route path="/DisbursementByDeptList">
+            <DisbursementByDeptList />
           </Route>
         </Switch>
       </Router>

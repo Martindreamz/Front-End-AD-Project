@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import './StockAdjustmentPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-class StockAdjustmentPopup extends React.Component {
+class SupervisorDetailPopup extends React.Component {
     constructor(props) {
         super(props)
+        this.state={popupData:[]}
     }
 
     render() {
@@ -50,4 +51,4 @@ class StockAdjustmentPopup extends React.Component {
     }
 }
 
-export default StockAdjustmentPopup;
+export default SupervisorDetailPopup;
