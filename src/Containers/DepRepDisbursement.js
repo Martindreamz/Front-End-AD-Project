@@ -9,8 +9,26 @@ class DepRepDisbursement extends Component {
     this.state = {
       showDistribution: false,
       class: "collectView",
+      department: {},
+      collectionInfo: [],
     };
     this.changeView = this.changeView.bind(this);
+  }
+
+  //Run once before render - lifecycle
+  componentDidMount() {
+    //HTTP get request
+    axios.get("https://localhost:5001/api/Dept/3").then((response) => {
+      const items = response.data;
+      this.setState({ department: items });
+    });
+
+    axios
+      .get("https://localhost:5001/api/Dept/allCollectionpt")
+      .then((response) => {
+        const items = response.data;
+        this.setState({ collectionInfo: items });
+      });
   }
 
   changeView() {
@@ -32,6 +50,8 @@ class DepRepDisbursement extends Component {
         <Header />
         <DepRepDistriCollectionList
           showDistribution={this.state.showDistribution}
+          department={this.state.department}
+          collectionInfo={this.state.collectionInfo}
         />
         <div className={this.state.class}>
           <button onClick={this.changeView}>

@@ -34,16 +34,29 @@ class DepRepCollectTable extends Component {
           qty: 55,
         },
       ],
+
+      collectionPoint: null,
+      collectionTime: null,
     };
   }
 
-  //Run once before render - lifecycle
   componentDidMount() {
-    //HTTP get request
-    axios.get(/* api here */).then((response) => {
-      const items = response.data;
-      this.setState({ data: items });
-    });
+    let collectionPoint = null;
+    let collectionTime = null;
+    if (this.props.department.collection != null) {
+      this.props.collectionInfo.map((x) => {
+        if (x.id === this.props.department.collection) {
+          collectionPoint = x.collectionPoint;
+          collectionTime = x.collectionTime;
+        }
+      });
+    } else {
+      collectionPoint = "No collection point assigned.";
+      collectionTime = "-- : --";
+    }
+
+    this.setState({ collectionPoint: collectionPoint });
+    this.setState({ collectionTime: collectionTime });
   }
 
   render() {
@@ -68,9 +81,9 @@ class DepRepCollectTable extends Component {
 
         <div className="cardColumn">
           <div className="card">
-            <h2>Collection Point: </h2>
+            <h2>Collection Point: {this.state.collectionPoint} </h2>
             <p>Date: </p>
-            <p>Time: </p>
+            <p>Time: {this.state.collectionTime} </p>
           </div>
         </div>
       </div>

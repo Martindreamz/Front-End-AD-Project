@@ -7,7 +7,49 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 class DepartmentHeadApproval extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      requisitionTable: [
+        {
+          id: 1,
+          employeeId: "Joe5",
+          dateOfAuthorizing: null,
+          status: "Applied",
+          comment: null,
+
+          requisitionDetail: [
+            {
+              id: 1,
+              stationeryId: 1,
+              reqQty: 15,
+              status: "Applied",
+            },
+          ],
+        },
+
+        {
+          id: 2,
+          employeeId: "Joe2",
+          dateOfAuthorizing: null,
+          status: "Applied",
+          comment: null,
+
+          requisitionDetail: [
+            {
+              id: 3,
+              stationeryId: 3,
+              reqQty: 5,
+              status: "Applied",
+            },
+            {
+              id: 5,
+              stationeryId: 3,
+              reqQty: 50,
+              status: "Applied",
+            },
+          ],
+        },
+      ],
+    };
   }
 
   render() {
@@ -43,7 +85,24 @@ class DepartmentHeadApproval extends Component {
                       <textarea />
                     </td>
                   </AccordionSummary>
-                  <AccordionDetails>Test Details</AccordionDetails>
+                  <AccordionDetails>
+                    <table>
+                      <tr>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                      </tr>
+                      {this.props.requisitionDetail.map((z) => {
+                        if (x.id === z.requisitionId) {
+                          return (
+                            <tr>
+                              <th>{z.id}</th>
+                              <th>{z.reqQty}</th>
+                            </tr>
+                          );
+                        }
+                      })}
+                    </table>
+                  </AccordionDetails>
                 </Accordion>
               </tr>
             );
