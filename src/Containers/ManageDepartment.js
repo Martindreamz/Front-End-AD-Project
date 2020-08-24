@@ -24,6 +24,9 @@ class ManageDepartment extends Component {
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
     this.handleRepSubmit = this.handleRepSubmit.bind(this);
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
+    this.handleApprove = this.handleApprove.bind(this);
+    this.handleReject = this.handleReject.bind(this);
+    this.handleComment = this.handleComment.bind(this);
   }
 
   //Run once before render - lifecycle
@@ -46,35 +49,67 @@ class ManageDepartment extends Component {
         this.setState({ collectionInfo: items });
       });
 
+    axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
+      const items = response.data;
+      this.setState({ stationery: items });
+    });
+
     axios
       .get("https://localhost:5001/api/Dept/deptPendingReq/3")
       .then((response) => {
         const items = response.data;
-        this.setState({ requisition: items });
+
+        const sItems = [];
+        items.forEach((item) => {
+          const newItem = {
+            id: item.id,
+            employeeId: item.employeeId,
+            employee: this.state.employee.find(
+              (emp) => emp.id === item.employeeId
+            ),
+            dateOfRequest: item.dateOfRequest,
+            dateOfAuthorizing: item.dateOfAuthorizing,
+            authorizerId: item.authorizerId,
+            status: item.status,
+            comment: item.comment,
+          };
+          sItems.push(newItem);
+        });
+
+        this.setState({ requisition: sItems });
       });
 
     axios
       .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
       .then((response) => {
         const items = response.data;
-        this.setState({ requisitionDetail: items });
-      });
 
-    axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
-      const items = response.data;
-      this.setState({ stationery: items });
-    });
+        const sItems = [];
+        items.forEach((item) => {
+          const newItem = {
+            id: item.id,
+            requisitionId: item.requisitionId,
+            stationeryId: item.stationeryId,
+            stationery: this.state.stationery.find(
+              (stat) => stat.id === item.stationeryId
+            ),
+            reqQty: item.reqQty,
+            rcvQty: item.rcvQty,
+            status: item.status,
+          };
+          sItems.push(newItem);
+        });
+
+        this.setState({ requisitionDetail: sItems });
+      });
   }
 
   handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
     this.setState(
       Object.assign(this.state.department, {
-        DelgtStartDate: selectedStartDate,
-        DelgtEndDate: selectedEndDate,
-      }),
-      () => {
-        console.log(this.state);
-      }
+        delgtStartDate: selectedStartDate,
+        delgtEndDate: selectedEndDate,
+      })
     );
 
     let oldDelegate = null;
@@ -95,6 +130,9 @@ class ManageDepartment extends Component {
         this.setState({ x: newDelegate });
       }
     });
+
+    console.log(this.state.department);
+    console.log(this.state.employee);
   }
 
   handleRepSubmit(selectedRep) {
@@ -117,7 +155,7 @@ class ManageDepartment extends Component {
       }
     });
 
-    console.log(this.state);
+    console.log(this.state.employee);
   }
 
   handleCollectionSubmit(selectedCollectionPoint) {
@@ -132,16 +170,53 @@ class ManageDepartment extends Component {
         collection: updatedCollectionId,
       }),
       () => {
-        console.log(this.state);
+        console.log(this.state.department);
       }
     );
 
-    //this needs to modify further!
-    console.log("Post");
     axios.post(
-      "https://localhost:5001/api/Dept/updateDeptInfo/3",
+      "https://localhost:5001/api/Dept/deptCollection/3",
       this.state.department
     );
+  }
+
+  handleApprove(requisitionId) {
+    let newRequisition = null;
+    this.state.requisition.map((x) => {
+      if (x.id === requisitionId) {
+        newRequisition = x;
+        newRequisition.status = "Approved";
+        this.setState({ x: newRequisition });
+      }
+    });
+
+    console.log(this.state.requisition);
+  }
+
+  handleReject(requisitionId) {
+    let newRequisition = null;
+    this.state.requisition.map((x) => {
+      if (x.id === requisitionId) {
+        newRequisition = x;
+        newRequisition.status = "Declined";
+        this.setState({ x: newRequisition });
+      }
+    });
+
+    console.log(this.state.requisition);
+  }
+
+  handleComment(requisitionId, comment) {
+    let newRequisition = null;
+    this.state.requisition.map((x) => {
+      if (x.id === requisitionId) {
+        newRequisition = x;
+        newRequisition.comment = comment;
+        this.setState({ x: newRequisition });
+      }
+    });
+
+    console.log(this.state.requisition);
   }
 
   render() {
@@ -175,10 +250,11 @@ class ManageDepartment extends Component {
         <div className="middlepane">
           <h4>Your Tasks</h4>
           <DepartmentHeadApproval
-            employee={this.state.employee}
             requisition={this.state.requisition}
             requisitionDetail={this.state.requisitionDetail}
-            stationery={this.state.stationery}
+            handleApprove={this.handleApprove.bind(this)}
+            handleReject={this.handleReject.bind(this)}
+            handleComment={this.handleComment.bind(this)}
           />
         </div>
         <div className="rightpane">

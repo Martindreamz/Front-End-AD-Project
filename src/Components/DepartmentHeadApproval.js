@@ -3,53 +3,12 @@ import "./InventoryTable.css";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
+import { set } from "numeral";
 
 class DepartmentHeadApproval extends Component {
   constructor() {
     super();
-    this.state = {
-      requisitionTable: [
-        {
-          id: 1,
-          employeeId: "Joe5",
-          dateOfAuthorizing: null,
-          status: "Applied",
-          comment: null,
-
-          requisitionDetail: [
-            {
-              id: 1,
-              stationeryId: 1,
-              reqQty: 15,
-              status: "Applied",
-            },
-          ],
-        },
-
-        {
-          id: 2,
-          employeeId: "Joe2",
-          dateOfAuthorizing: null,
-          status: "Applied",
-          comment: null,
-
-          requisitionDetail: [
-            {
-              id: 3,
-              stationeryId: 3,
-              reqQty: 5,
-              status: "Applied",
-            },
-            {
-              id: 5,
-              stationeryId: 3,
-              reqQty: 50,
-              status: "Applied",
-            },
-          ],
-        },
-      ],
-    };
+    this.state = {};
   }
 
   render() {
@@ -65,48 +24,67 @@ class DepartmentHeadApproval extends Component {
             <th> Action</th>
             <th> Comments</th>
           </tr>
-          {this.props.requisition.map((x) => {
-            return (
-              <tr className="tableRow">
-                <Accordion style={accordionStyle}>
-                  <AccordionSummary>
-                    <td>
-                      {this.props.employee.map((y) => {
-                        if (x.employeeId === y.id) {
-                          return y.name;
-                        }
-                      })}
-                    </td>
-                    <td>
-                      <button className="redButton">Reject</button>
-                      <button className="greenButton">Approve</button>
-                    </td>
-                    <td>
-                      <textarea />
-                    </td>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <table>
-                      <tr>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                      </tr>
-                      {this.props.requisitionDetail.map((z) => {
-                        if (x.id === z.requisitionId) {
-                          return (
+          {this.props.requisition.find((req) => req.status === "Applied") !=
+          null ? (
+            <div>
+              {this.props.requisition.map((x) => {
+                if (x.status === "Applied") {
+                  return (
+                    <tr className="tableRow">
+                      <Accordion style={accordionStyle}>
+                        <AccordionSummary>
+                          <td>{x.employee.name}</td>
+                          <td>
+                            <button
+                              className="redButton"
+                              onClick={() => this.props.handleApprove(x.id)}
+                            >
+                              Reject
+                            </button>
+                            <button
+                              className="greenButton"
+                              onClick={() => this.props.handleReject(x.id)}
+                            >
+                              Approve
+                            </button>
+                          </td>
+                          <td>
+                            <textarea
+                              onChange={(e) =>
+                                this.props.handleComment(x.id, e.target.value)
+                              }
+                            />
+                          </td>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <table>
                             <tr>
-                              <th>{z.id}</th>
-                              <th>{z.reqQty}</th>
+                              <th>Description</th>
+                              <th>Quantity</th>
+                              <th>Unit</th>
                             </tr>
-                          );
-                        }
-                      })}
-                    </table>
-                  </AccordionDetails>
-                </Accordion>
-              </tr>
-            );
-          })}
+                            {this.props.requisitionDetail.map((y) => {
+                              if (x.id === y.requisitionId) {
+                                return (
+                                  <tr>
+                                    <th>{y.stationery.desc}</th>
+                                    <th>{y.reqQty}</th>
+                                    <th>{y.stationery.unit}</th>
+                                  </tr>
+                                );
+                              }
+                            })}
+                          </table>
+                        </AccordionDetails>
+                      </Accordion>
+                    </tr>
+                  );
+                }
+              })}
+            </div>
+          ) : (
+            <tr>No pending requisitions.</tr>
+          )}
         </table>
       </div>
     );

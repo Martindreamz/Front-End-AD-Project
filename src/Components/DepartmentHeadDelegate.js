@@ -9,7 +9,7 @@ class DepartmentHeadDelegate extends Component {
   }
 
   render() {
-    let deptDelegate = "No Department Representative assigned.";
+    let deptDelegate = "No Department Delegate assigned.";
     this.props.employee.map((x) => {
       if (x.role === "DELEGATE") {
         deptDelegate = x.name;

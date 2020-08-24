@@ -57,8 +57,6 @@ class AssignHeadPopup extends Component {
 
   //$ npm install dateformat
   openModal() {
-    console.log("Popup called!");
-    console.log(this.props.employee);
     this.setState({ open: true });
 
     this.props.employee.map((x) => {

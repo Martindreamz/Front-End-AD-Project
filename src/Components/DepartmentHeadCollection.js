@@ -31,23 +31,27 @@ class DepartmentHeadCollection extends Component {
         }
       });
     } else {
-      collectionTime = "No collection point assigned.";
+      collectionTime = null;
     }
 
     return (
       <div>
-        <div>
-          <table className="componentTable">
-            <tr className="tableHeader">
-              <th>Collection Time</th>
-            </tr>
-            <tr className="tableRow">
-              <td>
-                <Moment format="HH:mm">{collectionTime}</Moment>
-              </td>
-            </tr>
-          </table>
-        </div>
+        {collectionTime != null ? (
+          <div>
+            <table className="componentTable">
+              <tr className="tableHeader">
+                <th>Collection Time</th>
+              </tr>
+              <tr className="tableRow">
+                <td>
+                  <Moment format="HH:mm">{collectionTime}</Moment>
+                </td>
+              </tr>
+            </table>
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div>
           <table className="componentTable">
             <tr className="tableHeader">
@@ -62,6 +66,7 @@ class DepartmentHeadCollection extends Component {
           <AssignCollectionPtPopup
             department={this.props.department}
             collectionInfo={this.props.collectionInfo}
+            collectionPoint={collectionPoint}
             handleCollectionSubmit={this.props.handleCollectionSubmit.bind(
               this
             )}
