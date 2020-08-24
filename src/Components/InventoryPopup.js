@@ -32,17 +32,6 @@ class InventoryPopup extends React.Component {
                 }
             })
         }
-        if (event.target.id === "itemCode") {
-            this.setState(prevState => {
-                const data = prevState.data;
-                return {
-                    data: {
-                        ...data,
-                        Id: update,
-                    }
-                }
-            })
-        }
         if (event.target.id === "qty") {
             this.setState(prevState => {
                 const data = prevState.data;
@@ -50,6 +39,17 @@ class InventoryPopup extends React.Component {
                     data: {
                         ...data,
                         inventoryQty: Number(update),
+                    }
+                }
+            })
+        }
+        if (event.target.id === "itemUnit") {
+            this.setState(prevState => {
+                const data = prevState.data;
+                return {
+                    data: {
+                        ...data,
+                        unit: update,
                     }
                 }
             })
@@ -94,8 +94,8 @@ class InventoryPopup extends React.Component {
                         <HighlightOffIcon onClick={this.props.closePopup} />
                         <div className="formSection">
                             <fieldset>
-                                Item Code:
-                                <input type="text" id="itemCode" value={this.state.data.Id} />
+                                Item Name:
+                                <input type="text" id="itemName" value={this.state.data.desc} />
                             </fieldset>
                             <fieldset>
                                 Item Category:
@@ -113,8 +113,8 @@ class InventoryPopup extends React.Component {
                             </fieldset>
                         </div>
                         <fieldset>
-                            Item Name:
-                            <input type="text" id="itemName" value={this.state.data.desc} />
+                            Item Unit:
+                            <input type="text" id="itemUnit" value={this.state.data.unit} />
                         </fieldset>
                         <fieldset>
                             Quantity:

@@ -25,6 +25,7 @@ class InventoryTable extends React.Component {
                 <td>{item.Id}</td>
                 {this.state.isCheckInvTable ? null : <td>{item.category}</td>}
                 <td>{item.desc}</td>
+                <td>{item.unit}</td>
                 <td className="tableQuantity">
                     {item.inventoryQty}
                     {this.state.isCheckInvTable ? null :
@@ -49,6 +50,7 @@ class InventoryTable extends React.Component {
                     <th>Item Code</th>
                     {this.state.isCheckInvTable ? null : <th>Category</th>}
                     <th>Description</th>
+                    <th>Unit</th>
                     <th>Total Quantity</th>
                     {this.state.isCheckInvTable ? <th>Inventory Quantity</th> : null}
                 </tr>

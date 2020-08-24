@@ -15,10 +15,12 @@ class RecievedGoods extends React.Component {
             data: [],
             showPopup: false,
             popupData: {
-                Id: "",
                 category: "",
                 desc: "",
-                inventoryQty: 1
+                unit: "",
+                inventoryQty: 1,
+                reOrderQty: 0,
+                reOrderLevel: 0
             },
             categoryData: []
         }
@@ -34,7 +36,10 @@ class RecievedGoods extends React.Component {
                         Id: item.id,
                         category: item.category,
                         desc: item.desc,
-                        inventoryQty: item.inventoryQty
+                        unit: item.unit,
+                        inventoryQty: item.inventoryQty,
+                        reOrderQty: item.reOrderQty,
+                        reOrderLevel: item.reOrderLevel
                     }
                 });
                 //Generate category dropdown data
@@ -52,7 +57,10 @@ class RecievedGoods extends React.Component {
                         Id: item.id,
                         category: item.category,
                         desc: item.desc,
-                        inventoryQty: item.inventoryQty
+                        unit: item.unit,
+                        inventoryQty: item.inventoryQty,
+                        reOrderQty: item.reOrderQty,
+                        reOrderLevel: item.reOrderLevel
                     }
                 });
                 //Generate category dropdown data
@@ -69,10 +77,12 @@ class RecievedGoods extends React.Component {
         //show popup
         await this.setState({
             popupData: {
-                Id: "",
                 category: "",
                 desc: "",
-                inventoryQty: 1
+                unit: "",
+                inventoryQty: 1,
+                reOrderQty: 0,
+                reOrderLevel: 0
             }, 
             showPopup: !this.state.showPopup
         })

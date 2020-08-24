@@ -4,8 +4,9 @@
     "\\src",
     "\\src\\Components",
     "\\src\\Components\\Headers",
+    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Components\\Login.js",
+  "SelectedNode": "\\src\\Configurations\\Config.js",
   "PreviewInSolutionExplorer": false
 }

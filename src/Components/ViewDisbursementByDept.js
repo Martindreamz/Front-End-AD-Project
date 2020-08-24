@@ -32,7 +32,7 @@ class ViewDisbursementByDept extends React.Component {
         )
 
         return (
-            <table className="supplierTable text-center">
+            <table className="supplierTable center">
                 <tr className="tableHeader">
                     <th>Date</th>
                     <th>Department</th>

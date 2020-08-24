@@ -5,6 +5,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 class SupervisorDetailPopup extends React.Component {
     constructor(props) {
         super(props)
+
     }
 
     render() {
@@ -16,21 +17,21 @@ class SupervisorDetailPopup extends React.Component {
                 <td>{item.reason}</td>
             </tr>
         )
-
         return (
             <div className="">
                 <div className="container">
                     <div className="popupInner">
                         <HighlightOffIcon onClick={this.props.closePopup} />
                         <div className="col-sm-12">
-                            <div className="col-sm-8">
-                            <p>Voucher no:{this.props.voucherInfo.vocNo}</p>
-                            <p>Date:{this.props.voucherInfo.date}</p>
+                            <div className="col-sm-6">
+                            <p>Voucher no:{this.props.popupData.vocId}</p>
+                            <p>Date:{this.props.popupData.date}</p>
                             </div>
                         </div>
                         <div  className="col-sm-12 text-center">
                             <p>Raised By</p>
-                            <p>Name: {this.props.voucherInfo.empName}</p>
+                            <p>Name: {this.props.popupData.empName}</p>
+                            <p>Email: {this.props.popupData.email}</p>
                         </div>
                         <div  className="col-sm-12 text-center">
                             <table className="table">

@@ -15,28 +15,7 @@ class DisbursementList extends React.Component {
         this.deptRept= "Mr John Lau"
         this.collectionPoint = "Science Department" 
         this.state = {
-            data: [
-                {
-                    id: 1,
-                    name: "Staplet",
-                    quantity: 4
-                },
-                {
-                    id: 2,
-                    name: "Thumb Tracks Large",
-                    quantity: 5
-                },
-                {
-                    id: 3,
-                    name: "Folder Plastic Blue",
-                    quantity: 5
-                },
-                {
-                    id: 4,
-                    name: "Transparency Pen",
-                    quantity: 5
-                },
-            ], 
+            data: [], 
         }
     }
 
@@ -53,7 +32,6 @@ class DisbursementList extends React.Component {
     render() {
         return (
             <div>
-                <Header/>
                 <div className="container">
                     <div className="mt-1" ref={ref}>
                         <div class="col-md-12 mx-auto text-center">
@@ -61,19 +39,19 @@ class DisbursementList extends React.Component {
                         </div>
                         <div className="row mt-1 pt-10">
                             <div className="col-sm-6">
-                                <p>Date:  {this.date}</p>
-                                <p>Collection point :  {this.collectionPoint}</p>
+                                <p>Date:  {this.props.deliveryInfo.date}</p>
+                                <p>Collection point :  {this.props.deliveryInfo.collectionPoint}</p>
                             </div>
                             <div className="col-sm-6">
                                 <div className="float-right">
-                                    <p>Department name:   {this.department}</p>
-                                    <p>Department representative:   {this.deptRept}</p>
+                                    <p>Department name:   {this.props.deliveryInfo.departmentName}</p>
+                                    <p>Department representative:   {this.props.deliveryInfo.representativeName}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div className="row">
-                            <DisbursementRow data={this.state.data} />
+                            <DisbursementRow data={this.props.data}/>
                         </div>
                     </div>
                     <div className="row float-right">
@@ -84,7 +62,11 @@ class DisbursementList extends React.Component {
                               </button>
                             )}
                         </Pdf>
+                        <button class="button" onClick={()=>this.props.showList()}>
+                                Back
+                        </button>
                     </div>
+
                 </div>
             </div>
         )
