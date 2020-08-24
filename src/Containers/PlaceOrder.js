@@ -7,6 +7,8 @@ import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import user from '../UserProfile';
+import PlaceOrderPopup from '../Components/PlaceOrderPopup';
+import Utils from "../Utils";
 
 
 class PlaceOrder extends Component {
@@ -25,10 +27,17 @@ class PlaceOrder extends Component {
             selectAll: 0,
             purchaseOrders: [],
             isEditing: false,
-            submit:false
+            redirect: false,
+            displayPopup: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
+    }
+
+    closePopup = () => {
+        this.setState({
+            displayPopup: false
+        })
     }
 
     //Run once before render - lifecycle
@@ -40,7 +49,7 @@ class PlaceOrder extends Component {
             .then(response => {
                 const items = response.data;
                 this.setState({ suppliers: items });
-                //console.log(response)
+                console.log(response)
             })
 
         //HTTP get reorderItems
@@ -63,8 +72,7 @@ class PlaceOrder extends Component {
                                     //map in suppliername
                                     supplierName: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).name,
                                     priority: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).priority,
-                                    price: sItem.price,
-                                    unit: item.unit
+                                    price: sItem.price                       
                                 };
                                 sitems.push(newsitem)
                             })
@@ -115,8 +123,7 @@ class PlaceOrder extends Component {
 
     handleChange(event, index) {
         const { name, value } = event.target;
-        //const currentData = this.setState(prevState => prevState.data)
-       // console.log('name', name, 'value', value)
+
         if (name == "selectedSupplier") {
             this.setState(prevState => {
                 const reorder = [...prevState.data];
@@ -150,11 +157,10 @@ class PlaceOrder extends Component {
             console.log('dict:', dict)
             var newSelectedItems = [];
             var d= new Date()
-            var date = JSON.stringify(new Date())
+            //var date = JSON.stringify(new Date())
             var msec = d.getMilliseconds()
             console.log('msec',msec)
             var purchaseOrders = []
-            //var podetails = []
 
             //get all selected objects
             Object.entries(dict).forEach(([key, value]) => {
@@ -172,39 +178,33 @@ class PlaceOrder extends Component {
             //group all selectedItems by supplier Id and create PO
             suppliers.forEach(supplier => {
                 var POId = msec + supplier
-                var podetails = []
+                var spodetails = []
                 var poBySupplier = []
 
                 //group all selectedItems by supplier Id
                 newSelectedItems.map(item => item.selectedSupplier.supplierId == supplier && poBySupplier.push(item))
-                //console.log('poBySupplier',poBySupplier)
 
                 //create PO details
                 poBySupplier.forEach(item => {
                     const detail =
                     {
-                        id: item.id,
                         PurchaseOrderId: POId,
                         stationeryId: item.id,
                         qty: item.qty
                     }
-                    podetails.push(detail)
+                    spodetails.push(detail)
 
                 })
 
-                //console.log('poDetails',podetails)
 
                 //create PO
                 var purchaseOrder = {
-                    id: POId,
-                    clerkId: 15,
                     //clerkId: user.getId(),
+                    clerkId: 15,
                     SupplierId: supplier,
-                    //dateOfOrder: date,
-                    //dateOfOrder:null,
                     status: "ordered",
-                    //StockAdjustmentId: null,
-                    PurchaseOrderDetails: podetails
+                    StockAdjustmentId: 1,
+                    DetailList: spodetails
                 }
 
                 purchaseOrders.push(purchaseOrder)
@@ -215,13 +215,10 @@ class PlaceOrder extends Component {
 
             this.setState({
                 purchaseOrders: purchaseOrders,
-                submit: true
+                redirect: true,
             }, () => { this.postPO() }
 
             )
-            console.log('purchaseOrders',this.state.purchaseOrders)
-            //console.log('podetails',podetails)
-            return <Redirect to="/placeOrderSubmit" />
 
         }
 
@@ -232,7 +229,7 @@ class PlaceOrder extends Component {
                 //set state
                 reorder[index] = {
                     ...reorder[index],
-                    [name]: value
+                    [name]: parseInt(value)
                 }
                 return { data: reorder }
             })
@@ -258,10 +255,28 @@ class PlaceOrder extends Component {
         console.log([name], value)
     }
 
-    postPO() {
+    async postPO() {
         console.log("state POs:", this.state.purchaseOrders)
-        axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders)
-            //axios.post('https://localhost:5001/api/Store/generatePODetails', podetails)
+        axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders).then(response => {
+            console.log(response)
+            Utils.setPoCreated(response)
+        }, () => { this.setRedirect() })
+  
+    }
+
+    setRedirect = () => {
+        console.log('set redirect')
+        this.setState({
+            redirect:true
+        })
+
+    }
+
+    renderRedirect = () => {
+        console.log('render redirect')
+        if (this.state.redirect) {
+            return <Redirect to='/PurchaseOrderSubmit' />
+        }
     }
 
     addItem(event) {
@@ -297,25 +312,16 @@ class PlaceOrder extends Component {
 
     }
 
-    handleIconButton(event, name, index, qty) {
-        console.log('add', 'name:', name, 'index', index, 'qty:', qty)
-        //this.setState(prevState => {
-        //    const reorder = [...prevState.data];
-        //    const newQty = reorder[index].name + 1
-
-        //    reorder[index] = {
-        //        ...reorder[index],
-        //        qty: newQty
-        //    }
-        //})
-    }
-
     render() {
         var CurrencyFormat = require('react-currency-format')
         return (
             <div>
                 <Header />
-                <h1>{this.state.isEditing}</h1>
+                {this.state.displayPopup ?
+                    <PlaceOrderPopup
+                        data={this.state.data}
+                        handleSubmit={this.handleSubmit}
+                        closePopup={this.closePopup} /> : null}
                 <div className="tableBody">
                     <PlaceOrderTable
                         data={this.state.data}
@@ -340,7 +346,7 @@ class PlaceOrder extends Component {
                         <br />
                         {this.state.isEditing?
                             <div>
-                                <button className="button">Add Items</button>
+                                <button name="displayPopup" value={true} onClick={this.handleChange} className="button">Add Items</button>
                                 <button name="reset" className="button" onClick={this.handleChange}>Cancel</button>
                                 < button name="save" value={false} className="button" onClick={this.handleChange}>Save</button>
                             </div>

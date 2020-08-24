@@ -18,6 +18,7 @@ class ManageDepartment extends Component {
       requisitionListWithDetail: [],
       department: {},
       collectionInfo: [],
+      stationery: [],
     };
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
@@ -58,6 +59,11 @@ class ManageDepartment extends Component {
         const items = response.data;
         this.setState({ requisitionDetail: items });
       });
+
+    axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
+      const items = response.data;
+      this.setState({ stationery: items });
+    });
   }
 
   handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
@@ -110,6 +116,8 @@ class ManageDepartment extends Component {
         this.setState({ x: newRepresentative });
       }
     });
+
+    console.log(this.state);
   }
 
   handleCollectionSubmit(selectedCollectionPoint) {
@@ -170,6 +178,7 @@ class ManageDepartment extends Component {
             employee={this.state.employee}
             requisition={this.state.requisition}
             requisitionDetail={this.state.requisitionDetail}
+            stationery={this.state.stationery}
           />
         </div>
         <div className="rightpane">
