@@ -6,29 +6,23 @@ import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SupplierForm from '../Components/SupplierForm';
-import ViewDisbursementByDept from "../Components/ViewDisbursementByDept";
-import DisbursementList from "../Containers/DisbursementList";
 
 class DisbursementByDeptList extends React.Component {
     constructor() {
         super()
         this.state = {
             //test data
-            data: [],
-            showItemDetail: false, 
-            itemDetailData: [],
-            deliveryInfo: [],
+            data: [],editSupObj: [],isEdit:false,
+            showSupplierForm : false, 
         }
-    }
-
-    showList=()=>{
-        this.setState({ showItemDetail: false,})
+        this.addSupplierFun = this.addSupplierFun.bind(this)
+        this.editSupplier = this.editSupplier.bind(this)
     }
 
     detailDisbursement = (item) =>{
-        this.setState({deliveryInfo:item});
+        this.setState({detailInfo:item});
 
-        fetch('https://localhost:5001/api/Store/getDisburseItemDetail', {
+        fetch('https://localhost:5001/api/Store/getDisburseDetailByDept', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -36,8 +30,8 @@ class DisbursementByDeptList extends React.Component {
             body: JSON.stringify(item)
           }).then(res => res.json()).then(item => {
             this.setState({
-                  showItemDetail: true,
-                  itemDetailData : item
+                  displayDetailTable: true,
+                  detailApprovalData : item
              })
           });
     }
@@ -56,15 +50,11 @@ class DisbursementByDeptList extends React.Component {
         return (
         <div>
             <Header />
-            {this.state.showItemDetail? 
-                <DisbursementList deliveryInfo={this.state.deliveryInfo} data={this.state.itemDetailData} showList={this.showList}/>
-                    : 
-                <div className="container">
-                    <div className="col-sm-12" >
-                       <ViewDisbursementByDept data={this.state.data} detailDisbursement={this.detailDisbursement}/>
-                    </div>
-                </div> 
-            }
+            <div className="container">
+                <div className="row" >
+                    <ViewDisbursementByDept data={this.state.data} detailDisbursement={this.detailDisbursement}/>
+                </div>
+            </div>
         </div>
         )
     }

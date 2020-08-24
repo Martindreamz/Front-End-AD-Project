@@ -16,16 +16,16 @@ class SupplierTable extends React.Component {
     render() {
         const disbursementItem = this.props.data.map(item =>
             <tr className="tableRow" key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
+                <td>{item.requisitionId}</td>
+                <td>{item.itemDescription}</td>
+                <td>{item.revQuantity}</td>
             </tr>        
         )
 
         return (
             <table className="supplierTable text-center">
                 <tr className="tableHeader">
-                    <th>SN</th>
+                    <th>Requistion Id</th>
                     <th>Stationary Description</th>
                     <th>Quantity</th>
                 </tr>
