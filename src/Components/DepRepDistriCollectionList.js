@@ -13,14 +13,18 @@ class DepRepDistriCollectionList extends Component {
       return (
         <div className="inventoryBody">
           <h1>Distribution</h1>
-          <DepRepDistriTable />
+          <DepRepDistriTable requisitionDetail={this.props.requisitionDetail} />
         </div>
       );
     }
+
     return (
       <div className="inventoryBody">
         <h1>Collection</h1>
-        <DepRepCollectTable />
+        <DepRepCollectTable
+          disbursement={this.props.disbursement}
+          disbursementDetail={this.props.disbursementDetail}
+        />
       </div>
     );
   }

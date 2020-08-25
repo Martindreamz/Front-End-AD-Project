@@ -33,7 +33,7 @@ class DepartmentHeadApproval extends Component {
                     <tr className="tableRow">
                       <Accordion style={accordionStyle}>
                         <AccordionSummary>
-                          <td>{x.employee.name}</td>
+                          <td>{x.employeeName}</td>
                           <td>
                             <button
                               className="redButton"
@@ -67,9 +67,9 @@ class DepartmentHeadApproval extends Component {
                               if (x.id === y.requisitionId) {
                                 return (
                                   <tr>
-                                    <th>{y.stationery.desc}</th>
+                                    <th>{y.stationeryDesc}</th>
                                     <th>{y.reqQty}</th>
-                                    <th>{y.stationery.unit}</th>
+                                    <th>{y.stationeryUnit}</th>
                                   </tr>
                                 );
                               }
