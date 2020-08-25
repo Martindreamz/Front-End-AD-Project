@@ -37,12 +37,20 @@ class StockTrendAnalysis extends React.Component {
     }
 
     //Run once before render - lifecycle
-    componentDidMount(url = 'https://localhost:5001/api/report') {
+    componentDidMount(url = 'https://localhost:5001/api/report/reqByDay') {
         //HTTP get request
         axios.get(url)
             .then(response => {
                 console.log(response.data)
-                this.setState({ data: response.data })
+                const items = response.data.map(item => {
+                    return {
+                        category: item.category,
+                        departmentName: item.departmentName,
+                        dateOfAuthorizing: item.dateOfAuthorizing.split(' ')[0],
+                        reqQty: item.reqQty
+                    }
+                })
+                this.setState({ data: items })
                 this.setState(
                     {
                         chartData: this.buildChartData(this.state.data),
@@ -153,10 +161,11 @@ class StockTrendAnalysis extends React.Component {
         this.setState({ selectedGraph: selected })
         if (selected === "Requisition") {
             this.componentDidMount()
+            this.setState({ value: "one" })
         }
         else {
-            this.setState({ selectedCategory: null, selectedDepartment: null })
-            this.componentDidMount('https://localhost:5001/api/report/reorder')
+            this.setState({ selectedCategory: null, selectedDepartment: null, value: "one" })
+            this.componentDidMount('https://localhost:5001/api/report/reorderbyday')
         }
     }
     closeGraph = () => {
@@ -172,6 +181,23 @@ class StockTrendAnalysis extends React.Component {
     }
 
     handleChange = (event, newValue) => {
+        if (newValue == "one" && this.state.selectedGraph == "Requisition") {
+            this.setState({ selectedCategory: null, selectedDepartment: null})
+            this.componentDidMount('https://localhost:5001/api/report/reqByDay')
+        }
+        else if (newValue == "two" && this.state.selectedGraph == "Requisition" || newValue == "three" && this.state.selectedGraph == "Requisition") {
+            this.setState({ selectedCategory: null, selectedDepartment: null })
+            this.componentDidMount('https://localhost:5001/api/report/reqByMonth')
+        }
+        else if (newValue == "one" && this.state.selectedGraph == "Reorder") {
+            this.setState({ selectedCategory: null, selectedDepartment: null })
+            this.componentDidMount('https://localhost:5001/api/report/reorderbyday')
+        }
+        else {
+            this.setState({ selectedCategory: null, selectedDepartment: null })
+            this.componentDidMount('https://localhost:5001/api/report/reorder')
+        }
+        console.log(newValue)
         this.setState({ value: newValue })
     };
 
