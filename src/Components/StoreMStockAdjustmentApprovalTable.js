@@ -37,7 +37,9 @@ class InventoryPopup extends React.Component {
                                     <th>Amount</th>
                                     <th>Reason</th>
                                 </tr>
-                            {tableData}
+                            <tbody className="popupTable">  
+                                {tableData}
+                            </tbody>
                             </table>
                         </div>
                     </div>
