@@ -39,8 +39,12 @@ class PlaceOrderPopup extends React.Component {
         if (name == 'browser') {
           // const item = this.props.data.find(item => item.desc = value)
             this.setState(prevState => {
-                const item = prevState.data.find(item => item.desc = value)
-                return {item:item}
+                const item = prevState.data.find(item => item.desc == value)
+                console.log('selected item', item)
+                if (item != null) {
+                    return { item: item }
+                   
+                }
            })
 
         }
@@ -59,13 +63,26 @@ class PlaceOrderPopup extends React.Component {
 
         }
 
+        if (name == 'selectedSupplier') {
+            this.setState(prevState => {
+                const item = prevState.item
+                if (item != null) {
+                    console.log('not null')
+                    item.selectedSupplier=value
+                    return { item: item }
+                }
+            })
+
+        }
+
         
     }
     
     
     //Event Handling for submitting form
     submitForm = () => {
-        
+        const item = this.state.item
+        this.props.newItem(item);
     }
 
 
@@ -76,7 +93,7 @@ class PlaceOrderPopup extends React.Component {
 
             <div className="popup">
                 <div className="poPopupInner">
-                    <div onChange={this.props.handleSubmit}>
+                    <div className="form"  onChange={this.props.handleSubmit}>
                         <h1>Add reorder item</h1>
                         <HighlightOffIcon onClick={this.props.closePopup} />
                         <div>
@@ -137,11 +154,12 @@ class PlaceOrderPopup extends React.Component {
                                     <td>
                                         <label>Price:</label>
                                     </td>
+                                    
                                     <td>
-                                        {this.state.item.selectedSupplier != null && this.item.selectedSupplier.price}
+                                    {this.state.item.selectedSupplier != null && this.state.item.selectedSupplier.price}
                                     </td>
                                 </tr>
-                                <tr><td><button name="addNewItem" value={this.state.item} >Add</button></td></tr>
+                                <tr><td><button name="addNewItem" value={this.state.item} onClick={() => this.props.newItem(this.state.item)} >Add</button></td></tr>
                             </table>
                     </div>
                 </div>

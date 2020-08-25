@@ -2,11 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\Components",
-    "\\src\\Components\\Headers",
-    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Components\\InventoryPopup.js",
+  "SelectedNode": "\\src\\Containers\\RequisitionHistoryDetailsView.js",
   "PreviewInSolutionExplorer": false
 }
