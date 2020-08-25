@@ -9,11 +9,22 @@ class DepRepDistriCollectionList extends Component {
   }
 
   render() {
+    let requisitionDetailinDisbursement = [];
+    this.props.requisitionDetail.map((x) => {
+      this.props.disbursementDetail.map((y) => {
+        if (x.id === y.requisitionDetailId) {
+          requisitionDetailinDisbursement.push(x);
+        }
+      });
+    });
+
     if (this.props.showDistribution) {
       return (
         <div className="inventoryBody">
           <h1>Distribution</h1>
-          <DepRepDistriTable requisitionDetail={this.props.requisitionDetail} />
+          <DepRepDistriTable
+            requisitionDetail={requisitionDetailinDisbursement}
+          />
         </div>
       );
     }

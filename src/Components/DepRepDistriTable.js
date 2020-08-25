@@ -8,17 +8,10 @@ class DepRepDistriTable extends Component {
   }
 
   render() {
-    const requisitionDetailList = [];
-    this.props.requisitionDetail.map((item) => {
-      if (item.status === "Approved" || item.status === "Partially_Delivered") {
-        requisitionDetailList.push(item);
-      }
-    });
-
-    const distriItem = requisitionDetailList.map((item) => (
+    const distriItem = this.props.requisitionDetail.map((item) => (
       <tr className="tableRow">
         <td>{item.desc}</td>
-        <td>{item.id}</td>
+        <td>{item.employee}</td>
         <td>{item.reqQty}</td>
       </tr>
     ));
