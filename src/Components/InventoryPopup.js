@@ -89,9 +89,9 @@ class InventoryPopup extends React.Component {
         return (
             <div className="popup">
                 <div className="popupInner">
+                    <HighlightOffIcon className="formCloseBtn" onClick={this.props.closePopup} />
                     <div className="form" onChange={this.handleUpdatedData}>
                         <h1>Inventory Record</h1>
-                        <HighlightOffIcon onClick={this.props.closePopup} />
                         <div className="formSection">
                             <fieldset>
                                 Item Name:
@@ -112,14 +112,16 @@ class InventoryPopup extends React.Component {
                                 </Select>
                             </fieldset>
                         </div>
-                        <fieldset>
-                            Item Unit:
-                            <input type="text" id="itemUnit" value={this.state.data.unit} />
-                        </fieldset>
-                        <fieldset>
-                            Quantity:
-                            <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} />
-                        </fieldset>
+                        <div className="formBody">
+                            <fieldset>
+                                Item Unit:
+                                <input type="text" id="itemUnit" value={this.state.data.unit} />
+                            </fieldset>
+                            <fieldset>
+                                Quantity:
+                                <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} />
+                            </fieldset>
+                        </div>
                         <div className="formButtons">
                             <button onClick={async () => { await this.submitForm(); await this.props.closeForm(); }}>Save</button>
                         </div>
