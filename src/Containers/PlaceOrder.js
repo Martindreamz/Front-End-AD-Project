@@ -34,6 +34,7 @@ class PlaceOrder extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
         this.setRedirect = this.setRedirect.bind(this);
+        this.postPO = this.postPO.bind(this)
     }
 
     closePopup = () => {
@@ -55,7 +56,7 @@ class PlaceOrder extends Component {
             })
 
         //HTTP get reorderItems
-        axios.get('https://localhost:5001/api/Store/ItemsNeedOrder')
+        await axios.get('https://localhost:5001/api/Store/getReorderItems')
             .then(response => {
                 const supplieritems = response.data;
                 this.setState({ stationeries: supplieritems });
@@ -148,6 +149,8 @@ class PlaceOrder extends Component {
 
         
 
+        
+
         if (name == "submit") {
             console.log('handle submit')
             console.log('from submit',this.state.selected)
@@ -158,10 +161,6 @@ class PlaceOrder extends Component {
 
             console.log('dict:', dict)
             var newSelectedItems = [];
-            var d= new Date()
-            //var date = JSON.stringify(new Date())
-            var msec = d.getMilliseconds()
-            console.log('msec',msec)
             var purchaseOrders = []
 
             //get all selected objects
@@ -179,7 +178,7 @@ class PlaceOrder extends Component {
 
             //group all selectedItems by supplier Id and create PO
             suppliers.forEach(supplier => {
-                var POId = msec + supplier
+               
                 var spodetails = []
                 var poBySupplier = []
 
@@ -190,7 +189,7 @@ class PlaceOrder extends Component {
                 poBySupplier.forEach(item => {
                     const detail =
                     {
-                        PurchaseOrderId: POId,
+                     
                         stationeryId: item.id,
                         qty: item.qty
                     }
@@ -218,11 +217,10 @@ class PlaceOrder extends Component {
             this.setState({
                 purchaseOrders: purchaseOrders,
                 redirect: true
-                
+
             }, () => { this.postPO() }
 
             )
-
         }
 
         if (name == "qty") {
@@ -262,12 +260,12 @@ class PlaceOrder extends Component {
         console.log("state POs:", this.state.purchaseOrders)
         axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders).then(response => {
             console.log(response)
-            Utils.setPoCreated(response)
-        }, () => { this.setRedirect() })
-  
+        }, () => this.setRedirect()
+  )
+           
     }
 
-    setRedirect = () => {
+    setRedirect() {
         console.log('set redirect')
         this.setState({
             redirect:true
@@ -285,7 +283,6 @@ class PlaceOrder extends Component {
     addItem(event) {
         const { name, value } = event.target;
         if (name == "selectAll") {
-            //console.log('selectAll')
             let newSelected = {};
             if (this.state.selectAll === 0) {
                 this.state.data.map((item) => {
@@ -297,7 +294,7 @@ class PlaceOrder extends Component {
                 selected: newSelected,
                 selectAll: this.state.selectAll === 0 ? 1 : 0,
             }, () => { this.updateSubtotal() });
-            //console.log(this.state.selectAll)
+       
         }
 
         if (name == "select") {
@@ -337,6 +334,10 @@ class PlaceOrder extends Component {
         return (
             <div>
                 <Header />
+                {this.state.redirect == true &&
+                    <Redirect to='/placeOrderSubmit' />
+                }
+                <h1>{this.state.redirect}</h1>
                 {this.state.displayPopup ?
                     <PlaceOrderPopup
                         data={this.state.data}
