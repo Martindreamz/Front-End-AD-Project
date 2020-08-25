@@ -7,7 +7,6 @@ class AssignCollectionPtPopup extends Component {
     super(props);
 
     this.state = {
-      currentCollectionPt: "",
       updatedCollectionPt: "",
       open: false,
     };
@@ -29,15 +28,6 @@ class AssignCollectionPtPopup extends Component {
 
   openModal() {
     this.setState({ open: true });
-    if (this.props.department.collection != null) {
-      this.props.collectionInfo.map((x) => {
-        if (x.Id === this.props.department.collection) {
-          this.setState({ currentCollectionPt: x.collectionPoint });
-        }
-      });
-    } else {
-      this.setState({ currentCollectionPt: "No collection point assigned." });
-    }
   }
 
   closeModal() {
@@ -65,9 +55,9 @@ class AssignCollectionPtPopup extends Component {
                 <h2>
                   {this.props.department.collection === null
                     ? "Select Stationery Collection Point"
-                    : "Current Stationery Collection Point"}{" "}
+                    : "Current Stationery Collection Point"}
                 </h2>
-                <h4>{this.state.currentCollectionPt}</h4>
+                <h4>{this.props.collectionPoint}</h4>
               </div>
               <br />
               <div className="dialogContent">

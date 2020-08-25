@@ -121,7 +121,6 @@ class InventoryPopup extends React.Component {
                             <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} />
                         </fieldset>
                         <div className="formButtons">
-                            <button>Delete</button>
                             <button onClick={async () => { await this.submitForm(); await this.props.closeForm(); }}>Save</button>
                         </div>
                     </div>

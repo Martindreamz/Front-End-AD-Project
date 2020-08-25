@@ -3,38 +3,16 @@ import Header from '../Components/Headers/Header';
 import './RecievedGoods.css';
 import DiscrepancyTable from '../Components/DiscrepancyTable';
 import axios from 'axios';
+import { domain } from '../Configurations/Config';
+
 
 class DiscrepancyList extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             //test data
-            data: [
-                {
-                    id: 1,
-                    name: "pen",
-                    quantity: 10,
-                    cost: 2.00
-                },
-                {
-                    id: 2,
-                    name: "pencil",
-                    quantity: 5,
-                    cost: 3.00
-                },
-                {
-                    id: 3,
-                    name: "pencil",
-                    quantity: 15,
-                    cost: 4.00
-                },
-                {
-                    id: 4,
-                    name: "pencil",
-                    quantity: 5,
-                    cost: 5.00
-                }
-            ]
+            data: [],
+            id: String(this.props.match.params.id)
         }
     }
 
@@ -42,21 +20,50 @@ class DiscrepancyList extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get("http://localhost:50001/")
-            .then(response => {
-                const items = response.data;
-                this.setState({ data: items });
-            })
+        Promise.all([
+            axios.get("https://localhost:5001/api/store/stkAd/get/" + this.state.id),
+            axios.get("https://localhost:5001/api/store/stationeries")
+        ]).then(([stkadj, items]) => {
+            const result = stkadj.data.map(item => {
+                return {
+                    id: item.id,
+                    stationeryId: item.stationeryId,
+                    desc: items.data.find(record => record.id == item.stationeryId).desc,
+                    discpQty: item.discpQty,
+                    comment: item.comment
+                }
+            });
+            this.setState({ data: result });
+        })
     }
 
     //Save input qty to state
     handleInput = (event) => {
-        console.log(event.currentTarget.id)
+        const id = event.currentTarget.id
+        const reason = event.currentTarget.value
+        this.setState(prevState => {
+            const newData = prevState.data.map(item => {
+                if (item.stationeryId == id) {
+                    return {
+                        ...item,
+                        comment: reason
+                    }
+                }
+                return item
+            })
+            return {
+                data: newData
+            }
+        })
     }
 
     //Event handling to send post request to backend
-    submitAction = () => {
+    submitAction = async () => {
         //actions here
+        await axios.put('https://localhost:5001/api/store/stkAd/put', this.state.data)
+            .then(response => {
+                window.location.href = domain
+            })
     }
 
     render() {

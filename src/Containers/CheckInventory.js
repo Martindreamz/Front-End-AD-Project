@@ -4,6 +4,7 @@ import './RecievedGoods.css';
 import InventoryTable from '../Components/InventoryTable';
 import ErrorPopup from '../Components/ErrorPopup';
 import axios from 'axios';
+import { domain } from '../Configurations/Config';
 
 class CheckInventory extends React.Component {
     constructor() {
@@ -34,7 +35,7 @@ class CheckInventory extends React.Component {
                 this.setState(prevState => {
                     const generateDiscrepancy = prevState.data.map(item => {
                         return {
-                            Id: item.Id,
+                            StationeryId: item.Id,
                             discpQty: null,
                             comment: ""
                         }
@@ -49,12 +50,12 @@ class CheckInventory extends React.Component {
     //Save input qty to discrepancy state
     handleInput = (event) => {
         const targetData = this.state.data.find(item => item.Id == event.currentTarget.id)
-        let id = event.target.id
-        let qty = event.target.value - targetData.inventoryQty
+        let id = event.currentTarget.id
+        let qty = event.currentTarget.value - targetData.inventoryQty
         //Update discrepancy data
         this.setState(prevState => {
             const updatedDiscrepancy = prevState.discrepancy.map(item => {
-                if (item.Id == id) {
+                if (item.StationeryId == id) {
                     return {
                         ...item,
                         discpQty: qty
@@ -72,9 +73,13 @@ class CheckInventory extends React.Component {
     submitForm = () => {
         console.log("post")
         let flag = false
+        let hasDiscrepancy = false
         this.state.discrepancy.forEach(item => {
-            if (item.discpQty == null || item.discpQty == "") {
+            if (item.discpQty == null) {
                 flag = true
+            }
+            if (item.discpQty != 0) {
+                hasDiscrepancy = true
             }
         })
 
@@ -84,18 +89,16 @@ class CheckInventory extends React.Component {
             })
         }
         else {
-            axios.post('https://localhost:5001/api/store/stkAd/1', this.state.discrepancy)
+            axios.post('https://localhost:5001/api/store/stkAd/15', this.state.discrepancy)
+                .then(response => {
+                    if (hasDiscrepancy) {
+                        window.location.href = domain + 'test2/' + response.data.id
+                    }
+                    else {
+                        window.location.href = domain
+                    }
+                })
         }
-
-        /*fetch('https://localhost:5001/api/store/stkAd/1', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.discrepancy)
-        }).then(res => res.json()).then(tom => {
-            console.log(tom)
-        });*/
     }
     closePopup = () => {
         this.setState({

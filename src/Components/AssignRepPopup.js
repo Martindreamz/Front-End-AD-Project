@@ -28,9 +28,6 @@ class AssignRepPopup extends Component {
   }
 
   openModal() {
-    console.log("Popup called!");
-    console.log(this.props.employee);
-
     this.setState({ open: true });
     this.props.employee.map((x) => {
       if (x.role === "REPRESENTATIVE") {
