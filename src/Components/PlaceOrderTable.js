@@ -115,7 +115,6 @@ class PlaceOrderTable extends Component {
                         <th>Amount</th>
                         <th>Supplier</th>
                     </tr>
-        
                 <tbody className="tbody">{orderItem}</tbody>
             </table>
         );
