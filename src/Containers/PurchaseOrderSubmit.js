@@ -16,8 +16,8 @@ class PurchaseOrderSubmit extends Component {
         this.state = {
             poId:[1,2],
             data: [],
-            currentSupplier:"",
-            currentPO: []
+            currentSupplier:null,
+            currentPO: null
         }
 
     }
@@ -109,7 +109,7 @@ class PurchaseOrderSubmit extends Component {
                             this.setState({
                                 data: data,
                                 currentSupplier: data[0].supplier,
-                                currentPO: data[0],
+                                //currentPO: data[0]
 
                             })
                            // console.log('formatted record', record)
@@ -140,12 +140,12 @@ class PurchaseOrderSubmit extends Component {
                 <Header />
                 <div className="tableBody">
                     <div className="btn-group">
+                        <button name="currentSupplier" class="button" value='all'>All</button>
                         {tabs}
                     </div>
                     {this.state.currentPO != null &&
                         <div>
-                        <Pdf targetRef={ref} filename="PurchaseOrder.pdf">
-
+                        <Pdf targetRef={ref} filename="PurchaseOrder.pdf">    
                             {({ toPdf }) => (
                                 <button class="button" onClick={toPdf}>Export</button>
                             )}
@@ -158,7 +158,7 @@ class PurchaseOrderSubmit extends Component {
                         </div>
                         
                         }
-                        <div style={{ width: 500, height: 500, background: 'blue' }} ref={ref} />
+                        
                     </div>
                    
                 </div>
