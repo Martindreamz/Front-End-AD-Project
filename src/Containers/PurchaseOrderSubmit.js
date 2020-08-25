@@ -6,6 +6,7 @@ import Header from '../Components/Headers/Header';
 import "./general.css"
 import Utils from "../Utils"
 import axios from 'axios';
+import Pdf from "react-to-pdf";
 
 
 class PurchaseOrderSubmit extends Component {
@@ -141,17 +142,22 @@ class PurchaseOrderSubmit extends Component {
                     <div className="btn-group">
                         {tabs}
                     </div>
-                    <Pdf targetRef={ref} filename="PurchaseOrder.pdf">
+                    {this.state.currentPO != null &&
+                        <div>
+                        <Pdf targetRef={ref} filename="PurchaseOrder.pdf">
 
-                        {({ toPdf }) => (
-                            <button class="button" onClick={toPdf}>Export</button>
-                        )}
-                    </Pdf>
-                    <div ref={ref}>
-                        <PurchaseOrder
-                            data={this.state.currentPO}
-                            currentSupplier={this.state.data} />
-                    </div>
+                            {({ toPdf }) => (
+                                <button class="button" onClick={toPdf}>Export</button>
+                            )}
+                        </Pdf>
+                        <div ref={ref}>
+                            <PurchaseOrder
+                                data={this.state.currentPO}
+                                currentSupplier={this.state.data} />
+                        </div>
+                        </div>
+                        
+                        }
                         <div style={{ width: 500, height: 500, background: 'blue' }} ref={ref} />
                     </div>
                    
