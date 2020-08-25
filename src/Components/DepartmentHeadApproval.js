@@ -37,13 +37,13 @@ class DepartmentHeadApproval extends Component {
                           <td>
                             <button
                               className="redButton"
-                              onClick={() => this.props.handleApprove(x.id)}
+                              onClick={() => this.props.handleReject(x.id)}
                             >
                               Reject
                             </button>
                             <button
                               className="greenButton"
-                              onClick={() => this.props.handleReject(x.id)}
+                              onClick={() => this.props.handleApprove(x.id)}
                             >
                               Approve
                             </button>

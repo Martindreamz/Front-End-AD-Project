@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { format } from "date-fns"; //need npm install date-fns --save
 import Header from "../Components/Headers/Header";
 import DepartmentHeadDelegate from "../Components/DepartmentHeadDelegate";
 import DepartmentHeadCollection from "../Components/DepartmentHeadCollection";
@@ -22,12 +23,15 @@ class ManageDepartment extends Component {
     };
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
+    this.postDeptDelegate = this.postDeptDelegate.bind(this);
     this.handleRepSubmit = this.handleRepSubmit.bind(this);
+    this.postDeptRep = this.postDeptRep.bind(this);
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
     this.postDeptCollection = this.postDeptCollection.bind(this);
     this.handleApprove = this.handleApprove.bind(this);
     this.handleReject = this.handleReject.bind(this);
     this.handleComment = this.handleComment.bind(this);
+    this.postDeptApprRej = this.postDeptApprRej.bind(this);
   }
 
   //Run once before render - lifecycle
@@ -135,8 +139,28 @@ class ManageDepartment extends Component {
       }
     });
 
-    console.log(this.state.department);
-    console.log(this.state.employee);
+    this.postDeptDelegate(oldDelegate, newDelegate);
+  }
+
+  async postDeptDelegate(oldDelegate, newDelegate) {
+    let sendObj = {};
+    sendObj = {
+      Id: Number(this.state.department.id),
+      name: this.state.department.delgtStartDate,
+      password: this.state.department.delgtEndDate,
+      email: oldDelegate.id.toString(),
+      role: oldDelegate.role,
+      phoneNum: newDelegate.role,
+      departmentId: newDelegate.id,
+    };
+
+    console.log(sendObj);
+
+    axios
+      .post("https://localhost:5001/api/Dept/deptDelegate", sendObj)
+      .then((response) => {
+        console.log(response);
+      });
   }
 
   handleRepSubmit(selectedRep) {
@@ -159,7 +183,26 @@ class ManageDepartment extends Component {
       }
     });
 
-    console.log(this.state.employee);
+    this.postDeptRep(oldRepresentative, newRepresentative);
+  }
+
+  async postDeptRep(oldRepresentative, newRepresentative) {
+    let sendObj = {};
+    sendObj = {
+      Id: Number(this.state.department.id),
+      email: oldRepresentative.id.toString(),
+      role: oldRepresentative.role,
+      phoneNum: newRepresentative.role,
+      departmentId: newRepresentative.id,
+    };
+
+    console.log(sendObj);
+
+    axios
+      .post("https://localhost:5001/api/Dept/deptRepresentative", sendObj)
+      .then((response) => {
+        console.log(response);
+      });
   }
 
   handleCollectionSubmit(selectedCollectionPoint) {
@@ -189,7 +232,7 @@ class ManageDepartment extends Component {
     console.log(sendDepartment);
 
     axios
-      .post("https://localhost:5001/api/Dept/deptCollection/3", sendDepartment)
+      .post("https://localhost:5001/api/Dept/deptCollection", sendDepartment)
       .then((response) => {
         console.log(response);
       });
@@ -206,6 +249,7 @@ class ManageDepartment extends Component {
     });
 
     console.log(this.state.requisition);
+    this.postDeptApprRej(newRequisition);
   }
 
   handleReject(requisitionId) {
@@ -219,6 +263,28 @@ class ManageDepartment extends Component {
     });
 
     console.log(this.state.requisition);
+    this.postDeptApprRej(newRequisition);
+  }
+
+  //need npm install date-fns --save
+  async postDeptApprRej(newRequisition) {
+    var nowDateTime = new Date();
+    var formattedNow = format(nowDateTime, "yyyy-MM-dd HH:mm:ss");
+    let sendRequisition = {};
+    sendRequisition = {
+      Id: Number(newRequisition.id),
+      dateOfAuthorizing: formattedNow,
+      status: newRequisition.status,
+      comment: newRequisition.comment,
+    };
+
+    console.log(sendRequisition);
+
+    axios
+      .post("https://localhost:5001/api/Dept/deptRequisition", sendRequisition)
+      .then((response) => {
+        console.log(response);
+      });
   }
 
   handleComment(requisitionId, comment) {
@@ -230,8 +296,6 @@ class ManageDepartment extends Component {
         this.setState({ x: newRequisition });
       }
     });
-
-    console.log(this.state.requisition);
   }
 
   render() {
