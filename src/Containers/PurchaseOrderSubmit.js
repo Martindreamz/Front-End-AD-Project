@@ -6,6 +6,7 @@ import Header from '../Components/Headers/Header';
 import "./general.css"
 import Utils from "../Utils"
 import axios from 'axios';
+import Pdf from "react-to-pdf";
 
 
 class PurchaseOrderSubmit extends Component {
@@ -15,8 +16,8 @@ class PurchaseOrderSubmit extends Component {
         this.state = {
             poId:[1,2],
             data: [],
-            currentSupplier:"",
-            currentPO: []
+            currentSupplier:null,
+            currentPO: null
         }
 
     }
@@ -108,7 +109,7 @@ class PurchaseOrderSubmit extends Component {
                             this.setState({
                                 data: data,
                                 currentSupplier: data[0].supplier,
-                                currentPO: data[0],
+                                //currentPO: data[0]
 
                             })
                            // console.log('formatted record', record)
@@ -131,6 +132,7 @@ class PurchaseOrderSubmit extends Component {
         var tabs = this.state.data.map((item) =>
             <button key={item.poNum} name="currentSupplier" class="button" value={item.poNum}>{item.supplier.name}</button>
         )
+        const ref = React.createRef();
 
         return (
 
@@ -138,15 +140,29 @@ class PurchaseOrderSubmit extends Component {
                 <Header />
                 <div className="tableBody">
                     <div className="btn-group">
+                        <button name="currentSupplier" class="button" value='all'>All</button>
                         {tabs}
                     </div>
-                    <div>
-                        <PurchaseOrder
-                            data={this.state.currentPO}
-                            currentSupplier={this.state.data} />
+                    {this.state.currentPO != null &&
+                        <div>
+                        <Pdf targetRef={ref} filename="PurchaseOrder.pdf">    
+                            {({ toPdf }) => (
+                                <button class="button" onClick={toPdf}>Export</button>
+                            )}
+                        </Pdf>
+                        <div ref={ref}>
+                            <PurchaseOrder
+                                data={this.state.currentPO}
+                                currentSupplier={this.state.data} />
+                        </div>
+                        </div>
+                        
+                        }
+                        
                     </div>
+                   
                 </div>
-            </div>
+           
         )
 
 

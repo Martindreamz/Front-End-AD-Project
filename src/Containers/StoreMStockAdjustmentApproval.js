@@ -55,6 +55,20 @@ class StoreMStockAdjustmentApproval extends Component {
           });
     }
 
+    rejectRequest = (item) =>{
+        fetch('https://localhost:5001/api/Store/managerRejectRequest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+          }).then(res => res.json()).then(itemList => {
+              this.componentDidMount();
+          });
+        
+    }
+
+
     showDetail = (item) =>{
         this.setState({detailInfo:item});
 
@@ -96,7 +110,7 @@ class StoreMStockAdjustmentApproval extends Component {
             {this.state.displayDetailTable? <StoreMStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup}/>:null}
             <div className="inventoryBody mt-1">
                {(this.state.data && this.state.data.length)? 
-                  <StoreMgrStockAdjustmentSumTable data={this.state.data} showDetail={this.showDetail} showPopup={this.showPopup}closePopup={this.closePopup}/>
+                  <StoreMgrStockAdjustmentSumTable data={this.state.data} showDetail={this.showDetail} rejectRequest={this.rejectRequest} showPopup={this.showPopup} closePopup={this.closePopup}/>
                   :
                   <div className="col-sm-6 mt-1"><p className="alert alert-primary"> No Stockadjustment request!</p></div>
                 }

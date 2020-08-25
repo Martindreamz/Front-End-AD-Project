@@ -30,7 +30,9 @@ class StoreMStockAdjustmentApprovalTable extends Component {
           <th>Amount</th>
           <th>Action</th>
         </tr>
-        {approvalItem}
+        <tbody className="sumTable">
+          {approvalItem}
+        </tbody>
       </table>
     );
   }

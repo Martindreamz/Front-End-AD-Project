@@ -12,18 +12,19 @@ class ManageDepartment extends Component {
   constructor() {
     super();
     this.state = {
+      department: {},
       employee: [],
       requisition: [],
-      requisitionDetail: [],
-      requisitionListWithDetail: [],
-      department: {},
       collectionInfo: [],
       stationery: [],
+      requisitionDetail: [],
+      requisitionListWithDetail: [],
     };
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
     this.handleRepSubmit = this.handleRepSubmit.bind(this);
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
+    this.postDeptCollection = this.postDeptCollection.bind(this);
     this.handleApprove = this.handleApprove.bind(this);
     this.handleReject = this.handleReject.bind(this);
     this.handleComment = this.handleComment.bind(this);
@@ -33,75 +34,78 @@ class ManageDepartment extends Component {
   componentDidMount() {
     //HTTP get request
     axios.get("https://localhost:5001/api/Dept/3").then((response) => {
-      const items = response.data;
-      this.setState({ department: items });
+      const departmentItem = response.data;
+      this.setState({ department: departmentItem });
     });
 
     axios.get("https://localhost:5001/api/Dept/deptEmp/3").then((response) => {
-      const items = response.data;
-      this.setState({ employee: items });
+      const employeeItems = response.data;
+      this.setState({ employee: employeeItems });
+
+      axios
+        .get("https://localhost:5001/api/Dept/deptPendingReq/3")
+        .then((response) => {
+          const pendingReqItems = response.data;
+
+          const newPendingReqItems = [];
+          pendingReqItems.forEach((pendingReqItem) => {
+            const newPendingReqItem = {
+              id: pendingReqItem.id,
+              employeeId: pendingReqItem.employeeId,
+              employeeName: employeeItems.find(
+                (emp) => emp.id === pendingReqItem.employeeId
+              ).name,
+              dateOfRequest: pendingReqItem.dateOfRequest,
+              dateOfAuthorizing: pendingReqItem.dateOfAuthorizing,
+              authorizerId: pendingReqItem.authorizerId,
+              status: pendingReqItem.status,
+              comment: pendingReqItem.comment,
+            };
+            newPendingReqItems.push(newPendingReqItem);
+          });
+
+          this.setState({ requisition: newPendingReqItems });
+        });
     });
 
     axios
       .get("https://localhost:5001/api/Dept/allCollectionpt")
       .then((response) => {
-        const items = response.data;
-        this.setState({ collectionInfo: items });
+        const collectionInfoItems = response.data;
+        this.setState({ collectionInfo: collectionInfoItems });
       });
 
     axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
-      const items = response.data;
-      this.setState({ stationery: items });
+      const stationeryItems = response.data;
+      this.setState({ stationery: stationeryItems });
+
+      axios
+        .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
+        .then((response) => {
+          const reqDetailItems = response.data;
+
+          const newReqDetailItems = [];
+          reqDetailItems.forEach((reqDetailItem) => {
+            const newReqDetailItem = {
+              id: reqDetailItem.id,
+              requisitionId: reqDetailItem.requisitionId,
+              stationeryId: reqDetailItem.stationeryId,
+              stationeryDesc: stationeryItems.find(
+                (stat) => stat.id === reqDetailItem.stationeryId
+              ).desc,
+              stationeryUnit: stationeryItems.find(
+                (stat) => stat.id === reqDetailItem.stationeryId
+              ).unit,
+              reqQty: reqDetailItem.reqQty,
+              rcvQty: reqDetailItem.rcvQty,
+              status: reqDetailItem.status,
+            };
+            newReqDetailItems.push(newReqDetailItem);
+          });
+
+          this.setState({ requisitionDetail: newReqDetailItems });
+        });
     });
-
-    axios
-      .get("https://localhost:5001/api/Dept/deptPendingReq/3")
-      .then((response) => {
-        const items = response.data;
-
-        const sItems = [];
-        items.forEach((item) => {
-          const newItem = {
-            id: item.id,
-            employeeId: item.employeeId,
-            employee: this.state.employee.find(
-              (emp) => emp.id === item.employeeId
-            ),
-            dateOfRequest: item.dateOfRequest,
-            dateOfAuthorizing: item.dateOfAuthorizing,
-            authorizerId: item.authorizerId,
-            status: item.status,
-            comment: item.comment,
-          };
-          sItems.push(newItem);
-        });
-
-        this.setState({ requisition: sItems });
-      });
-
-    axios
-      .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
-      .then((response) => {
-        const items = response.data;
-
-        const sItems = [];
-        items.forEach((item) => {
-          const newItem = {
-            id: item.id,
-            requisitionId: item.requisitionId,
-            stationeryId: item.stationeryId,
-            stationery: this.state.stationery.find(
-              (stat) => stat.id === item.stationeryId
-            ),
-            reqQty: item.reqQty,
-            rcvQty: item.rcvQty,
-            status: item.status,
-          };
-          sItems.push(newItem);
-        });
-
-        this.setState({ requisitionDetail: sItems });
-      });
   }
 
   handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
@@ -167,17 +171,28 @@ class ManageDepartment extends Component {
     });
     this.setState(
       Object.assign(this.state.department, {
-        collection: updatedCollectionId,
+        collectionId: updatedCollectionId,
       }),
       () => {
-        console.log(this.state.department);
+        this.postDeptCollection();
       }
     );
+  }
 
-    axios.post(
-      "https://localhost:5001/api/Dept/deptCollection/3",
-      this.state.department
-    );
+  async postDeptCollection() {
+    let sendDepartment = {};
+    sendDepartment = {
+      Id: Number(this.state.department.id),
+      CollectionId: Number(this.state.department.collectionId),
+    };
+
+    console.log(sendDepartment);
+
+    axios
+      .post("https://localhost:5001/api/Dept/deptCollection/3", sendDepartment)
+      .then((response) => {
+        console.log(response);
+      });
   }
 
   handleApprove(requisitionId) {

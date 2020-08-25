@@ -12,6 +12,7 @@
 
 .popupInner {
     position: absolute;
+    height: 25%;
     left: 30%;
     right: 30%;
     top: 35%;
@@ -33,12 +34,21 @@ fieldset{
 
 .formSection {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    padding: 5px;
 }
-
+.formBody {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+}
+.formCloseBtn{
+    margin: 5px;
+}
 .formButtons {
     display: flex;
     justify-content: center;
+    padding: 5px;
 }
 
 .poPopupInner {

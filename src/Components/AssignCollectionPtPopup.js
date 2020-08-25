@@ -38,7 +38,7 @@ class AssignCollectionPtPopup extends Component {
     return (
       <div>
         <button className="manageButton" onClick={this.openModal}>
-          {this.props.department.collection === null ? "Set" : "Change"}{" "}
+          {this.props.department.collectionId === null ? "Set" : "Change"}{" "}
         </button>
         <Popup
           open={this.state.open}
@@ -53,7 +53,7 @@ class AssignCollectionPtPopup extends Component {
               </a>
               <div className="dialogHeader">
                 <h2>
-                  {this.props.department.collection === null
+                  {this.props.department.collectionId === null
                     ? "Select Stationery Collection Point"
                     : "Current Stationery Collection Point"}
                 </h2>

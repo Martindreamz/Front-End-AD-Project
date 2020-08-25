@@ -28,10 +28,12 @@ class PlaceOrder extends Component {
             purchaseOrders: [],
             isEditing: false,
             redirect: false,
-            displayPopup: false
+            displayPopup: false,
+            identity: JSON.parse(sessionStorage.getItem("mySession"))
         }
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
+        this.setRedirect = this.setRedirect.bind(this);
     }
 
     closePopup = () => {
@@ -123,7 +125,7 @@ class PlaceOrder extends Component {
 
     handleChange(event, index) {
         const { name, value } = event.target;
-
+        console.log('name',name,'value',value)
         if (name == "selectedSupplier") {
             this.setState(prevState => {
                 const reorder = [...prevState.data];
@@ -199,7 +201,7 @@ class PlaceOrder extends Component {
 
                 //create PO
                 var purchaseOrder = {
-                    //clerkId: user.getId(),
+                    //clerkId: this.state.identity,
                     clerkId: 15,
                     SupplierId: supplier,
                     status: "ordered",
@@ -215,7 +217,8 @@ class PlaceOrder extends Component {
 
             this.setState({
                 purchaseOrders: purchaseOrders,
-                redirect: true,
+                redirect: true
+                
             }, () => { this.postPO() }
 
             )
@@ -310,7 +313,24 @@ class PlaceOrder extends Component {
             console.log(this.state.selected)
         }
 
+        if (name == "addNewItem") {
+            this.setState(prevState => {
+                const CurrData = prevState.data
+                CurrData.push(value)
+                return { data: CurrData }
+            })
+        }
+
     }
+
+    addNewItem = (item) => {
+        console.log('parent get data',item)
+    this.setState(prevState => {
+        const CurrData = prevState.data
+        CurrData.push(item)
+        return { data: CurrData }
+    })
+}
 
     render() {
         var CurrencyFormat = require('react-currency-format')
@@ -320,45 +340,47 @@ class PlaceOrder extends Component {
                 {this.state.displayPopup ?
                     <PlaceOrderPopup
                         data={this.state.data}
-                        handleSubmit={this.handleSubmit}
-                        closePopup={this.closePopup} /> : null}
-                <div className="tableBody">
-                    <PlaceOrderTable
-                        data={this.state.data}
-                        onEdit={this.state.isEditing}
-                        handleChange={this.handleChange}
-                        addItem={this.addItem}
-                        all={this.state.selectAll}
-                        selected={this.state.selected}
-                        iconButton={this.handleIconButton}
-                    />
-                    <br />
-                    <div className="tablebottom">
-                        <h3>Sub total:
-                        <CurrencyFormat
-                                value={this.state.subTotal}
-                                decimalScale={2}
-                                thousandSeparator={true} 
-                                fixedDecimalScale={true}
-                                displayType={'text'}
-                                prefix={'$'} />
-                        </h3>
+                        closePopup={this.closePopup}
+                        newItem={this.addNewItem}
+                    /> : null}
+                {this.state.data != null &&
+                    <div className="tableBody">
+                        <PlaceOrderTable
+                            data={this.state.data}
+                            onEdit={this.state.isEditing}
+                            handleChange={this.handleChange}
+                            addItem={this.addItem}
+                            all={this.state.selectAll}
+                            selected={this.state.selected}
+                            iconButton={this.handleIconButton}
+                        />
                         <br />
-                        {this.state.isEditing?
-                            <div>
-                                <button name="displayPopup" value={true} onClick={this.handleChange} className="button">Add Items</button>
-                                <button name="reset" className="button" onClick={this.handleChange}>Cancel</button>
-                                < button name="save" value={false} className="button" onClick={this.handleChange}>Save</button>
-                            </div>
-                            :
-                            <div>
-                                < button name="isEditing" value={true} className="button" onClick={this.handleChange}>Edit</button>
-                                
-                                <button name="submit" className="button" name="submit" onClick={this.handleChange}>Submit</button>
-                               
-                            </div>}
-                    </div>
-                </div>
+                        <div className="tablebottom">
+                            <h3>Sub total:
+                        <CurrencyFormat
+                                    value={this.state.subTotal}
+                                    decimalScale={2}
+                                    thousandSeparator={true}
+                                    fixedDecimalScale={true}
+                                    displayType={'text'}
+                                    prefix={'$'} />
+                            </h3>
+                            <br />
+                            {this.state.isEditing ?
+                                <div>
+                                    <button name="displayPopup" value={true} onClick={this.handleChange} className="button">Add Items</button>
+                                    <button name="reset" className="button" onClick={this.handleChange}>Cancel</button>
+                                    < button name="save" value={false} className="button" onClick={this.handleChange}>Save</button>
+                                </div>
+                                :
+                                <div>
+                                    < button name="isEditing" value={true} className="button" onClick={this.handleChange}>Edit</button>
+
+                                    <button name="submit" className="button" name="submit" onClick={this.handleChange}>Submit</button>
+
+                                </div>}
+                        </div>
+                    </div>}
             </div>
         )
     }

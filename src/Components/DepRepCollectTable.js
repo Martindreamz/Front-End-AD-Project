@@ -1,49 +1,21 @@
 import React, { Component } from "react";
-import axios from "axios";
+import Moment from "react-moment"; //need npm install --save moment react-moment
 import "../Components/InventoryTable.css";
 
 class DepRepCollectTable extends Component {
   constructor() {
     super();
-    this.state = {
-      //test data
-      data: [
-        {
-          id: 1,
-          description: "Clips Double 2",
-          qty: 5,
-        },
-        {
-          id: 2,
-          description: "Short Hand Book",
-          qty: 15,
-        },
-        {
-          id: 3,
-          description: "Pad Post It 2 x 4",
-          qty: 50,
-        },
-        {
-          id: 4,
-          description: "Trays in/out",
-          qty: 25,
-        },
-        {
-          id: 5,
-          description: "Stapler No.28",
-          qty: 55,
-        },
-      ],
-    };
+    this.state = {};
   }
 
   render() {
-    const collectItem = this.state.data.map((item) => (
+    const collectItem = this.props.disbursementDetail.map((item) => (
       <tr className="tableRow">
-        <td>{item.description}</td>
+        <td>{item.stationeryDesc}</td>
         <td>{item.qty}</td>
       </tr>
     ));
+
     return (
       <div className="overallContainer">
         <div className="tableColumn">
@@ -59,9 +31,22 @@ class DepRepCollectTable extends Component {
 
         <div className="cardColumn">
           <div className="card">
-            <h2>Collection Point: </h2>
-            <p>Date: </p>
-            <p>Time: </p>
+            <h2>
+              Collection Point:{" "}
+              {this.props.disbursement.deliveryPoint
+                ? this.props.disbursement.deliveryPoint
+                : "No Collection Point assigned!"}
+            </h2>
+            <p>
+              Date:{" "}
+              <Moment format="D MMM YYYY">
+                {this.props.disbursement.date}
+              </Moment>
+            </p>
+            <p>
+              Time:{" "}
+              <Moment format="HH:mm A">{this.props.disbursement.time}</Moment>
+            </p>
           </div>
         </div>
       </div>
