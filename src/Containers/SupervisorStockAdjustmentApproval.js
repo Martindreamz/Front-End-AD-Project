@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import Header from "../Components/Headers/Header";
 import StoreMStockAdjustmentApprovalTable from "../Components/StoreMStockAdjustmentApprovalTable";
 import axios from "axios";
-import StockAdjustmentPopup from "../Components/StockAdjustmentPopup";
-import StoreMgrStockAdjustmentSumTable from "../Components/StoreMgrStockAdjustmentSumTable";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SupervisorDetailPopup from "../Components/SupervisorDetailPopup";
 import SupervisorStockAdjustmentApprovalTable from "../Components/SupervisorStockAdjustmentApprovalTable";
 import SupervisorStockAdjustmentSumTable from "../Components/SupervisorStockAdjustmentSumTable";
-  
+import StockAdjustmentPopup from "../Components/StockAdjustmentPopup";
 
 class SupervisorStockAdjustmentApproval extends Component {
   constructor() {
@@ -71,7 +69,7 @@ class SupervisorStockAdjustmentApproval extends Component {
           }).then(res => res.json()).then(itemList => {
               this.componentDidMount();
           });
-        
+        this.componentDidMount();
     }
 
     showDetail = (item) =>{
@@ -98,13 +96,14 @@ class SupervisorStockAdjustmentApproval extends Component {
         })
         this.componentDidMount();
     }
+
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+      axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
             .then(response => {
                 const resdata =response.data
                 this.setState({ data: resdata})
-            })
+      })
     }
    
   render() {
@@ -112,7 +111,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     return ( 
       <div>
             <Header />
-            {this.state.displayPopup ? < SupervisorDetailPopup popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
+            {this.state.displayPopup ? <StockAdjustmentPopup  popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
             {this.state.displayDetailTable? <SupervisorStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup}/>:null}
             <div className="inventoryBody mt-1">
                 {(this.state.data && this.state.data.length)? 

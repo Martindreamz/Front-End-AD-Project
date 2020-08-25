@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './InventoryPopup.css';
+import './StockAdjustmentPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';

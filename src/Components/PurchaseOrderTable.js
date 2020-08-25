@@ -1,60 +1,63 @@
+// JavaScript source code
+import "./InventoryTable.css"
 import React, { Component } from "react";
-import "./InventoryTable.css";
-import CurrencyFormat from "react-currency-format";
+import Moment from 'moment';
 
 class PurchaseOrderTable extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-          data: this.props.data
-      }
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            data:this.props.data
+        }
+    }
 
-  render() {
-      var CurrencyFormat = require("react-currency-format");
-      console.log('this is from purchase table', this.state.data)
-    const orderItem = this.props.data.map((item) => (
-      <tr className="tableRow">
-        <td>{item.id}</td>
-        <td>description</td>
-        <td>{item.qty}</td>
-        <td>
-          <CurrencyFormat
-            value={item.price}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            displayType={"text"}
-            prefix={"$"}
-          />{" "}
-          /{item.unit}
-        </td>
-        <td>
-          <CurrencyFormat
-            value={item.price * item.qty}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            displayType={"text"}
-            prefix={"$"}
-          />
-        </td>
-       
-      </tr>
-    ));
+    render() {
+        //Moment.locale('en');
+        var CurrencyFormat = require("react-currency-format");
+        const orderItem =
+            this.props.data != null &&
+            this.props.data.map((item, index) => (
+                <tr className="tableRow" key={item.poNum}>
+                    <td>{item.poNum}</td>
+                    <td>{item.Sname}</td>
+                    <td>{Moment(item.date).format('YYYY-MM-DD HH:mm')}</td>
+                    <td>
+                        <CurrencyFormat
+                            value={item.subtotal}
+                            decimalScale={2}
+                            thousandSeparator={true}
+                            fixedDecimalScale={true}
+                            displayType={"text"}
+                            prefix={"$"}
+                        />
+                    </td>
+                    <td>
+                        <button name="view" onClick={event => this.props.handleChange(event,index)}>View details</button>
+                    </td>
+                    <td>{item.status == "ordered" ?
+                        <button value={item.id} name="delivered" onClick={event => this.props.handleChange(event, index)}>Recieved</button>
+                        :
+                        item.status
+                        }
+                    </td>
+                </tr>
+            ));
 
-      return (
-          this.state.data!=null &&
-      <table className="purchaseOrderTable">
-        <thead className="tableHeader">
-          <th>Item Code</th>
-          <th>Description</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Amount</th>
-         
-        </thead>
-        <tbody>{orderItem}</tbody>
-      </table>
-    );
-  }
+        return (
+            this.props.data != null &&
+            <table className="placeOrderTable">
+                <tr className="tableHeader">
+                    <th>PO number</th>
+                    <th>Supplier</th>
+                    <th>Order Date</th>
+                    <th>Subtotal</th>
+                    <th>Status</th>
+                   
+                </tr>
+                <tbody className="tbody">{orderItem}</tbody>
+            </table>
+        );
+    }
 }
+
 export default PurchaseOrderTable;

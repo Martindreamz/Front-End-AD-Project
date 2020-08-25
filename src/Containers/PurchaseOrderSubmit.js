@@ -2,11 +2,12 @@
 
 import React, { Component } from "react"
 import PurchaseOrder from "../Components/PurchaseOrder"
+import PurchaseOrderTable from "../Components/PurchaseOrderTable"
 import Header from '../Components/Headers/Header';
 import "./general.css"
-import Utils from "../Utils"
 import axios from 'axios';
 import Pdf from "react-to-pdf";
+
 
 
 class PurchaseOrderSubmit extends Component {
@@ -14,46 +15,48 @@ class PurchaseOrderSubmit extends Component {
     constructor() {
         super()
         this.state = {
-            poId:[1,2],
             data: [],
-            currentSupplier:null,
-            currentPO: null
+            Allpos:[],
+            currentPO: null,
+            Suppliers: null,
+            uSuppliers:null
         }
+        this.handleChange = this.handleChange.bind(this)
+        this.setUniqueSuppliers = this.setUniqueSuppliers.bind(this)
 
     }
 
     componentDidMount() {
-        var poId = Utils.getPoCreated()
-        if (poId != null) {
-            this.setState({ poId: poId })
-        }
-        console.log('poId', poId)
+      
         const data = [];
-        //get pos for each PO
-        this.state.poId.forEach(id => {
-            const subtotal=0
-            const url = 'https://localhost:5001/api/Store/getPO/' + id
-            axios.get(url).then(response => {
-                const po = response.data;
-                const Pod = [];
-                this.setState({ pos: po });
+        const Suppliers = [];
+       
 
-               //console.log('response', response)
-               // console.log('po', po)
-               
-                     //get supplier 
+        axios.get('https://localhost:5001/api/Store/getAllPOs').then(response => {
+            //console.log('get all POs', response.data);
+            const AllPo = response.data;
+
+
+            AllPo.forEach(po => {
+                const Pod = [];
+                var subTotal = 0;
+
+                //get supplier 
                 const Supplierurl = 'https://localhost:5001/api/Store/getSupplier/' + po.supplierId
-                    axios.get(Supplierurl).then(supplier => {
-                        const sup = supplier.data
-                        
-                    
+                axios.get(Supplierurl).then(supplier => {
+                    const sup = supplier.data
+                    const Sname = supplier.name
+                    const supplierId = supplier.id
+
+                    Suppliers.push(sup)
+
                     //get clerk details
-                const Clerkurl = 'https://localhost:5001/api/Store/getEmployee/' + po.clerkId
+                    const Clerkurl = 'https://localhost:5001/api/Store/getEmployee/' + po.clerkId
                     axios.get(Clerkurl).then(clerk => {
                         const clerk1 = clerk.data
                         //console.log(clerk)
 
-                        const Podurl = 'https://localhost:5001/api/Store/getPOD/' + id
+                        const Podurl = 'https://localhost:5001/api/Store/getPOD/' + po.id
                         axios.get(Podurl).then(pod => {
                             const pods = pod.data
                             //console.log('pod',pod)
@@ -66,14 +69,11 @@ class PurchaseOrderSubmit extends Component {
                                     const desc = stationery.data.desc
                                     const unit = stationery.data.unit
 
-
-                                    //get supplier item (price)
                                     const supUrl = 'https://localhost:5001/api/Store/getSupplierItems/' + pod.stationeryId
                                     axios.get(supUrl).then(supItem => {
 
                                         const price = supItem.data.find(sitem => sitem.supplierId === sup.id).price
-                                        //console.log('supItem', supItem)
-                                        //create model for each row
+                                      
                                         const FormattedPod = {
                                             id: pod.stationeryId,
                                             desc: desc,
@@ -82,55 +82,129 @@ class PurchaseOrderSubmit extends Component {
                                             price: price
                                         }
                                         Pod.push(FormattedPod)
-                                        
+                                        //subTotal += (pod.qty * price)
+
+                                        for (pod in Pod) {
+                                            subTotal += price * pod.qty
+
+                                        }
+
                                         //console.log('formatted pod', FormattedPod )
                                     })
                                 })
                             })
+                            //console.log('POD',Pod)
 
-                            //if (Pod != null) {
-                            //    subtotal = Pod.reduce(subtotal,(total, pod) => total + (pod.price * pod.qty))
-                            //}
+                          
 
-                    const record = {
-                        poNum: po.id,
-                        date: po.dateOfOrder,
-                        clerk: clerk1,
-                        supplier: sup,
-                        pod: Pod,
-                        subtotal: subtotal
+                            const record = {
+                                poNum: po.id,
+                                date: po.dateOfOrder,
+                                clerk: clerk1,
+                                Sname: sup.name,
+                                supplierId: sup.id,
+                                supplier: sup,
+                                status: po.status,
+                                StockAdjustmentId: po.StockAdjustmentId,
+                                pod: Pod,
+                                subtotal: Pod.reduce((total, pod) => total + pod.qty * pod.price, 0)
                             }
 
                             data.push(record)
-                            //sort by supplier priority
-                            data.sort((a, b) => a.supplier.priority - b.supplier.priority)
-                            console.log('data', data)
 
+                            //sort by supplier priority
+                            data.sort((a, b) => b.poNum - a.poNum)
+                            //console.log('data', data)
+                        })
+            
                             this.setState({
                                 data: data,
-                                currentSupplier: data[0].supplier,
-                                //currentPO: data[0]
+                                Allpos: data,
+                                suppliers: Suppliers 
 
-                            })
-                           // console.log('formatted record', record)
-                            console.log('state data', this.state.data)
-                            console.log('state currentPO', this.state.currentPO)
+                            }, () => this.setUniqueSuppliers())
 
-                    })
-                
-            });
+                          // console.log('formatted record', record)
+                        console.log('state data', this.state.data)
+                        //console.log('state currentPO', this.state.currentPO)
+                        //console.log('state suppliers', this.state.suppliers)
+                        console.log('AllPOs', this.state.Allpos)
+                        })
+
                     });
-                    });
-            });
-       
-
+                });
+            })
     }
 
+    setUniqueSuppliers() {
+        const sSet = new Set(this.state.suppliers.map(s => s.id))
+        const usups=[]
+        sSet.forEach(id => {
+            const usup = this.state.suppliers.find(supplier => supplier.id == id)
+            usups.push(usup)
+        })
+
+        const sorted_list = usups.sort((a, b) => b.priority- a.priority)
+        this.setState({ uSuppliers: sorted_list})
+    }
+
+    
+
+    handleChange(event,index) {
+        const { name, value } = event.target;
+        console.log('name', name, 'value', value, 'index', index)
+
+        if (name == 'data') {
+            const newData = value == 'all' ? this.state.Allpos :
+                this.state.Allpos.filter(po => po.supplierId == value)
+
+            console.log('new data', newData)
+            this.setState({
+                data: newData,
+                currentPO:null
+            })
+        }
+
+        if (name == 'view') {
+            this.setState(prevState => {
+                const targetData = prevState.data[index];
+                return { currentPO: targetData }
+            })
+
+        }
+
+        if (name == "delivered") {
+            this.setState(prevState => {
+                const reorder = [...prevState.data];
+                reorder[index] = {
+                    ...reorder[index],
+                    status: "delivered"
+                }
+
+                const id = reorder[index].poNum
+                const temp = {id:id}
+                console.log('id', id)
+                //const url = 'https://localhost:5001/api/Store/PORecieved/'
+                axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
+                return { data: reorder }
+            })
+        }
+    }
 
     render() {
-        //var sups = this.state.suppliers
-        var tabs = this.state.data.map((item) =>
-            <button key={item.poNum} name="currentSupplier" class="button" value={item.poNum}>{item.supplier.name}</button>
+       
+       
+        //console.log('usuppliers',this.state.uSuppliers)
+        var tabs = this.state.uSuppliers!=null && this.state.uSuppliers.map((item) => 
+            <button
+                key={item.id}
+                name="data"
+                class="button"
+                value={item.id}
+                onClick={this.handleChange}
+            >
+                {item.name}
+            </button>
         )
         const ref = React.createRef();
 
@@ -140,8 +214,8 @@ class PurchaseOrderSubmit extends Component {
                 <Header />
                 <div className="tableBody">
                     <div className="btn-group">
-                        <button name="currentSupplier" class="button" value='all'>All</button>
-                        {tabs}
+                        <button name="data" class="button" value='all' onClick={this.handleChange}>All</button>
+                        {this.state.suppliers!=null && tabs}
                     </div>
                     {this.state.currentPO != null &&
                         <div>
@@ -153,11 +227,19 @@ class PurchaseOrderSubmit extends Component {
                         <div ref={ref}>
                             <PurchaseOrder
                                 data={this.state.currentPO}
-                                currentSupplier={this.state.data} />
+                                />
                         </div>
-                        </div>
+                    </div>
+                    }
+                    {this.state.currentPO == null &&
+                        <PurchaseOrderTable
+                            data={this.state.data}
+                            handleChange={this.handleChange}
+                        />}
+                       
+               
                         
-                        }
+                        
                         
                     </div>
                    
