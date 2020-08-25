@@ -14,7 +14,7 @@ class StoreMStockAdjustmentApprovalTable extends Component {
           <tr className="tableRow" id={item.stockAdustmentId}>
             <td onClick={()=>this.props.showDetail(item)}>{item.stockAdustmentId}</td>
             <td onClick={()=>this.props.showDetail(item)}>{item.empName}</td>
-            <td onClick={()=>this.props.showDetail(item)}>{item.amount}</td>
+            <td onClick={()=>this.props.showDetail(item)}>{(item.amount).toFixed(2)}</td>
             <td>
               <button className="redButton mr-1" onClick={()=>this.props.rejectRequest(item)}>Reject</button>
               <button className="greenButton ml-1" onClick={()=>this.props.showPopup(item)}>Approve</button>

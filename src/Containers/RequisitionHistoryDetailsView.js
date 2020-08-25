@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import RequisitionHistory from "../Components/RequisitionHistory";
 import RequisitionHistoryDetails from "../Components/RequisitionHistoryDetails";
 import Header from '../Components/Headers/Header';
+import RequisitionApplyForm from "../Components/RequisitionApplyForm";
+import RequisitionForm from "./RequisitionForm";
 
 class RequisitionHistoryDetailsView extends Component {
     constructor() {
@@ -50,13 +52,14 @@ class RequisitionHistoryDetailsView extends Component {
     render() {
         return (
             <div>
-                <Header />
+               
                 <div className="container">
                     <div className="row" >
                         {(this.state.showHistory == true && this.state.showHistoryDetails == false) ?
                             <div className="col-sm-12  ">
                                 <h1>History</h1>
                                 <RequisitionHistory historyDetails={this.showHisDetail} />
+                                
                             </div>
                             : null
                         }
