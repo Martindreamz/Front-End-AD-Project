@@ -3,6 +3,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './InventoryTable.css';
 import { domain } from '../Configurations/Config';
+import Axios from "axios";
 
 
 class InventoryTable extends React.Component {
@@ -12,11 +13,12 @@ class InventoryTable extends React.Component {
             //state to reuse table for managed recieve goods and inventory check screens
             isCheckInvTable: props.type
         }
-        this.deleteButton = this.deleteButton.bind(this)
     }
     //event Listeners
-    deleteButton = () => {
+    deleteButton = (event) => {
         //actions to delete record
+        const selectedId = event.currentTarget.id
+        Axios.delete('https://localhost:5001/api/store/stationery/delete/' + selectedId);
     }
 
     render() {
@@ -31,7 +33,7 @@ class InventoryTable extends React.Component {
                     {this.state.isCheckInvTable ? null :
                         <div className="tableIcons">
                             <EditIcon id={item.Id} onClick={this.props.editData} />
-                            <DeleteIcon onClick={this.deleteButton} />
+                            <DeleteIcon id={item.Id} onClick={this.deleteButton} />
                         </div>
                     }
                 </td>

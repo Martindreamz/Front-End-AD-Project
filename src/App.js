@@ -55,8 +55,7 @@ class App extends Component {
                         <Route path="/test1">
                             <CheckInventory />
                         </Route>
-                        <Route path="/test2">
-                            <DiscrepancyList />
+                        <Route path="/test2/:id" component={DiscrepancyList}>
                         </Route>
                         <Route path="/test3">
                             <StockTrendAnalysis />

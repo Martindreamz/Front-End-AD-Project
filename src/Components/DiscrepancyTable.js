@@ -12,23 +12,17 @@ class DiscrepancyTable extends React.Component {
 
         }
     }
-    //event Listeners
-    deleteButton = () => {
-        //actions to delete record
-    }
 
     render() {
         const discrepancyItem = this.props.data.map(item =>
             <tr className="tableRow" >
-                <td>{item.id}</td>
-                <td>{item.name}</td>
+                <td>{item.stationeryId}</td>
+                <td>{item.desc}</td>
                 <td className="tableQuantity">
-                    {item.quantity}
+                    {item.discpQty}
                 </td>
-                <td>${item.cost}</td>
-                <td>${item.cost * item.quantity}</td>
                 <td>
-                    <input id={item.id} type="text" onChange={this.props.handleReasonsInput} />
+                    <input id={item.stationeryId} type="text" onChange={this.props.handleReasonsInput} />
                 </td>
             </tr>
         )
@@ -38,9 +32,7 @@ class DiscrepancyTable extends React.Component {
                 <tr className="tableHeader">
                     <th>Item Code</th>
                     <th>Description</th>
-                    <th>Total Quantity</th>
-                    <th>Cost</th>
-                    <th>Subtotal</th>
+                    <th>Discrepancy Quantity</th>
                     <th>Reasons</th>
                 </tr>
                 {discrepancyItem}
