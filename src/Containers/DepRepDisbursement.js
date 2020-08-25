@@ -9,68 +9,176 @@ class DepRepDisbursement extends Component {
     this.state = {
       showDistribution: false,
       class: "collectView",
+      department: {},
+      collectionInfo: [],
+      disbursement: {},
+      requisition: {},
+      stationery: [],
+      requisitionDetail: [],
+      disbursementDetail: [],
     };
     this.changeView = this.changeView.bind(this);
   }
 
   componentDidMount() {
-    axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
-      const items = response.data;
-      this.setState({ stationery: items });
-    });
-
-    axios.get("https://localhost:5001/api/Dept/reqDetails").then((response) => {
-      const items = response.data;
-
-      const sItems = [];
-      items.forEach((item) => {
-        const newItem = {
-          id: item.id,
-          stationeryId: item.stationeryId,
-          desc: this.state.stationery.find(
-            (stat) => stat.id === item.stationeryId
-          ).desc,
-        };
-        sItems.push(newItem);
-      });
-
-      this.setState({ requisitionDetail: sItems });
+    axios.get("https://localhost:5001/api/Dept/2").then((response) => {
+      const departmentItems = response.data;
+      this.setState({ department: departmentItems });
     });
 
     axios
-      .get("https://localhost:5001/api/Dept/disbursementDetailByDept/3")
+      .get("https://localhost:5001/api/Dept/allCollectionpt")
       .then((response) => {
-        const disDetailItems = response.data;
+        const collectionItems = response.data;
+        this.setState({ collectionInfo: collectionItems });
 
-        const sItems = [];
-        disDetailItems.forEach((disDetailItem) => {
-          const newItem = {
-            id: disDetailItem.id,
-            disbursementListId: disDetailItem.disbursementListId,
-            requisitionDetailId: disDetailItem.requisitionDetailId,
-            stationeryDesc: this.state.requisitionDetail.find(
-              (req) => req.id === disDetailItem.requisitionDetailId
-            ).desc,
-            qty: disDetailItem.qty,
-          };
-          sItems.push(newItem);
+        axios
+          .get("https://localhost:5001/api/Dept/latestDisbursementByDept/2")
+          .then((response) => {
+            const disbursementItem = response.data;
+
+            let newDisbursementItem = {};
+            newDisbursementItem = {
+              id: disbursementItem.id,
+              departmentId: disbursementItem.departmentId,
+              date: disbursementItem.date,
+              time: collectionItems.find(
+                (collect) =>
+                  collect.collectionPoint === disbursementItem.deliveryPoint
+              ).collectionTime,
+              deliveryPoint: disbursementItem.deliveryPoint,
+            };
+
+            this.setState({ disbursement: newDisbursementItem });
+          });
+      });
+
+    axios.get("https://localhost:5001/api/Dept/deptEmp/2").then((response) => {
+      const employeeItems = response.data;
+      this.setState({ employee: employeeItems });
+
+      axios
+        .get("https://localhost:5001/api/Dept/deptToDeliverReq/2")
+        .then((response) => {
+          const toDeliverReqItems = response.data;
+
+          const newtoDeliverReqItems = [];
+          toDeliverReqItems.forEach((toDeliverReqItem) => {
+            const newtoDeliverReqItem = {
+              id: toDeliverReqItem.id,
+              employeeId: toDeliverReqItem.employeeId,
+              employeeName: employeeItems.find(
+                (emp) => emp.id === toDeliverReqItem.employeeId
+              ).name,
+              dateOfRequest: toDeliverReqItem.dateOfRequest,
+              dateOfAuthorizing: toDeliverReqItem.dateOfAuthorizing,
+              authorizerId: toDeliverReqItem.authorizerId,
+              status: toDeliverReqItem.status,
+              comment: toDeliverReqItem.comment,
+            };
+            newtoDeliverReqItems.push(newtoDeliverReqItem);
+          });
+
+          this.setState({ requisition: newtoDeliverReqItems });
+
+          axios
+            .get("https://localhost:5001/api/Dept/stationery")
+            .then((response) => {
+              const stationeryItems = response.data;
+              this.setState({ stationery: stationeryItems });
+
+              axios
+                .get(
+                  "https://localhost:5001/api/Dept/disbursementDetailByDept/2"
+                )
+                .then((response) => {
+                  const disDetailItems = response.data;
+
+                  axios
+                    .get("https://localhost:5001/api/Dept/deptToDeliverReq/2")
+                    .then((response) => {
+                      const tempToDeliverReqItems = response.data;
+
+                      const newtempToDeliverReqItems = [];
+                      tempToDeliverReqItems.forEach((tempToDeliverReqItem) => {
+                        const newtempToDeliverReqItem = {
+                          id: tempToDeliverReqItem.id,
+                          employeeName: employeeItems.find(
+                            (emp) => emp.id === tempToDeliverReqItem.employeeId
+                          ).name,
+                        };
+                        newtempToDeliverReqItems.push(newtempToDeliverReqItem);
+                      });
+
+                      axios
+                        .get(
+                          "https://localhost:5001/api/Dept/deptToDeliverReqDetail/2"
+                        )
+                        .then((response) => {
+                          const reqDetailsItems = response.data;
+
+                          const newReqDetailItems = [];
+                          reqDetailsItems.forEach((reqDetailItem) => {
+                            const newReqDetailItem = {
+                              id: reqDetailItem.id,
+                              requisitionId: reqDetailItem.requisitionId,
+                              employee: newtempToDeliverReqItems.find(
+                                (req) => req.id === reqDetailItem.requisitionId
+                              ).employeeName,
+                              stationeryId: reqDetailItem.stationeryId,
+                              desc: stationeryItems.find(
+                                (stat) => stat.id === reqDetailItem.stationeryId
+                              ).desc,
+                              status: reqDetailItem.status,
+                              reqQty: reqDetailItem.reqQty,
+                            };
+                            newReqDetailItems.push(newReqDetailItem);
+                          });
+
+                          this.setState({
+                            requisitionDetail: newReqDetailItems,
+                          });
+
+                          axios
+                            .get(
+                              "https://localhost:5001/api/Dept/latestDisbursementByDept/2"
+                            )
+                            .then((response) => {
+                              const disItem = response.data;
+
+                              const newDisDetailItems = [];
+                              disDetailItems.forEach((disDetailItem) => {
+                                if (
+                                  disDetailItem.disbursementListId ===
+                                  disItem.id
+                                ) {
+                                  const newDisDetailItem = {
+                                    id: disDetailItem.id,
+                                    disbursementListId:
+                                      disDetailItem.disbursementListId,
+                                    requisitionDetailId:
+                                      disDetailItem.requisitionDetailId,
+                                    stationeryDesc: newReqDetailItems.find(
+                                      (reqDetail) =>
+                                        reqDetail.id ===
+                                        disDetailItem.requisitionDetailId
+                                    ).desc,
+                                    qty: disDetailItem.qty,
+                                  };
+                                  newDisDetailItems.push(newDisDetailItem);
+                                }
+                              });
+
+                              this.setState({
+                                disbursementDetail: newDisDetailItems,
+                              });
+                            });
+                        });
+                    });
+                });
+            });
         });
-
-        this.setState({ disbursementDetail: sItems });
-      });
-
-    axios
-      .get("https://localhost:5001/api/Dept/latestDisbursementByDept/3")
-      .then((response) => {
-        const item = {
-          id: response.data.id,
-          departmentId: response.data.departmentId,
-          date: response.data.date,
-          deliveryPoint: response.data.deliveryPoint,
-        };
-
-        this.setState({ disbursement: item });
-      });
+    });
   }
   changeView() {
     this.setState((prevState) => {
@@ -91,6 +199,9 @@ class DepRepDisbursement extends Component {
         <Header />
         <DepRepDistriCollectionList
           showDistribution={this.state.showDistribution}
+          disbursement={this.state.disbursement}
+          disbursementDetail={this.state.disbursementDetail}
+          requisitionDetail={this.state.requisitionDetail}
         />
         <div className={this.state.class}>
           <button onClick={this.changeView}>

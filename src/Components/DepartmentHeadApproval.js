@@ -33,17 +33,17 @@ class DepartmentHeadApproval extends Component {
                     <tr className="tableRow">
                       <Accordion style={accordionStyle}>
                         <AccordionSummary>
-                          <td>{x.employee.name}</td>
+                          <td>{x.employeeName}</td>
                           <td>
                             <button
                               className="redButton"
-                              onClick={() => this.props.handleApprove(x.id)}
+                              onClick={() => this.props.handleReject(x.id)}
                             >
                               Reject
                             </button>
                             <button
                               className="greenButton"
-                              onClick={() => this.props.handleReject(x.id)}
+                              onClick={() => this.props.handleApprove(x.id)}
                             >
                               Approve
                             </button>
@@ -67,9 +67,9 @@ class DepartmentHeadApproval extends Component {
                               if (x.id === y.requisitionId) {
                                 return (
                                   <tr>
-                                    <th>{y.stationery.desc}</th>
+                                    <th>{y.stationeryDesc}</th>
                                     <th>{y.reqQty}</th>
-                                    <th>{y.stationery.unit}</th>
+                                    <th>{y.stationeryUnit}</th>
                                   </tr>
                                 );
                               }

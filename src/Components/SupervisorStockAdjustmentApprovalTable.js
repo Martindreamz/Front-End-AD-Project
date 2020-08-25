@@ -31,13 +31,16 @@ class InventoryPopup extends React.Component {
                         </div>
                         <div  className="col-sm-12 text-center">
                             <table className="table">
-                                <tr className="tableRow">
-                                    <th>Item Code</th>
-                                    <th>Quantity Adjusted</th>
-                                    <th>Amount</th>
-                                    <th>Reason</th>
-                                </tr>
+                                
+                                    <tr className="tableRow">
+                                        <th>Item Code</th>
+                                        <th>Quantity Adjusted</th>
+                                        <th>Amount</th>
+                                        <th>Reason</th>
+                                    </tr>
+                            <tbody>    
                             {tableData}
+                            </tbody>
                             </table>
                         </div>
                     </div>

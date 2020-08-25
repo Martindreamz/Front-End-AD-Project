@@ -12,14 +12,27 @@
 
 .popupInner {
     position: absolute;
-    left: 30%;
-    right: 30%;
-    top: 25%;
-    bottom: 25%;
+    left: 15%;
+    right: 15%;
+    top: 20%;
+    bottom: 15%;
     margin: auto;
     border-radius: 20px;
     background: white;
 }
 .tableRow{
     display: flex;
+}
+
+thead, tbody { display: block; }
+
+.popupTable {
+    height: 180px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+.sumTable{
+    height: 520px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden; 
 }

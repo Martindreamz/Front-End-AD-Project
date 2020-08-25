@@ -12,6 +12,8 @@
 
 .popupInner {
     position: absolute;
+    max-height: 10%;
+    max-width: 25%;
     left: 35%;
     right: 35%;
     top: 25%;
@@ -24,6 +26,6 @@
 .popupMessage{
     text-align: center;
     font-weight: bold;
-    font-size: large; 
+    font-size: larger; 
 }
 
