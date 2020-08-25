@@ -15,32 +15,19 @@ class RequisitionApplyForm extends React.Component {
             newData: [],
             category: [],
             desc: [],
-
             message: '',
             currentFormObj: [],
-
             cat: '',
             openCat: false,
-
             showDescription: false,
             description: '',
             openDescription: false,
-
             showQtyUnit: false,
-
             add: false,
-
             showRow: false,
-
-            isAdd: false
+            isAdd: false,
+            identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
-        /*this.initialState = {
-            id: '',
-            category: '',
-            desc: '',
-            reqQty: ,
-            unit: '',
-        } */
         this.showCat = this.showCat.bind(this);
         this.closeCat = this.closeCat.bind(this);
         this.catOpen = this.catOpen.bind(this);
@@ -127,7 +114,7 @@ class RequisitionApplyForm extends React.Component {
     }
 
     saveRequisition = () => {
-        console.log(this.state.newData)
+        console.log({requisition:this.state.newData,session:1})
 
         //if (!this.props.isEdit) {
         fetch('https://localhost:5001/api/Dept/ApplyRequisition', {
@@ -135,7 +122,7 @@ class RequisitionApplyForm extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.newData)
+            body: JSON.stringify({requisition:this.state.newData,session:1})
 
         }).then(res => res.json())
             .then(requestForm => {
