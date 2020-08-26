@@ -76,7 +76,9 @@ class Navigation extends Component {
                 {/*Route for Dept Head*/}
                 {this.props.role === 'HEAD' ?
                     <Switch>
-
+                        <Route path="/manager">
+                            <ManageDepartment />
+                        </Route>
                     </Switch>
                     :
                     null
@@ -92,7 +94,9 @@ class Navigation extends Component {
                 {/*Route for Dept Rep*/}
                 {this.props.role === 'REPRESENTATIVE' ?
                     <Switch>
-
+                        <Route path="/DepRepDisbursement">
+                            <DepRepDisbursement />
+                        </Route>
                     </Switch>
                     :
                     null
@@ -100,70 +104,7 @@ class Navigation extends Component {
             </Router>    
         )
     }
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <Router>
-        {/*Route for clerk*/}
-        {this.props.role === "CLERK" ? (
-          <Switch>
-            <Route path="/manageInventory">
-              <ManageInventory />
-            </Route>
-            <Route path="/receivedGoods">
-              <ReceivedGoods />
-            </Route>
-            <Route path="/checkInventory">
-              <CheckInventory />
-            </Route>
-            <Route
-              path="/discrepancyList/:id"
-              component={DiscrepancyList}
-            ></Route>
-          </Switch>
-        ) : null}
-        {/*Route for Store Supervisor*/}
-        {this.props.role === "STRSUPV" ? (
-          <Switch>
-            <Route path="/StoreMStockAdjustmentApproval">
-              <StoreMStockAdjustmentApproval />
-            </Route>
-            <Route path="/trend">
-              <StockTrendAnalysis />
-            </Route>
-          </Switch>
-        ) : null}
-        {/*Route for Store Manager*/}
-        {this.props.role === "STRMGR" ? (
-          <Switch>
-            <Route path="/trend">
-              <StockTrendAnalysis />
-            </Route>
-          </Switch>
-        ) : null}
-        {/*Route for Dept Head*/}
-        {this.props.role === "HEAD" ? (
-          <Switch>
-            <Route path="/manager">
-              <ManageDepartment />
-            </Route>
-          </Switch>
-        ) : null}
-        {/*Route for Dept Staff*/}
-        {this.props.role === "STAFF" ? <Switch></Switch> : null}
-        {/*Route for Dept Rep*/}
-        {this.props.role === "REPRESENTATIVE" ? (
-          <Switch>
-            <Route path="/DepRepDisbursement">
-              <DepRepDisbursement />
-            </Route>
-          </Switch>
-        ) : null}
-      </Router>
-    );
-  }
+  
 }
 
 export default Navigation;
