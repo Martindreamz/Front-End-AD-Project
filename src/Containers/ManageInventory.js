@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import InventoryTable from '../Components/InventoryTable';
-import './ReceivedGoods.css';
+import './RecievedGoods.css';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
@@ -71,7 +71,7 @@ class ManageInventory extends React.Component {
 
     checkInventoryAction = () => {
         //redirect to check inventory url
-        window.location.href = domain
+        window.location.href = domain + 'checkInventory'
     }
     togglePopupAction = async () => {
         //show popup
@@ -113,7 +113,7 @@ class ManageInventory extends React.Component {
             <div>
                 <Header />
                 {this.state.showPopup ? <InventoryPopup closePopup={this.togglePopupAction} data={this.state.popupData} categoryData={this.state.categoryData} showCat={this.showCat} closeForm={this.closeForm} /> : null}
-                <div className="recievedGoodsBody">
+                <div className="inventoryBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
                     <InventoryTable data={this.state.data} editData={this.editInventoryAction} />
                     <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>

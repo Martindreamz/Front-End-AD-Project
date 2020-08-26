@@ -68,7 +68,7 @@ class ReceivedGoods extends React.Component {
     }
 
     submitForm = () => {
-        axios.post('https://localhost:5001/api/store/receivedGoods/15', this.state.discrepancy)
+        axios.post('https://localhost:5001/api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy)
             .then(response => {
                 {
                     window.location.href = domain

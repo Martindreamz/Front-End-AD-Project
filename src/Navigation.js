@@ -1,23 +1,37 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import ReceivedGoods from "./Containers/ReceivedGoods";
+import PlaceOrder from "./Containers/PlaceOrder";
+import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
+import CheckInventory from "./Containers/CheckInventory";
+import DiscrepancyList from "./Containers/DiscrepancyList";
+import RequisitionForm from "./Containers/RequisitionForm";
+import StoreMStockAdjustmentApproval from "./Containers/StoreMStockAdjustmentApproval";
+import ManageDepartment from "./Containers/ManageDepartment";
+import DepRepDisbursement from "./Containers/DepRepDisbursement";
+import SupplierList from "./Containers/SupplierList";
+import RequisitionHistoryDetailsView from "./Containers/RequisitionHistoryDetailsView";
+import DisbursementList from "./Containers/DisbursementList";
+import SupervisorStockAdjustmentApproval from "./Containers/SupervisorStockAdjustmentApproval";
+import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
+import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
+import ManageInventory from './Containers/ManageInventory';
 
 function Navigation(props) {
     <Router>
         {/*Route for clerk*/}
         {this.props.role === 'CLERK' ?
             <Switch>
-                <Route path="/clerk">
-                    <Header />
+                <Route path="/manageInventory">
+                    <ManageInventory />
                 </Route>
-                <Route path="/test">
-                    <RecievedGoods />
+                <Route path="/receivedGoods">
+                    <ReceivedGoods />
                 </Route>
-                <Route path="/test1">
+                <Route path="/checkInventory">
                     <CheckInventory />
                 </Route>
-                <Route path="/test2">
-                    <DiscrepancyList />
-                </Route>
+                <Route path="/discrepancyList/:id" component={DiscrepancyList}></Route>
             </Switch>
             :
             null
@@ -28,6 +42,9 @@ function Navigation(props) {
                 <Route path="/StoreMStockAdjustmentApproval">
                     <StoreMStockAdjustmentApproval />
                 </Route>
+                <Route path="/trend">
+                    <StockTrendAnalysis />
+                </Route>
             </Switch>
             :
             null
@@ -35,7 +52,9 @@ function Navigation(props) {
         {/*Route for Store Manager*/}
         {this.props.role === 'STRMGR' ?
             <Switch>
-               
+                <Route path="/trend">
+                    <StockTrendAnalysis />
+                </Route>
             </Switch>
             :
             null

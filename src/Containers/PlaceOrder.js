@@ -6,7 +6,6 @@ import './general.css';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
-import user from '../UserProfile';
 import PlaceOrderPopup from '../Components/PlaceOrderPopup';
 import Utils from "../Utils";
 

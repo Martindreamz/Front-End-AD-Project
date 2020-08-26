@@ -19,6 +19,7 @@ import SupervisorStockAdjustmentApproval from "./Containers/SupervisorStockAdjus
 import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
 import Home from './Containers/Home';
+import ManageInventory from "./Containers/ManageInventory";
 
 class App extends Component {
     constructor() {
@@ -37,28 +38,20 @@ class App extends Component {
                         <Route path="/" exact>
                             {this.state.identity != null ? <Home /> : < Login />}
                         </Route>
-                        <Route path="/home">
-                            <Home />
-                        </Route>
-                        <Route path="/clerk">
-                            <Header />
-                        </Route>
-                        <Route path="/test">
-                            <ReceivedGoods />
-                        </Route>
                         <Route path="/requisitionForm">
                             <RequisitionForm />
                         </Route>
                         <Route path="/supplier">
                             <SupplierList />
                         </Route>
-                        <Route path="/test1">
-                            <CheckInventory />
-                        </Route>
-                        <Route path="/test2/:id" component={DiscrepancyList}>
-                        </Route>
                         <Route path="/test3">
                             <StockTrendAnalysis />
+                        </Route>
+                        <Route path="/test4">
+                            <ManageInventory />
+                        </Route>
+                        <Route path="/test1">
+                            <ReceivedGoods />
                         </Route>
                         <Route path="/RequisitionHistoryDetailsView">
                             <RequisitionHistoryDetailsView />
