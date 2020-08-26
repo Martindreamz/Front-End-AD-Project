@@ -1,6 +1,6 @@
 .inventoryBody {
-    display: flex; 
-    align-Items: center; 
+    display: flex;
+    align-Items: center;
     justify-Content: center;
     flex-direction: column;
 }

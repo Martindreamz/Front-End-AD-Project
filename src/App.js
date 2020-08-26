@@ -20,6 +20,7 @@ import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
 import Home from './Containers/Home';
 import ManageInventory from "./Containers/ManageInventory";
+import Navigation from "./Navigation";
 
 class App extends Component {
     constructor() {
@@ -86,6 +87,7 @@ class App extends Component {
                         </Route>
                     </Switch>
                 </Router>
+                {this.state.identity != null ? <Navigation role={this.state.identity.role} /> : null}
             </div>
         )
     }

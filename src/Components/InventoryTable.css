@@ -33,13 +33,12 @@
 }
 
 .inventoryTable {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  border: solid 0.5px;
-  width: 60%;
-  overflow: scroll;
-  
+    display: flex;
+    flex-direction: column;
+    border: solid 0.5px;
+    width: 60%;
+    overflow: scroll;
+    height: 600px;
 }
 
 .placeOrderTable {

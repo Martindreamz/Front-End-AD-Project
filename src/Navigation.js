@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ReceivedGoods from "./Containers/ReceivedGoods";
 import PlaceOrder from "./Containers/PlaceOrder";
@@ -17,73 +17,80 @@ import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
 import ManageInventory from './Containers/ManageInventory';
 
-function Navigation(props) {
-    <Router>
-        {/*Route for clerk*/}
-        {this.props.role === 'CLERK' ?
-            <Switch>
-                <Route path="/manageInventory">
-                    <ManageInventory />
-                </Route>
-                <Route path="/receivedGoods">
-                    <ReceivedGoods />
-                </Route>
-                <Route path="/checkInventory">
-                    <CheckInventory />
-                </Route>
-                <Route path="/discrepancyList/:id" component={DiscrepancyList}></Route>
-            </Switch>
-            :
-            null
-        }
-        {/*Route for Store Supervisor*/}
-        {this.props.role === 'STRSUPV' ?
-            <Switch>
-                <Route path="/StoreMStockAdjustmentApproval">
-                    <StoreMStockAdjustmentApproval />
-                </Route>
-                <Route path="/trend">
-                    <StockTrendAnalysis />
-                </Route>
-            </Switch>
-            :
-            null
-        }
-        {/*Route for Store Manager*/}
-        {this.props.role === 'STRMGR' ?
-            <Switch>
-                <Route path="/trend">
-                    <StockTrendAnalysis />
-                </Route>
-            </Switch>
-            :
-            null
-        }
-        {/*Route for Dept Head*/}
-        {this.props.role === 'HEAD' ?
-            <Switch>
+class Navigation extends Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        return (
+            <Router>
+                {/*Route for clerk*/}
+                {this.props.role === 'CLERK' ?
+                    <Switch>
+                        <Route path="/manageInventory">
+                            <ManageInventory />
+                        </Route>
+                        <Route path="/receivedGoods">
+                            <ReceivedGoods />
+                        </Route>
+                        <Route path="/checkInventory">
+                            <CheckInventory />
+                        </Route>
+                        <Route path="/discrepancyList/:id" component={DiscrepancyList}></Route>
+                    </Switch>
+                    :
+                    null
+                }
+                {/*Route for Store Supervisor*/}
+                {this.props.role === 'STRSUPV' ?
+                    <Switch>
+                        <Route path="/StoreMStockAdjustmentApproval">
+                            <StoreMStockAdjustmentApproval />
+                        </Route>
+                        <Route path="/trend">
+                            <StockTrendAnalysis />
+                        </Route>
+                    </Switch>
+                    :
+                    null
+                }
+                {/*Route for Store Manager*/}
+                {this.props.role === 'STRMGR' ?
+                    <Switch>
+                        <Route path="/trend">
+                            <StockTrendAnalysis />
+                        </Route>
+                    </Switch>
+                    :
+                    null
+                }
+                {/*Route for Dept Head*/}
+                {this.props.role === 'HEAD' ?
+                    <Switch>
 
-            </Switch>
-            :
-            null
-        }
-        {/*Route for Dept Staff*/}
-        {this.props.role === 'STAFF' ?
-            <Switch>
+                    </Switch>
+                    :
+                    null
+                }
+                {/*Route for Dept Staff*/}
+                {this.props.role === 'STAFF' ?
+                    <Switch>
 
-            </Switch>
-            :
-            null
-        }
-        {/*Route for Dept Rep*/}
-        {this.props.role === 'REPRESENTATIVE' ?
-            <Switch>
+                    </Switch>
+                    :
+                    null
+                }
+                {/*Route for Dept Rep*/}
+                {this.props.role === 'REPRESENTATIVE' ?
+                    <Switch>
 
-            </Switch>
-            :
-            null
-        }
-    </Router>
+                    </Switch>
+                    :
+                    null
+                }
+            </Router>    
+        )
+    }
 }
 
 export default Navigation;
