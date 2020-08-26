@@ -29,30 +29,50 @@ class AssignHeadPopup extends Component {
 
   //need to install dateformat by npm install dateformat
   handleStartDateInput(event) {
-    this.setState({ startDate: event.target.value });
+    if (event.target.value > this.state.endDate) {
+      window.alert("Start Date can't be after End Date!");
+    } else {
+      this.setState({ startDate: event.target.value });
+    }
   }
 
   handleEndDateInput(event) {
-    this.setState({ endDate: event.target.value });
+    if (event.target.value < this.state.startDate) {
+      window.alert("End Date can't be before Start Date!");
+    } else {
+      this.setState({ endDate: event.target.value });
+    }
   }
 
   revoke() {
     if (window.confirm("Are you sure you want to revoke?")) {
-      this.setState({ delegate: "" });
-      this.setState({ startDate: "" });
-      this.setState({ endDate: "" });
-      this.props.handleDelegateSubmit("", "", "");
+      this.props.handleDelegateRevoke();
       this.closeModal();
+      window.location.reload(true);
     }
   }
 
   submit() {
-    this.props.handleDelegateSubmit(
-      this.state.delegate,
-      this.state.startDate,
-      this.state.endDate
-    );
-    this.closeModal();
+    if (
+      this.state.delegate === "" ||
+      this.state.startDate === "1-01-01" ||
+      this.state.endDate === "1-01-01"
+    ) {
+      window.alert("You need to complete all inputs!");
+    }
+
+    if (
+      this.state.delegate != "" &&
+      this.state.startDate != "1-01-01" &&
+      this.state.endDate != "1-01-01"
+    ) {
+      this.props.handleDelegateSubmit(
+        this.state.delegate,
+        this.state.startDate,
+        this.state.endDate
+      );
+      this.closeModal();
+    }
   }
 
   //$ npm install dateformat
