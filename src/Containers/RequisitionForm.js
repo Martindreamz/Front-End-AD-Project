@@ -11,6 +11,7 @@ class RequisitionForm extends React.Component {
     constructor() {
         super()
         this.state = {
+            //identity: JSON.parse(sessionStorage.getItem("mySession")),
             reqData: [
                 {
                     id: 1,
@@ -64,8 +65,6 @@ class RequisitionForm extends React.Component {
             showRequestForm: false,
             showReqList: false
         }
-        this.addRequisition = this.addRequisition.bind(this)
-        this.editRequestForm = this.editRequestForm.bind(this)
         this.goHistory = this.goHistory.bind(this)
     }
 
@@ -94,6 +93,7 @@ class RequisitionForm extends React.Component {
         });
     }
 
+    
     //Run once before render - lifecycle
     async componentDidMount() {
         //HTTP get request
@@ -132,15 +132,15 @@ class RequisitionForm extends React.Component {
         return (
             <div>
                 <Header />
-               
-                    {this.state.showReqList ?
-                        <RequisitionHistoryDetailsView goHistory={this.goHistory} /> 
+
+                {this.state.showReqList ?
+                    <RequisitionHistoryDetailsView goHistory={this.goHistory} />
                     :
                     <div className="row" >
                         <RequisitionApplyForm editSupObj={this.state.editSupObj} isEdit={this.state.isEdit} data={this.state.dropdownData} category={this.state.category} goHistory={this.goHistory} />
                     </div>
-                     }
-                
+                }
+
             </div>
 
         )

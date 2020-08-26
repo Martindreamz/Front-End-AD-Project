@@ -14,6 +14,8 @@ class RequisitionHistoryDetailsView extends Component {
             showHistoryDetails: false,
             showHistory: true,
             detailInfo: '',
+            showRequestForm: false,
+            identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
         this.historyDetails = this.historyDetails.bind(this)
         this.changeView = this.changeView.bind(this);
@@ -29,7 +31,14 @@ class RequisitionHistoryDetailsView extends Component {
     changeView() {
         this.setState({
             showHistoryDetails: false,
-            showHistory: true
+            showHistory: true,
+        });
+    }
+
+    goForm() {
+        this.setState({
+            showRequestForm: true,
+            //showForm: false
         });
     }
 
@@ -61,14 +70,14 @@ class RequisitionHistoryDetailsView extends Component {
                             <div className="col-sm-12  ">
                                 <h1>History</h1>
                                 <RequisitionHistory historyDetails={this.showHisDetail} />
-
+                              
                             </div>
                             : null
                         }
                         {(this.state.showHistoryDetails == true) ?
                             <div className="col-sm-12  ">
                                 <h1>History Details</h1>
-                                <RequisitionHistoryDetails details={this.state.hisDetailsData} detailInfo={this.state.detailInfo} />
+                                <RequisitionHistoryDetails details={this.state.hisDetailsData} detailInfo={this.state.detailInfo} id={this.state.identity.id} />
                                 <button className="btn btn-warning mt-1" onClick={() => this.changeView(this.state.showHistory)}>
                                     BACK
                                 </button>

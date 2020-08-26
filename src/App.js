@@ -67,12 +67,6 @@ class App extends Component {
                         <Route path="/manager">
                             <ManageDepartment />
                         </Route>
-                        <Route path="/PlaceOrder">
-                            <PlaceOrder />
-                        </Route>
-                        <Route path="/PlaceOrderSubmit">
-                            <PurchaseOrderSubmit />
-                        </Route>
 
                         <Route path="/disbursementList">
                           <DisbursementList />

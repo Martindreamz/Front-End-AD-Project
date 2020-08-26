@@ -11,7 +11,8 @@ class ReceivedGoods extends React.Component {
         this.state = {
             //test data
             data: [],
-            discrepancy: []
+            discrepancy: [],
+            //id: String(this.props.match.params.id)
         }
     }
 
@@ -19,30 +20,31 @@ class ReceivedGoods extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/store/stationeries')
-            .then(response => {
-                const items = response.data.map(item => {
+        Promise.all([
+            axios.get("https://localhost:5001/api/store/getPOD/" + 40),
+            axios.get("https://localhost:5001/api/store/stationeries")
+        ]).then(([pod, items]) => {
+            const result = pod.data.map(item => {
+                return {
+                    Id: item.stationeryId,
+                    desc: items.data.find(record => record.id == item.stationeryId).desc,
+                    inventoryQty: item.qty
+                }
+            });
+            this.setState({ data: result });
+            this.setState(prevState => {
+                const generateDiscrepancy = prevState.data.map(item => {
                     return {
-                        Id: item.id,
-                        desc: item.desc,
-                        inventoryQty: item.inventoryQty
-                    }
-                });
-                this.setState({ data: items });
-                //Generate Discrepancy state base data
-                this.setState(prevState => {
-                    const generateDiscrepancy = prevState.data.map(item => {
-                        return {
-                            StationeryId: item.Id,
-                            discpQty: 0,
-                            comment: ""
-                        }
-                    })
-                    return {
-                        discrepancy: generateDiscrepancy
+                        StationeryId: item.Id,
+                        discpQty: 0,
+                        comment: ""
                     }
                 })
+                return {
+                    discrepancy: generateDiscrepancy
+                }
             })
+        })
     }
 
     //Save input qty to discrepancy state
