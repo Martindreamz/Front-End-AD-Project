@@ -12,7 +12,6 @@ class PurchaseOrderTable extends Component {
     }
 
     render() {
-        //Moment.locale('en');
         var CurrencyFormat = require("react-currency-format");
         const orderItem =
             this.props.data != null &&
@@ -51,6 +50,7 @@ class PurchaseOrderTable extends Component {
                     <th>Supplier</th>
                     <th>Order Date</th>
                     <th>Subtotal</th>
+                    <th>View details</th>
                     <th>Status</th>
                    
                 </tr>

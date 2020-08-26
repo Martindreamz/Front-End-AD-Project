@@ -2,10 +2,7 @@
 
 import React, { Component } from "react"
 import "./PurchaseOrder.css"
-import { domain } from '../Configurations/Config';
-import axios from 'axios';
 import PurchaseOrderDetailTable from "../Components/PurchaseOrderDetailTable"
-import PlaceOrderTable from "./PlaceOrderTable";
 import Moment from 'moment';
 
 
@@ -14,8 +11,6 @@ class PurchaseOrder extends Component {
         super(props)
         this.state = {
             data: this.props.data,
-            //supplier: this.props.supplier,
-            //clerk: this.props.clerk,
             pod: this.props.pod
         };
     }
@@ -29,12 +24,8 @@ class PurchaseOrder extends Component {
 
 
     render() {
-
-        //console.log('this is from child', this.props.data)
         const po = this.props.data
         var CurrencyFormat = require("react-currency-format");
-        //const supplier = this.props.data.supplier
-        //const clerk = this.props.data.clerk
        return(
 
             po != null &&
