@@ -8,6 +8,7 @@ import { Label } from 'reactstrap';
 import Header from '../Components/Headers/Header';
 import { Button } from '@material-ui/core';
 
+
 class RequisitionApplyForm extends React.Component {
     constructor(props) {
         super(props);
@@ -33,6 +34,8 @@ class RequisitionApplyForm extends React.Component {
 
             showQtyUnit: false,
             showReqList: false,
+
+            identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
         /*this.initialState = {
             id: '',
@@ -92,7 +95,7 @@ class RequisitionApplyForm extends React.Component {
             openDescription: !this.state.openDescription,
             showQtyUnit: true
         });
-       
+
     }
     closeDesc = () => {
         this.setState({
@@ -127,7 +130,7 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
-   
+
 
     save = () => {
         let requestForm = {
@@ -158,7 +161,8 @@ class RequisitionApplyForm extends React.Component {
         console.log(this.state.newData)
 
         //if (!this.props.isEdit) {
-        fetch('https://localhost:5001/api/Dept/ApplyRequisition', {
+        /*fetch('https://localhost:5001/api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, {
+           
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -168,9 +172,14 @@ class RequisitionApplyForm extends React.Component {
         }).then(res => res.json())
             .then(requestForm => {
                 this.setState({ message: 'New requested items are successfully applied.' });
-            });
+            });*/
         //}
 
+        axios.post('https://localhost:5001/api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.newData)
+            .then(response => {
+                this.setState({ message: 'New requested items are successfully applied.' });
+                // window.location.href = domain
+            })
 
 
     }
@@ -189,7 +198,7 @@ class RequisitionApplyForm extends React.Component {
                         unit: item.unit
                     }
                 });
-                
+
                 this.setState(prevState => {
                     const categoryName = [...new Set(items.map(item => item.category))]
                     //const unit = [...new Set(items.map(item => item.unit))]
@@ -210,7 +219,7 @@ class RequisitionApplyForm extends React.Component {
                         itemUnit: data1
                     }
                 });
-               
+
 
             })
     }
@@ -334,7 +343,7 @@ class RequisitionApplyForm extends React.Component {
                         {(this.state.newData && this.state.newData.length) ?
                             <div class="row float-right">
                                 <div>
-                                    <Button variant="contained" onClick={(state) => this.props.goHistory(true)}>
+                                    <Button variant="contained" onClick={(state) => this.props.goHistory(true)} ident={this.state.identity} >
                                         Go to History
                                     </Button>
                                 </div>
