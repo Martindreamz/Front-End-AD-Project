@@ -32,7 +32,7 @@ class PlaceOrder extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
-        this.setRedirect = this.setRedirect.bind(this);
+        //this.setRedirect = this.setRedirect.bind(this);
         this.postPO = this.postPO.bind(this)
     }
 
@@ -156,70 +156,74 @@ class PlaceOrder extends Component {
 
             const dict = this.state.selected
 
-            if (dict == null) alert('No reorder items selected')
+            if (dict == null)  alert('No reorder items selected') 
 
             console.log('dict:', dict)
-            var newSelectedItems = [];
-            var purchaseOrders = []
+           if(dict!=null) {
+                var newSelectedItems = [];
+                var purchaseOrders = []
 
-            //get all selected objects
-            Object.entries(dict).forEach(([key, value]) => {
-                value &&
-                    this.state.data.map(item => item.id == key && newSelectedItems.push(item))     
-            });
+                //get all selected objects
+                Object.entries(dict).forEach(([key, value]) => {
+                    value &&
+                        this.state.data.map(item => item.id == key && newSelectedItems.push(item))
+                });
 
-            console.log('newSelectedItems:', newSelectedItems)
+                console.log('newSelectedItems:', newSelectedItems)
 
-            //get all unique supplier ids
-            var suppliers = new Set(newSelectedItems.map(item => item.selectedSupplier.supplierId))
-            console.log('supplier', suppliers)
+                //get all unique supplier ids
+                var suppliers = new Set(newSelectedItems.map(item => item.selectedSupplier.supplierId))
+                console.log('supplier', suppliers)
 
 
-            //group all selectedItems by supplier Id and create PO
-            suppliers.forEach(supplier => {
-               
-                var spodetails = []
-                var poBySupplier = []
+                //group all selectedItems by supplier Id and create PO
+                suppliers.forEach(supplier => {
 
-                //group all selectedItems by supplier Id
-                newSelectedItems.map(item => item.selectedSupplier.supplierId == supplier && poBySupplier.push(item))
+                    var spodetails = []
+                    var poBySupplier = []
 
-                //create PO details
-                poBySupplier.forEach(item => {
-                    const detail =
-                    {
-                     
-                        stationeryId: item.id,
-                        qty: item.qty
+                    //group all selectedItems by supplier Id
+                    newSelectedItems.map(item => item.selectedSupplier.supplierId == supplier && poBySupplier.push(item))
+
+                    //create PO details
+                    poBySupplier.forEach(item => {
+                        const detail =
+                        {
+
+                            stationeryId: item.id,
+                            qty: item.qty
+                        }
+                        spodetails.push(detail)
+
+                    })
+
+
+                    //create PO
+                    var purchaseOrder = {
+                        //clerkId: this.state.identity,
+                        clerkId: 15,
+                        SupplierId: supplier,
+                        status: "ordered",
+                        StockAdjustmentId: 1,
+                        DetailList: spodetails
                     }
-                    spodetails.push(detail)
+
+                    purchaseOrders.push(purchaseOrder)
+                    console.log('POs', purchaseOrder)
+
 
                 })
 
+                this.setState({
+                    purchaseOrders: purchaseOrders,
+                    redirect: true
 
-                //create PO
-                var purchaseOrder = {
-                    //clerkId: this.state.identity,
-                    clerkId: 15,
-                    SupplierId: supplier,
-                    status: "ordered",
-                    StockAdjustmentId: 1,
-                    DetailList: spodetails
+                }, () => {
+                    this.postPO()
                 }
 
-                purchaseOrders.push(purchaseOrder)
-                console.log('POs', purchaseOrder)
-               
-
-            })
-
-            this.setState({
-                purchaseOrders: purchaseOrders,
-                redirect: true
-
-            }, () => { this.postPO() }
-
-            )
+                )
+            }
         }
 
         if (name == "qty") {
@@ -259,25 +263,26 @@ class PlaceOrder extends Component {
         console.log("state POs:", this.state.purchaseOrders)
         axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders).then(response => {
             console.log(response)
-        }, () => this.setRedirect()
+        },
+            //() => this.setRedirect()
   )
            
     }
 
-    setRedirect() {
-        console.log('set redirect')
-        this.setState({
-            redirect:true
-        })
+    //setRedirect() {
+    //    console.log('set redirect')
+    //    this.setState({
+    //        redirect:true
+    //    })
 
-    }
+    //}
 
-    renderRedirect = () => {
-        console.log('render redirect')
-        if (this.state.redirect) {
-            return <Redirect to='/PurchaseOrderSubmit' />
-        }
-    }
+    //renderRedirect = () => {
+    //    console.log('render redirect')
+    //    if (this.state.redirect) {
+    //        return <Redirect to='/PurchaseOrderSubmit' />
+    //    }
+    //}
 
     addItem(event) {
         const { name, value } = event.target;

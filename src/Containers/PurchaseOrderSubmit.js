@@ -39,7 +39,7 @@ class PurchaseOrderSubmit extends Component {
 
             AllPo.forEach(po => {
                 const Pod = [];
-                var subTotal = 0;
+                //var subTotal = 0;
 
                 //get supplier 
                 const Supplierurl = 'https://localhost:5001/api/Store/getSupplier/' + po.supplierId
@@ -84,10 +84,10 @@ class PurchaseOrderSubmit extends Component {
                                         Pod.push(FormattedPod)
                                         //subTotal += (pod.qty * price)
 
-                                        for (pod in Pod) {
-                                            subTotal += price * pod.qty
+                                        //for (pod in Pod) {
+                                        //    subTotal += price * pod.qty
 
-                                        }
+                                        //}
 
                                         //console.log('formatted pod', FormattedPod )
                                     })
@@ -107,7 +107,7 @@ class PurchaseOrderSubmit extends Component {
                                 status: po.status,
                                 StockAdjustmentId: po.StockAdjustmentId,
                                 pod: Pod,
-                                subtotal: Pod.reduce((total, pod) => total + pod.qty * pod.price, 0)
+                                subtotal: 0
                             }
 
                             data.push(record)

@@ -8,6 +8,7 @@ import PurchaseOrderDetailTable from "../Components/PurchaseOrderDetailTable"
 import PlaceOrderTable from "./PlaceOrderTable";
 import Moment from 'moment';
 
+
 class PurchaseOrder extends Component {
     constructor(props) {
         super(props)
@@ -31,6 +32,7 @@ class PurchaseOrder extends Component {
 
         //console.log('this is from child', this.props.data)
         const po = this.props.data
+        var CurrencyFormat = require("react-currency-format");
         //const supplier = this.props.data.supplier
         //const clerk = this.props.data.clerk
        return(
@@ -53,12 +55,12 @@ class PurchaseOrder extends Component {
                                    Supplier<br />
                             Name:  {this.props.data.supplier.name} <br />
                             Person to contact:  {this.props.data.supplier.contactPerson}<br />
-                            contact: {this.props.data.phoneNum}<br />
+                            Contact: {this.props.data.supplier.phoneNum}<br />
                                </div>}
                        <div>
                            Attn to: {this.props.data.clerk.name}<br />
                            Deliver to: Logic University Stationery Store
-                           contact: {this.props.data.clerk.phoneNum}
+                           Contact: {this.props.data.clerk.phoneNum}
                           
                             
                            </div>
@@ -68,7 +70,15 @@ class PurchaseOrder extends Component {
 
                                <PurchaseOrderDetailTable data={this.props.data.pod} />
                        }
-                       {this.props.data.subtotal}
+                       Subtotal: 
+                       <CurrencyFormat
+                           value={this.props.data.subtotal}
+                           decimalScale={2}
+                           thousandSeparator={true}
+                           fixedDecimalScale={true}
+                           displayType={"text"}
+                           prefix={"$"}
+                       />
                         </div>
                     </div>
 
