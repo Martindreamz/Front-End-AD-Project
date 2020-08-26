@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Headers/Header";
@@ -18,70 +18,79 @@ import DisbursementList from "./Containers/DisbursementList";
 import SupervisorStockAdjustmentApproval from "./Containers/SupervisorStockAdjustmentApproval";
 import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
-import Home from './Containers/Home';
+import Home from "./Containers/Home";
 import ManageInventory from "./Containers/ManageInventory";
 import Navigation from "./Navigation";
 
 class App extends Component {
-    constructor() {
-        super()
+  constructor() {
+    super();
 
-        this.state = {
-            identity: JSON.parse(sessionStorage.getItem("mySession"))
-        }
-    }
+    this.state = {
+      identity: JSON.parse(sessionStorage.getItem("mySession")),
+    };
+  }
 
-    render() {
-        return (
-            <div className="App">
-                <Router>
-                    <Switch>
-                        <Route path="/" exact>
-                            {this.state.identity != null ? (this.state.identity.role === "STAFF" ? <RequisitionForm /> : < Home /> ) : < Login />}
-                        </Route>
-                        <Route path="/requisitionForm">
-                            <RequisitionForm />
-                        </Route>
-                        <Route path="/supplier">
-                            <SupplierList />
-                        </Route>
-                        <Route path="/test3">
-                            <StockTrendAnalysis />
-                        </Route>
-                        <Route path="/test4">
-                            <ManageInventory />
-                        </Route>
-                        <Route path="/test1">
-                            <ReceivedGoods />
-                        </Route>
-                        <Route path="/home">
-                            <Home />
-                        </Route>
-                        <Route path="/RequisitionHistoryDetailsView">
-                            <RequisitionHistoryDetailsView />
-                        </Route>
-                        
-                        <Route path="/DepRepDisbursement">
-                            <DepRepDisbursement />
-                        </Route>
-                        <Route path="/manager">
-                            <ManageDepartment />
-                        </Route>
-                        
+  render() {
+    return (
+      <div className="App">
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              {this.state.identity != null ? (
+                this.state.identity.role === "STAFF" ? (
+                  <RequisitionForm />
+                ) : (
+                  <Home />
+                )
+              ) : (
+                <Login />
+              )}
+            </Route>
+            <Route path="/requisitionForm">
+              <RequisitionForm />
+            </Route>
+            <Route path="/supplier">
+              <SupplierList />
+            </Route>
+            <Route path="/test3">
+              <StockTrendAnalysis />
+            </Route>
+            <Route path="/test4">
+              <ManageInventory />
+            </Route>
+            <Route path="/test1">
+              <ReceivedGoods />
+            </Route>
+            <Route path="/home">
+              <Home />
+            </Route>
+            <Route path="/RequisitionHistoryDetailsView">
+              <RequisitionHistoryDetailsView />
+            </Route>
 
-                        <Route path="/disbursementList">
-                          <DisbursementList />
-                        </Route>
-                        
-                        <Route path="/DisbursementByDeptList">
-                          <DisbursementByDeptList />
-                        </Route>
-                    </Switch>
-                </Router>
-                {this.state.identity != null ? <Navigation role={this.state.identity.role} /> : null}
-            </div>
-        )
-    }
+            <Route path="/DepRepDisbursement">
+              <DepRepDisbursement />
+            </Route>
+            <Route path="/manageDepartment">
+              <ManageDepartment />
+            </Route>
+
+            <Route path="/disbursementList">
+              <DisbursementList />
+            </Route>
+
+            <Route path="/DisbursementByDeptList">
+              <DisbursementByDeptList />
+            </Route>
+          </Switch>
+        </Router>
+        {this.state.identity != null ? (
+          <Navigation role={this.state.identity.role} />
+        ) : null}
+      </div>
+    );
+  }
 }
 
 export default App;
