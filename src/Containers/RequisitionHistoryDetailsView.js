@@ -13,6 +13,7 @@ class RequisitionHistoryDetailsView extends Component {
             hisDetailsData: [],
             showHistoryDetails: false,
             showHistory: true,
+            detailInfo: '',
         };
         this.historyDetails = this.historyDetails.bind(this)
         this.changeView = this.changeView.bind(this);
@@ -46,27 +47,28 @@ class RequisitionHistoryDetailsView extends Component {
                 hisDetailsData: item,
                 showHistoryDetails: true
             })
+            item.map(r => this.setState({ detailInfo: r }))
         });
     }
 
     render() {
         return (
             <div>
-               
+
                 <div className="container">
                     <div className="row" >
                         {(this.state.showHistory == true && this.state.showHistoryDetails == false) ?
                             <div className="col-sm-12  ">
                                 <h1>History</h1>
                                 <RequisitionHistory historyDetails={this.showHisDetail} />
-                                
+
                             </div>
                             : null
                         }
                         {(this.state.showHistoryDetails == true) ?
                             <div className="col-sm-12  ">
                                 <h1>History Details</h1>
-                                <RequisitionHistoryDetails details={this.state.hisDetailsData} />
+                                <RequisitionHistoryDetails details={this.state.hisDetailsData} detailInfo={this.state.detailInfo} />
                                 <button className="btn btn-warning mt-1" onClick={() => this.changeView(this.state.showHistory)}>
                                     BACK
                                 </button>

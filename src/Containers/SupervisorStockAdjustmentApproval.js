@@ -33,14 +33,6 @@ class SupervisorStockAdjustmentApproval extends Component {
     });
     }
 
-   /* showPopup = (event) => {
-        console.log(event)
-        //post request with id to retrieve stock adjustment details
-        this.setState({
-            displayPopup: true
-        })
-    }*/
-
     showPopup = (item) =>{
         fetch('https://localhost:5001/api/Store/supervisorissueVoucher', {
             method: 'POST',
@@ -56,7 +48,6 @@ class SupervisorStockAdjustmentApproval extends Component {
              })
             itemList.map(item => this.setState({voucherInfo:item}))
           });
-        
     }
 
     rejectRequest = (item) =>{
@@ -84,6 +75,7 @@ class SupervisorStockAdjustmentApproval extends Component {
           }).then(res => res.json()).then(item => {
             this.setState({
                   displayDetailTable: true,
+                  displayPopup: false,
                   detailApprovalData : item
              })
           });
@@ -111,7 +103,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     return ( 
       <div>
             <Header />
-            {this.state.displayPopup ? <StockAdjustmentPopup  popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
+            {this.state.displayPopup ?<SupervisorDetailPopup popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
             {this.state.displayDetailTable? <SupervisorStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup}/>:null}
             <div className="inventoryBody mt-1">
                 {(this.state.data && this.state.data.length)? 

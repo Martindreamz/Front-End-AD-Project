@@ -86,7 +86,12 @@ class Navigation extends Component {
                 {/*Route for Dept Staff*/}
                 {this.props.role === 'STAFF' ?
                     <Switch>
-
+                        <Route path="/requisitionForm">
+                            <RequisitionForm />
+                        </Route>
+                        <Route path="/RequisitionHistoryDetailsView">
+                            <RequisitionHistoryDetailsView />
+                        </Route>
                     </Switch>
                     :
                     null

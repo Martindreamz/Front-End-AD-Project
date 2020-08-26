@@ -9,6 +9,7 @@ import DepartmentHeadRep from "../Components/DepartmentHeadRep";
 import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
 import "../Components/ManagerPartition.css";
 
+
 class ManageDepartment extends Component {
   constructor() {
     super();
@@ -24,6 +25,8 @@ class ManageDepartment extends Component {
 
     this.handleDelegateSubmit = this.handleDelegateSubmit.bind(this);
     this.postDeptDelegate = this.postDeptDelegate.bind(this);
+    this.handleDelegateRevoke = this.handleDelegateRevoke.bind(this);
+    this.postDelegateRevoke = this.postDelegateRevoke.bind(this);
     this.handleRepSubmit = this.handleRepSubmit.bind(this);
     this.postDeptRep = this.postDeptRep.bind(this);
     this.handleCollectionSubmit = this.handleCollectionSubmit.bind(this);
@@ -113,6 +116,9 @@ class ManageDepartment extends Component {
   }
 
   handleDelegateSubmit(selectedDelegate, selectedStartDate, selectedEndDate) {
+    console.log(selectedDelegate);
+    console.log(selectedStartDate);
+    console.log(selectedEndDate);
     this.setState(
       Object.assign(this.state.department, {
         delgtStartDate: selectedStartDate,
@@ -139,7 +145,11 @@ class ManageDepartment extends Component {
       }
     });
 
-    this.postDeptDelegate(oldDelegate, newDelegate);
+    if (oldDelegate != null) {
+      this.postDeptDelegate(oldDelegate, newDelegate);
+    } else {
+      this.postDeptDelegate(newDelegate, newDelegate);
+    }
   }
 
   async postDeptDelegate(oldDelegate, newDelegate) {
@@ -150,14 +160,56 @@ class ManageDepartment extends Component {
       password: this.state.department.delgtEndDate,
       email: oldDelegate.id.toString(),
       role: oldDelegate.role,
-      phoneNum: newDelegate.role,
       departmentId: newDelegate.id,
+      phoneNum: newDelegate.role,
     };
 
     console.log(sendObj);
 
     axios
       .post("https://localhost:5001/api/Dept/deptDelegate", sendObj)
+      .then((response) => {
+        console.log(response);
+      });
+  }
+
+  handleDelegateRevoke() {
+    console.log("Delegate Revoke reached!");
+
+    this.setState(
+      Object.assign(this.state.department, {
+        delgtStartDate: null,
+        delgtEndDate: null,
+      })
+    );
+
+    let oldDelegate = null;
+
+    this.state.employee.map((x) => {
+      if (x.role === "DELEGATE") {
+        oldDelegate = x;
+        oldDelegate.role = "STAFF";
+        this.setState({ x: oldDelegate });
+      }
+    });
+
+    this.postDelegateRevoke(oldDelegate);
+  }
+
+  async postDelegateRevoke(oldDelegate) {
+    let sendObj = {};
+    sendObj = {
+      Id: Number(this.state.department.id),
+      name: this.state.department.delgtStartDate,
+      password: this.state.department.delgtEndDate,
+      departmentId: oldDelegate.id,
+      role: oldDelegate.role,
+    };
+
+    console.log(sendObj);
+
+    axios
+      .post("https://localhost:5001/api/Dept/deptRevokeDelegate", sendObj)
       .then((response) => {
         console.log(response);
       });
@@ -189,11 +241,10 @@ class ManageDepartment extends Component {
   async postDeptRep(oldRepresentative, newRepresentative) {
     let sendObj = {};
     sendObj = {
-      Id: Number(this.state.department.id),
-      email: oldRepresentative.id.toString(),
+      Id: oldRepresentative.id,
       role: oldRepresentative.role,
-      phoneNum: newRepresentative.role,
       departmentId: newRepresentative.id,
+      phoneNum: newRepresentative.role,
     };
 
     console.log(sendObj);
@@ -313,6 +364,7 @@ class ManageDepartment extends Component {
               department={this.state.department}
               employee={this.state.employee}
               handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
+              handleDelegateRevoke={this.handleDelegateRevoke.bind(this)}
             />
           </div>
           <div>
