@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './StockAdjustmentPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Axios from 'axios';
+
 
 class PlaceOrderPopup extends React.Component {
     constructor(props) {
@@ -22,22 +20,14 @@ class PlaceOrderPopup extends React.Component {
     }
 
     
-
-    //handle changing field value in fields
     handleChange (event) {
-        console.log('handleChange!')
-        console.log('from handle change', this.state.data)
         
         const { name, value, id } = event.target
-
-        console.log('name', name, 'value', value)
-
             this.setState({
                 [name]: value
             })
 
         if (name == 'browser') {
-          // const item = this.props.data.find(item => item.desc = value)
             this.setState(prevState => {
                 const item = prevState.data.find(item => item.desc == value)
                 console.log('selected item', item)
@@ -49,14 +39,12 @@ class PlaceOrderPopup extends React.Component {
 
         }
 
-        if(name=='qty') {
-
+        if (name == 'qty') {
+            console.log('updating qty')
             this.setState(prevState => {
-                const reorder = [...prevState.data];
-                reorder = {
-                    ...reorder,
-                    [name]:value
-                }
+                const reorder = prevState.item;
+                reorder.qty = value
+                
                 return { item: reorder }
             })
             
@@ -74,40 +62,34 @@ class PlaceOrderPopup extends React.Component {
             })
 
         }
-
-        
-    }
-    
-    
-    //Event Handling for submitting form
-    submitForm = () => {
-        const item = this.state.item
-        this.props.newItem(item);
     }
 
 
 
     render() {
-        
+
         return(
 
-            <div className="popup">
-                <div className="poPopupInner">
-                    <div className="form"  onChange={this.props.handleSubmit}>
+            <div className="detailContainer">
+                <div className="detailInnerContainer">
+                    <HighlightOffIcon onClick={this.props.closePopup} />
+                    <div className="col-sm-12 text-center">
+                        
                         <h1>Add reorder item</h1>
-                        <HighlightOffIcon onClick={this.props.closePopup} />
+                        
                         <div>
-                            <table>
-                                <tr>
+                            <table className="table">
+                                <tbody className="popupTable"> 
+                                <tr className="tableRow">
                                     <td>
                                         <label>Item Code:</label>
                                     </td>
                                     <td>
                                         {this.state.item != null && this.state.item.id} 
                                     </td>
-                                </tr>
+                                </tr >
 
-                                <tr>
+                                <tr className="tableRow">
                                     <td>
                                         <label>Description:</label>
                                     </td>
@@ -127,16 +109,16 @@ class PlaceOrderPopup extends React.Component {
 
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr className="tableRow">
                                     <td>
                                         <label>Qty:</label>
                                     </td>
                                    
                                     <td>
-                                        <input name="qty" type="number" />
+                                        <input name="qty" type="number" onChange={this.handleChange} />
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr className="tableRow">
                                     <td>
                                         <label>Supplier:</label>
                                     </td>
@@ -150,17 +132,18 @@ class PlaceOrderPopup extends React.Component {
                                         }
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr className="tableRow">
                                     <td>
                                         <label>Price:</label>
                                     </td>
                                     
-                                    <td>
-                                    {this.state.item.selectedSupplier != null && this.state.item.selectedSupplier.price}
+                                        <td>
+                                    $ {this.state.item.selectedSupplier != null && this.state.item.selectedSupplier.price}
                                     </td>
                                 </tr>
                                 <tr><td><button name="addNewItem" value={this.state.item} onClick={() => this.props.newItem(this.state.item)} >Add</button></td></tr>
-                            </table>
+                            </tbody>
+                                    </table>
                     </div>
                 </div>
                 </div>

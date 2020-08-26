@@ -42,7 +42,9 @@ class App extends Component {
                         <Route path="/requisitionForm">
                             <RequisitionForm />
                         </Route>
-                        
+                        <Route path="/supplier">
+                            <SupplierList />
+                        </Route>
                         <Route path="/test3">
                             <StockTrendAnalysis />
                         </Route>
@@ -62,7 +64,15 @@ class App extends Component {
                         <Route path="/DepRepDisbursement">
                             <DepRepDisbursement />
                         </Route>
-                        
+                        <Route path="/manager">
+                            <ManageDepartment />
+                        </Route>
+                        <Route path="/PlaceOrder">
+                            <PlaceOrder />
+                        </Route>
+                        <Route path="/PlaceOrderSubmit">
+                            <PurchaseOrderSubmit />
+                        </Route>
 
                         <Route path="/disbursementList">
                           <DisbursementList />
