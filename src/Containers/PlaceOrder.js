@@ -32,6 +32,7 @@ class PlaceOrder extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
         this.postPO = this.postPO.bind(this)
+        this.setEditing = this.setEditing.bind(this)
        
     }
 
@@ -141,9 +142,6 @@ class PlaceOrder extends Component {
 
                 this.setState({
                     allStationery: reorder,
-                    //recommended: reorder,
-                    //today: date,
-                    //isEditing:true
                 })
 
             })
@@ -237,7 +235,6 @@ class PlaceOrder extends Component {
                     poBySupplier.forEach(item => {
                         const detail =
                         {
-
                             stationeryId: item.id,
                             qty: item.qty
                         }
@@ -290,7 +287,8 @@ class PlaceOrder extends Component {
 
         if (name == "reset") {
             const Recdata = this.state.recommended
-            this.setState({ data: Recdata, isEditing: false })
+            console.log('Recdata', Recdata)
+            this.setState({ data: Recdata }, () => this.setEditing(false))
            
         }
 
@@ -305,6 +303,10 @@ class PlaceOrder extends Component {
         }
 
         console.log([name], value)
+    }
+
+    setEditing(value) {
+        this.setState({ isEditing: value })
     }
 
     async postPO() {
@@ -354,14 +356,22 @@ class PlaceOrder extends Component {
     this.setState(prevState => {
         const CurrData = prevState.data
         const Childitem = item
-        const Pitem = CurrData.find(x => x.id == item.id && x.selectedSupplier.supplierId == item.selectedSupplier.supplierId)
+        const Pitem = prevState.data.find(x => x.id == item.id && x.selectedSupplier.supplierId == item.selectedSupplier.supplierId)
         //merge if item exists
         if (Pitem != null) {
-            Childitem.reOrderQty += Pitem.reOrderQty
-            CurrData.pop(Pitem)  
+            console.log('qty', Pitem.qty, Childitem.qty)
+            Childitem.qty = parseInt(Pitem.qty) + parseInt(Childitem.qty)
+            CurrData.push(Childitem)
+            CurrData.pop(Pitem)
         }
-        CurrData.push(Childitem)
-        return { data: CurrData }
+        else {
+            CurrData.push(Childitem)
+        }
+        //CurrData.push(Childitem)
+        return {
+            data: CurrData,
+            displayPopup: false
+        }
     })
 }
 

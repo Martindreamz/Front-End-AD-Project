@@ -7,6 +7,7 @@ import Header from '../Components/Headers/Header';
 import "./general.css"
 import axios from 'axios';
 import Pdf from "react-to-pdf";
+import { Redirect } from "react-router-dom";
 
 
 
@@ -19,7 +20,8 @@ class PurchaseOrderSubmit extends Component {
             Allpos:[],
             currentPO: null,
             Suppliers: null,
-            uSuppliers:null
+            uSuppliers: null,
+            redirect:null
         }
         this.handleChange = this.handleChange.bind(this)
         this.setUniqueSuppliers = this.setUniqueSuppliers.bind(this)
@@ -183,16 +185,21 @@ class PurchaseOrderSubmit extends Component {
                 const id = reorder[index].poNum
                 const temp = {id:id}
                 console.log('id', id)
-                //const url = 'https://localhost:5001/api/Store/PORecieved/'
                 axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
-                return { data: reorder }
+                return {
+                    data: reorder,
+                    redirect: '/receivedGoods/'+id
+                    }
             })
+
+            console.log('redirect', this.state.redirect)
         }
     }
 
     render() {
 
-        var tabs = this.state.uSuppliers!=null && this.state.uSuppliers.map((item) => 
+        var tabs = this.state.uSuppliers != null && this.state.uSuppliers.map((item) => 
+            <div>
             <button
                 key={item.id}
                 name="data"
@@ -201,13 +208,17 @@ class PurchaseOrderSubmit extends Component {
                 onClick={this.handleChange}
             >
                 {item.name}
-            </button>
+                </button>
+                </div>
         )
         const ref = React.createRef();
 
         return (
 
             <div>
+                {this.state.redirect != null &&
+                    <Redirect to={this.state.redirect}/>
+                }
                 <Header />
                 <div className="tableBody">
                     <div className="btn-group">
