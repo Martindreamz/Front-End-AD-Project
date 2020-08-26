@@ -21,6 +21,18 @@
     border-radius: 10px;
 }
 
+.commentSubmitContainer{
+    position: fixed;
+    background-color: rgba(255, 255, 255, 255);
+    width: 50%;
+    height: 30%;
+    top: 35%;
+    left: 25%;
+    right: 25%;
+    bottom: 0;
+    border-radius: 10px;
+}
+
 thead, tbody { display: block; }
 
 .popupTable {
