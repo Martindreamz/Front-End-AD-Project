@@ -63,6 +63,8 @@ class DiscrepancyList extends React.Component {
         await axios.put('https://localhost:5001/api/store/stkAd/put', this.state.data)
             .then(response => {
                 window.location.href = domain
+            }).catch(response => {
+                window.location.href = domain
             })
     }
 

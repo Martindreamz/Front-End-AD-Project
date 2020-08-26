@@ -30,7 +30,7 @@ class Navigation extends Component {
                         <Route path="/manageInventory">
                             <ManageInventory />
                         </Route>
-                        <Route path="/receivedGoods">
+                        <Route path="/receivedGoods/:id">
                             <ReceivedGoods />
                         </Route>
                         <Route path="/checkInventory">
@@ -66,6 +66,9 @@ class Navigation extends Component {
                         <Route path="/StoreMStockAdjustmentApproval">
                             <StoreMStockAdjustmentApproval />
                         </Route>
+                        <Route path="/supplier">
+                            <SupplierList />
+                        </Route> y
                         <Route path="/trend">
                             <StockTrendAnalysis />
                         </Route>
@@ -78,6 +81,9 @@ class Navigation extends Component {
                     <Switch>
                         <Route path="/manager">
                             <ManageDepartment />
+                        </Route>
+                        <Route path="/requisitionForm">
+                            <RequisitionForm />
                         </Route>
                     </Switch>
                     :

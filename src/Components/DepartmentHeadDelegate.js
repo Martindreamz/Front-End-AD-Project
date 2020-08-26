@@ -33,6 +33,7 @@ class DepartmentHeadDelegate extends Component {
             department={this.props.department}
             employee={this.props.employee}
             handleDelegateSubmit={this.props.handleDelegateSubmit.bind(this)}
+            handleDelegateRevoke={this.props.handleDelegateRevoke.bind(this)}
           />
         </div>
       </div>

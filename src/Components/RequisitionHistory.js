@@ -10,6 +10,7 @@ class RequisitionHistory extends Component {
         this.state = {
             //test data
             data: [],
+            identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
     }
 
@@ -17,7 +18,7 @@ class RequisitionHistory extends Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/dept/req').then((response) => {
+        axios.get('https://localhost:5001/api/dept/requisition/' + JSON.parse(sessionStorage.getItem("mySession")).id).then((response) => {
             const items = response.data;
             this.setState({ data: items });
         });

@@ -67,7 +67,6 @@ class App extends Component {
                         <Route path="/manager">
                             <ManageDepartment />
                         </Route>
-                        
 
                         <Route path="/disbursementList">
                           <DisbursementList />
