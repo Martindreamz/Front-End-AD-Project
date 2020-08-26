@@ -60,28 +60,19 @@ class App extends Component {
                         <Route path="/RequisitionHistoryDetailsView">
                             <RequisitionHistoryDetailsView />
                         </Route>
-                        <Route path="/StoreMStockAdjustmentApproval">
-                            <StoreMStockAdjustmentApproval />
-                        </Route>
+                        
                         <Route path="/DepRepDisbursement">
                             <DepRepDisbursement />
                         </Route>
                         <Route path="/manager">
                             <ManageDepartment />
                         </Route>
-                        <Route path="/placeOrder">
-                            <PlaceOrder />
-                        </Route>
-                        <Route path="/placeOrderSubmit">
-                            <PurchaseOrderSubmit />
-                        </Route>
+                        
 
                         <Route path="/disbursementList">
                           <DisbursementList />
                         </Route>
-                        <Route path="/supervisorAdjustReqList">
-                          <SupervisorStockAdjustmentApproval />
-                        </Route>
+                        
                         <Route path="/DisbursementByDeptList">
                           <DisbursementByDeptList />
                         </Route>

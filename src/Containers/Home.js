@@ -21,7 +21,7 @@ class Home extends Component {
                     <div className="homeBodyClerk">
                         <Button>Stationery Retrieval</Button>
                         <Button>Disbursement List</Button>
-                        <Button>Raise Purchase Order</Button>
+                        <Button onClick={() => window.location.href = domain + "placeOrder"}>Raise Purchase Order</Button>
                         <Button onClick={() => window.location.href = domain + "manageInventory"}>Manage Inventory</Button>
                         <Button onClick={() => window.location.href = domain + "receivedGoods"}>Received Goods</Button>
                     </div>
@@ -30,7 +30,7 @@ class Home extends Component {
                 }
                 {this.state.identity.role === 'STRSUPV' ?
                     <div className="homeBodySup">
-                        <Button>Stock Adjustment Voucher Requests</Button>
+                        <Button onClick={() => window.location.href = domain + "supervisorAdjustReqList"}>Stock Adjustment Voucher Requests</Button>
                         <Button onClick={() => window.location.href = domain + "trend"}>View Trend Analysis</Button>
                     </div>
                     :
@@ -38,7 +38,7 @@ class Home extends Component {
                 }
                 {this.state.identity.role === 'STRMGR' ?
                     <div className="homeBodyMgr">
-                        <Button>Stock Adjustment Voucher Requests</Button>
+                        <Button onClick={() => window.location.href = domain + "StoreMStockAdjustmentApproval"}>Stock Adjustment Voucher Requests</Button>
                         <Button>View Supplier List</Button>
                         <Button onClick={() => window.location.href = domain + "trend"}>View Trend Analysis</Button>
                     </div>
