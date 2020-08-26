@@ -37,6 +37,12 @@ class Navigation extends Component {
                             <CheckInventory />
                         </Route>
                         <Route path="/discrepancyList/:id" component={DiscrepancyList}></Route>
+                        <Route path="/placeOrder">
+                            <PlaceOrder />
+                        </Route>
+                        <Route path="/placeOrderSubmit">
+                            <PurchaseOrderSubmit />
+                        </Route>
                     </Switch>
                     :
                     null
@@ -44,8 +50,8 @@ class Navigation extends Component {
                 {/*Route for Store Supervisor*/}
                 {this.props.role === 'STRSUPV' ?
                     <Switch>
-                        <Route path="/StoreMStockAdjustmentApproval">
-                            <StoreMStockAdjustmentApproval />
+                        <Route path="/supervisorAdjustReqList">
+                            <SupervisorStockAdjustmentApproval />
                         </Route>
                         <Route path="/trend">
                             <StockTrendAnalysis />
@@ -57,6 +63,9 @@ class Navigation extends Component {
                 {/*Route for Store Manager*/}
                 {this.props.role === 'STRMGR' ?
                     <Switch>
+                        <Route path="/StoreMStockAdjustmentApproval">
+                            <StoreMStockAdjustmentApproval />
+                        </Route>
                         <Route path="/trend">
                             <StockTrendAnalysis />
                         </Route>
