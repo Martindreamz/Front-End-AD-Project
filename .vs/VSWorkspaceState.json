@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\Components",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Containers\\RequisitionHistoryDetailsView.js",
+  "SelectedNode": "\\src\\Containers\\ManageDepartment.js",
   "PreviewInSolutionExplorer": false
 }

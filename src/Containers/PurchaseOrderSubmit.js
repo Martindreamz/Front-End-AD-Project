@@ -138,14 +138,27 @@ class PurchaseOrderSubmit extends Component {
 
     setUniqueSuppliers() {
         const sSet = new Set(this.state.suppliers.map(s => s.id))
-        const usups=[]
+        const usups = []
         sSet.forEach(id => {
             const usup = this.state.suppliers.find(supplier => supplier.id == id)
             usups.push(usup)
         })
 
         const sorted_list = usups.sort((a, b) => b.priority- a.priority)
-        this.setState({ uSuppliers: sorted_list})
+        this.setState({ uSuppliers: sorted_list })
+
+        this.setState(prevState => {
+            const reorder = [...prevState.Allpos];
+            reorder.forEach(order => {
+                order.subtotal = order.pod.reduce((total, p) => total + (p.qty * p.price), 0)
+            })
+            return ({
+                data: reorder,
+                Allpos: reorder
+            })
+    })
+
+     
     }
 
     
