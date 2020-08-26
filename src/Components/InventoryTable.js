@@ -11,7 +11,8 @@ class InventoryTable extends React.Component {
         super(props)
         this.state = {
             //state to reuse table for managed recieve goods and inventory check screens
-            isCheckInvTable: props.type
+            isCheckInvTable: props.type,
+            isReceivedGoods: props.isReceivedGoods
         }
     }
     //event Listeners
@@ -39,6 +40,7 @@ class InventoryTable extends React.Component {
                 </td>
                 {this.state.isCheckInvTable ?
                     <td>
+                        {this.state.isReceivedGoods ? "+" : null}
                         <input id={item.Id} type="number" min="0" max="9999" onChange={this.props.handleQtyInput} />
                     </td>
                     : null

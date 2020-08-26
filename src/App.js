@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Headers/Header";
 import Login from "./Components/Login";
-import RecievedGoods from "./Containers/RecievedGoods";
+import ReceivedGoods from "./Containers/ReceivedGoods";
 import PlaceOrder from "./Containers/PlaceOrder";
 import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
 import CheckInventory from "./Containers/CheckInventory";
@@ -19,6 +19,8 @@ import SupervisorStockAdjustmentApproval from "./Containers/SupervisorStockAdjus
 import DisbursementByDeptList from "./Containers/DisbursementByDeptList";
 import StockTrendAnalysis from "./Containers/StockTrendAnalysis";
 import Home from './Containers/Home';
+import ManageInventory from "./Containers/ManageInventory";
+import Navigation from "./Navigation";
 
 class App extends Component {
     constructor() {
@@ -35,16 +37,7 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path="/" exact>
-                            {this.state.identity != null ? <Home /> : < Login />}
-                        </Route>
-                        <Route path="/home">
-                            <Home />
-                        </Route>
-                        <Route path="/clerk">
-                            <Header />
-                        </Route>
-                        <Route path="/test">
-                            <RecievedGoods />
+                            {this.state.identity != null ? (this.state.identity.role === "STAFF" ? <RequisitionForm /> : < Home /> ) : < Login />}
                         </Route>
                         <Route path="/requisitionForm">
                             <RequisitionForm />
@@ -52,44 +45,40 @@ class App extends Component {
                         <Route path="/supplier">
                             <SupplierList />
                         </Route>
-                        <Route path="/test1">
-                            <CheckInventory />
-                        </Route>
-                        <Route path="/test2/:id" component={DiscrepancyList}>
-                        </Route>
                         <Route path="/test3">
                             <StockTrendAnalysis />
+                        </Route>
+                        <Route path="/test4">
+                            <ManageInventory />
+                        </Route>
+                        <Route path="/test1">
+                            <ReceivedGoods />
+                        </Route>
+                        <Route path="/home">
+                            <Home />
                         </Route>
                         <Route path="/RequisitionHistoryDetailsView">
                             <RequisitionHistoryDetailsView />
                         </Route>
-                        <Route path="/StoreMStockAdjustmentApproval">
-                            <StoreMStockAdjustmentApproval />
-                        </Route>
+                        
                         <Route path="/DepRepDisbursement">
                             <DepRepDisbursement />
                         </Route>
                         <Route path="/manager">
                             <ManageDepartment />
                         </Route>
-                        <Route path="/placeOrder">
-                            <PlaceOrder />
-                        </Route>
-                        <Route path="/placeOrderSubmit">
-                            <PurchaseOrderSubmit />
-                        </Route>
+                        
 
                         <Route path="/disbursementList">
                           <DisbursementList />
                         </Route>
-                        <Route path="/supervisorAdjustReqList">
-                          <SupervisorStockAdjustmentApproval />
-                        </Route>
+                        
                         <Route path="/DisbursementByDeptList">
                           <DisbursementByDeptList />
                         </Route>
                     </Switch>
                 </Router>
+                {this.state.identity != null ? <Navigation role={this.state.identity.role} /> : null}
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './StockAdjustmentPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
@@ -12,15 +12,14 @@ class SupervisorDetailPopup extends React.Component {
             <tr className="tableRow">
                 <td>{item.stockAdustmentDetailId}</td>
                 <td>{item.quantity}</td>
-                <td>{item.amount}</td>
+                <td>{(item.amount).toFixed(2)}</td>
                 <td>{item.reason}</td>
             </tr>
         )
 
         return (
-            <div className="">
-                <div className="container">
-                    <div className="popupInner">
+             <div className="detailContainer">
+                <div className="detailInnerContainer">
                         <HighlightOffIcon onClick={this.props.closePopup} />
                         <div className="col-sm-12">
                             <div className="col-sm-8">
@@ -48,7 +47,6 @@ class SupervisorDetailPopup extends React.Component {
                             
                             </table>
                         </div>
-                    </div>
                 </div>
             </div>
         )

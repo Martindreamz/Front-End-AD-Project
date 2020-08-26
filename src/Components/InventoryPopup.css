@@ -12,7 +12,8 @@
 
 .popupInner {
     position: absolute;
-    height: 25%;
+    max-height: 20%;
+    max-width: 35%;
     left: 30%;
     right: 30%;
     top: 35%;

@@ -1,6 +1,38 @@
-.homeBody {
+.homeBodyClerk, .homeBodySup, .homeBodyHead, .homeBodyMgr {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-self: center;
+    align-items: center;
 }
+
+    .homeBodyClerk Button {
+        background-color: skyblue;
+        border: solid 0.5px;
+        cursor: pointer;
+        width: 400px;
+        margin: 5px;
+    }
+
+    .homeBodySup Button {
+        background-color: lightblue;
+        border: solid 0.5px;
+        cursor: pointer;
+        width: 400px;
+        margin: 5px;
+    }
+
+    .homeBodyHead Button {
+        background-color: green;
+        border: solid 0.5px;
+        cursor: pointer;
+        width: 400px;
+        margin: 5px;
+    }
+
+    .homeBodyMgr button {
+        background-color: darkblue;
+        border: solid 0.5px;
+        cursor: pointer;
+        width: 400px;
+        margin: 5px;
+    }

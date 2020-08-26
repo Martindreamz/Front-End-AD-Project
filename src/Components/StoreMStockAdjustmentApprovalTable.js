@@ -17,9 +17,8 @@ class InventoryPopup extends React.Component {
             </tr>
         )
         return (
-            <div className="">
-                <div className="container">
-                    <div className="popupInner">
+            <div className="detailContainer">
+                <div className="detailInnerContainer">
                         <HighlightOffIcon onClick={this.props.closePopup} />
                         <div className="col-sm-12 text-center">
                             <h4>StockAdjustment Detail Records</h4>
@@ -42,7 +41,6 @@ class InventoryPopup extends React.Component {
                             </tbody>
                             </table>
                         </div>
-                    </div>
                 </div>
             </div>
         )

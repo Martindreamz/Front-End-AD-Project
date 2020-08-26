@@ -91,7 +91,6 @@ class InventoryPopup extends React.Component {
                 <div className="popupInner">
                     <HighlightOffIcon className="formCloseBtn" onClick={this.props.closePopup} />
                     <div className="form" onChange={this.handleUpdatedData}>
-                        <h1>Inventory Record</h1>
                         <div className="formSection">
                             <fieldset>
                                 Item Name:

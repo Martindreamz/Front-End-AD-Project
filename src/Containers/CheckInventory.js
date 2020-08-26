@@ -89,10 +89,10 @@ class CheckInventory extends React.Component {
             })
         }
         else {
-            axios.post('https://localhost:5001/api/store/stkAd/15', this.state.discrepancy)
+            axios.post('https://localhost:5001/api/store/stkAd/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy)
                 .then(response => {
                     if (hasDiscrepancy) {
-                        window.location.href = domain + 'test2/' + response.data.id
+                        window.location.href = domain + 'discrepancyList/' + response.data.id
                     }
                     else {
                         window.location.href = domain
