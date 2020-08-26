@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import InventoryTable from '../Components/InventoryTable';
-import './RecievedGoods.css';
+import './ReceivedGoods.css';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
 
-class RecievedGoods extends React.Component {
+class ManageInventory extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -123,4 +123,4 @@ class RecievedGoods extends React.Component {
     }
 }
 
-export default RecievedGoods;
+export default ManageInventory;

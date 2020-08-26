@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Headers/Header";
 import Login from "./Components/Login";
-import RecievedGoods from "./Containers/RecievedGoods";
+import ReceivedGoods from "./Containers/ReceivedGoods";
 import PlaceOrder from "./Containers/PlaceOrder";
 import PurchaseOrderSubmit from "./Containers/PurchaseOrderSubmit";
 import CheckInventory from "./Containers/CheckInventory";
@@ -44,7 +44,7 @@ class App extends Component {
                             <Header />
                         </Route>
                         <Route path="/test">
-                            <RecievedGoods />
+                            <ReceivedGoods />
                         </Route>
                         <Route path="/requisitionForm">
                             <RequisitionForm />
