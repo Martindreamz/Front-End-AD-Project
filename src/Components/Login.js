@@ -62,8 +62,8 @@ class Login extends React.Component {
 		//actions
 		axios.post('https://localhost:5001/api/login/post', this.state.identity)
 			.then(response => {
-				console.log(response.status)
-				let obj = { id: response.data.id, name: response.data.name, role: response.data.role }
+				console.log(response.data)
+				let obj = { id: response.data.id, name: response.data.name, role: response.data.role, departmentId: response.data.departmentId }
 				sessionStorage.setItem("mySession", JSON.stringify(obj));
 				window.location.href = domain
 				
