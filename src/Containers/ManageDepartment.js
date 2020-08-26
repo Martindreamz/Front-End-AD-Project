@@ -150,8 +150,8 @@ class ManageDepartment extends Component {
       password: this.state.department.delgtEndDate,
       email: oldDelegate.id.toString(),
       role: oldDelegate.role,
-      phoneNum: newDelegate.role,
       departmentId: newDelegate.id,
+      phoneNum: newDelegate.role,
     };
 
     console.log(sendObj);
@@ -189,11 +189,10 @@ class ManageDepartment extends Component {
   async postDeptRep(oldRepresentative, newRepresentative) {
     let sendObj = {};
     sendObj = {
-      Id: Number(this.state.department.id),
-      email: oldRepresentative.id.toString(),
+      Id: oldRepresentative.id,
       role: oldRepresentative.role,
-      phoneNum: newRepresentative.role,
       departmentId: newRepresentative.id,
+      phoneNum: newRepresentative.role,
     };
 
     console.log(sendObj);
