@@ -67,7 +67,8 @@ class PurchaseOrder extends Component {
                            {this.props.data.pod!=null &&
 
                                <PurchaseOrderDetailTable data={this.props.data.pod} />
-                           }
+                       }
+                       {this.props.data.subtotal}
                         </div>
                     </div>
 
