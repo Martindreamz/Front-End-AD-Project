@@ -45,8 +45,7 @@ class PurchaseOrderSubmit extends Component {
                 const Supplierurl = 'https://localhost:5001/api/Store/getSupplier/' + po.supplierId
                 axios.get(Supplierurl).then(supplier => {
                     const sup = supplier.data
-                    const Sname = supplier.name
-                    const supplierId = supplier.id
+
 
                     Suppliers.push(sup)
 
@@ -54,12 +53,10 @@ class PurchaseOrderSubmit extends Component {
                     const Clerkurl = 'https://localhost:5001/api/Store/getEmployee/' + po.clerkId
                     axios.get(Clerkurl).then(clerk => {
                         const clerk1 = clerk.data
-                        //console.log(clerk)
 
                         const Podurl = 'https://localhost:5001/api/Store/getPOD/' + po.id
                         axios.get(Podurl).then(pod => {
                             const pods = pod.data
-                            //console.log('pod',pod)
 
                             //get stationeries for description and unit
                             pods.forEach(pod => {
@@ -82,20 +79,11 @@ class PurchaseOrderSubmit extends Component {
                                             price: price
                                         }
                                         Pod.push(FormattedPod)
-                                        //subTotal += (pod.qty * price)
 
-                                        //for (pod in Pod) {
-                                        //    subTotal += price * pod.qty
-
-                                        //}
-
-                                        //console.log('formatted pod', FormattedPod )
                                     })
                                 })
                             })
-                            //console.log('POD',Pod)
-
-                          
+                    
 
                             const record = {
                                 poNum: po.id,
@@ -114,21 +102,17 @@ class PurchaseOrderSubmit extends Component {
 
                             //sort by supplier priority
                             data.sort((a, b) => b.poNum - a.poNum)
-                            //console.log('data', data)
+
                         })
+
             
                             this.setState({
-                                data: data,
                                 Allpos: data,
                                 suppliers: Suppliers 
 
                             }, () => this.setUniqueSuppliers())
 
-                          // console.log('formatted record', record)
-                        console.log('state data', this.state.data)
-                        //console.log('state currentPO', this.state.currentPO)
-                        //console.log('state suppliers', this.state.suppliers)
-                        console.log('AllPOs', this.state.Allpos)
+                  
                         })
 
                     });
@@ -146,23 +130,25 @@ class PurchaseOrderSubmit extends Component {
 
         const sorted_list = usups.sort((a, b) => b.priority- a.priority)
         this.setState({ uSuppliers: sorted_list })
+        console.log('AllPOs', this.state.Allpos)
 
         this.setState(prevState => {
             const reorder = [...prevState.Allpos];
+            const neworder = [];
             reorder.forEach(order => {
                 order.subtotal = order.pod.reduce((total, p) => total + (p.qty * p.price), 0)
+                neworder.push(order)
             })
+            
+
             return ({
-                data: reorder,
-                Allpos: reorder
+                data: neworder,
+                Allpos: neworder
             })
     })
-
-     
     }
 
-    
-
+   
     handleChange(event,index) {
         const { name, value } = event.target;
         console.log('name', name, 'value', value, 'index', index)
@@ -205,9 +191,7 @@ class PurchaseOrderSubmit extends Component {
     }
 
     render() {
-       
-       
-        //console.log('usuppliers',this.state.uSuppliers)
+
         var tabs = this.state.uSuppliers!=null && this.state.uSuppliers.map((item) => 
             <button
                 key={item.id}
@@ -249,11 +233,6 @@ class PurchaseOrderSubmit extends Component {
                             data={this.state.data}
                             handleChange={this.handleChange}
                         />}
-                       
-               
-                        
-                        
-                        
                     </div>
                    
                 </div>

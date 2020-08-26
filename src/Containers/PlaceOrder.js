@@ -3,11 +3,9 @@ import Header from '../Components/Headers/Header';
 import PlaceOrderTable from "../Components/PlaceOrderTable"
 import './RecievedGoods.css';
 import './general.css';
-import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import PlaceOrderPopup from '../Components/PlaceOrderPopup';
-import Utils from "../Utils";
 
 
 class PlaceOrder extends Component {
@@ -28,12 +26,13 @@ class PlaceOrder extends Component {
             isEditing: false,
             redirect: false,
             displayPopup: false,
-            identity: JSON.parse(sessionStorage.getItem("mySession"))
+            allStationery:null
+            //identity: JSON.parse(sessionStorage.getItem("mySession")).id
         }
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
-        //this.setRedirect = this.setRedirect.bind(this);
         this.postPO = this.postPO.bind(this)
+       
     }
 
     closePopup = () => {
@@ -100,6 +99,55 @@ class PlaceOrder extends Component {
                 })
 
             })
+
+        //get all stationery --> for add item
+        await axios.get('https://localhost:5001/api/Store/Stationeries/')
+            .then(response => {
+                console.log('all stationery', response)
+                const supplieritems = response.data;
+                this.setState({ stationeries: supplieritems });
+                var reorder = []
+                //var data = items
+                supplieritems.forEach(item => {
+                    const sitems = []
+                    const url = 'https://localhost:5001/api/Store/getSupplierItems/' + item.id
+                    axios.get(url)
+                        .then(response => {
+                            const items = response.data;
+                            console.log('sitems',sitems)
+                            items.forEach(sItem => {
+                                const newsitem = {
+                                    supplierId: sItem.supplierId,
+                                    //map in suppliername
+                                    supplierName: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).name,
+                                    priority: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).priority,
+                                    price: sItem.price
+                                };
+                                sitems.push(newsitem)
+                            })
+
+                            const order = {
+                                id: item.id,
+                                desc: item.desc,
+                                qty: 0,
+                                unit: item.unit,
+                                selectedSupplier: sitems[0],
+                                //nest supplier items
+                                supplierItems: sitems
+                            };
+                            reorder.push(order)
+                        })
+                })
+
+                this.setState({
+                    allStationery: reorder,
+                    //recommended: reorder,
+                    //today: date,
+                    //isEditing:true
+                })
+
+            })
+
 
     }
 
@@ -216,7 +264,7 @@ class PlaceOrder extends Component {
 
                 this.setState({
                     purchaseOrders: purchaseOrders,
-                    redirect: true
+                    //redirect: true
 
                 }, () => {
                     this.postPO()
@@ -260,29 +308,14 @@ class PlaceOrder extends Component {
     }
 
     async postPO() {
-        console.log("state POs:", this.state.purchaseOrders)
         axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders).then(response => {
             console.log(response)
         },
-            //() => this.setRedirect()
-  )
+            this.setState({ redirect: true })
+        )
+        
            
     }
-
-    //setRedirect() {
-    //    console.log('set redirect')
-    //    this.setState({
-    //        redirect:true
-    //    })
-
-    //}
-
-    //renderRedirect = () => {
-    //    console.log('render redirect')
-    //    if (this.state.redirect) {
-    //        return <Redirect to='/PurchaseOrderSubmit' />
-    //    }
-    //}
 
     addItem(event) {
         const { name, value } = event.target;
@@ -302,7 +335,6 @@ class PlaceOrder extends Component {
         }
 
         if (name == "select") {
-            //console.log('select')
             const newSelected = Object.assign({}, this.state.selected);
             newSelected[value] = !this.state.selected[value];
 
@@ -314,21 +346,21 @@ class PlaceOrder extends Component {
             console.log(this.state.selected)
         }
 
-        if (name == "addNewItem") {
-            this.setState(prevState => {
-                const CurrData = prevState.data
-                CurrData.push(value)
-                return { data: CurrData }
-            })
-        }
-
     }
 
     addNewItem = (item) => {
-        console.log('parent get data',item)
+        console.log('parent get data', item)
+        console.log('parent processing')
     this.setState(prevState => {
         const CurrData = prevState.data
-        CurrData.push(item)
+        const Childitem = item
+        const Pitem = CurrData.find(x => x.id == item.id && x.selectedSupplier.supplierId == item.selectedSupplier.supplierId)
+        //merge if item exists
+        if (Pitem != null) {
+            Childitem.reOrderQty += Pitem.reOrderQty
+            CurrData.pop(Pitem)  
+        }
+        CurrData.push(Childitem)
         return { data: CurrData }
     })
 }
@@ -344,7 +376,7 @@ class PlaceOrder extends Component {
                 <h1>{this.state.redirect}</h1>
                 {this.state.displayPopup ?
                     <PlaceOrderPopup
-                        data={this.state.data}
+                        data={this.state.allStationery}
                         closePopup={this.closePopup}
                         newItem={this.addNewItem}
                     /> : null}
