@@ -38,21 +38,33 @@ class AssignHeadPopup extends Component {
 
   revoke() {
     if (window.confirm("Are you sure you want to revoke?")) {
-      this.setState({ delegate: "" });
-      this.setState({ startDate: "" });
-      this.setState({ endDate: "" });
-      this.props.handleDelegateSubmit("", "", "");
+      this.props.handleDelegateRevoke();
       this.closeModal();
+      window.location.reload(true);
     }
   }
 
   submit() {
-    this.props.handleDelegateSubmit(
-      this.state.delegate,
-      this.state.startDate,
-      this.state.endDate
-    );
-    this.closeModal();
+    if (
+      this.state.delegate === "" ||
+      this.state.startDate === "1-01-01" ||
+      this.state.endDate === "1-01-01"
+    ) {
+      window.alert("You need to complete all inputs!");
+    }
+
+    if (
+      this.state.delegate != "" &&
+      this.state.startDate != "1-01-01" &&
+      this.state.endDate != "1-01-01"
+    ) {
+      this.props.handleDelegateSubmit(
+        this.state.delegate,
+        this.state.startDate,
+        this.state.endDate
+      );
+      this.closeModal();
+    }
   }
 
   //$ npm install dateformat
