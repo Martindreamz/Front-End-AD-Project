@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../Components/InventoryTable.css";
+import { Label } from "reactstrap";
 
 class RequisitionHistoryDetails extends Component {
     constructor() {
@@ -8,6 +9,7 @@ class RequisitionHistoryDetails extends Component {
         this.state = {
             //test data
             hisDetailsData: [],
+            aut: '',
         };
 
     }
@@ -22,6 +24,8 @@ class RequisitionHistoryDetails extends Component {
         });
     }
 
+
+
     render() {
         const hisDetailsItem = this.props.details.map((item) => (
             <tr className="tableRow">
@@ -32,15 +36,25 @@ class RequisitionHistoryDetails extends Component {
             </tr>
         ));
         return (
-            <table className="genericTable">
-                <tr className="tableHeader">
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Unit</th>
-                    <th>Status</th>
-                </tr>
-                {hisDetailsItem}
-            </table>
+            <div>
+                <div>
+
+                    <div>Approved By: {this.props.detailInfo.authorizer} </div>
+                </div>
+                <div>
+                    <div>Date: {this.props.detailInfo.authorizedDate} </div>
+
+                </div>
+                <table className="genericTable">
+                    <tr className="tableHeader">
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Status</th>
+                    </tr>
+                    {hisDetailsItem}
+                </table>
+            </div>
         );
     }
 }
