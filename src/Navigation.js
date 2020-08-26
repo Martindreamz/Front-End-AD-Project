@@ -30,7 +30,7 @@ class Navigation extends Component {
                         <Route path="/manageInventory">
                             <ManageInventory />
                         </Route>
-                        <Route path="/receivedGoods">
+                        <Route path="/receivedGoods/:id">
                             <ReceivedGoods />
                         </Route>
                         <Route path="/checkInventory">
