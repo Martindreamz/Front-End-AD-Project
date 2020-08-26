@@ -7,6 +7,7 @@ import SupervisorDetailPopup from "../Components/SupervisorDetailPopup";
 import SupervisorStockAdjustmentApprovalTable from "../Components/SupervisorStockAdjustmentApprovalTable";
 import SupervisorStockAdjustmentSumTable from "../Components/SupervisorStockAdjustmentSumTable";
 import StockAdjustmentPopup from "../Components/StockAdjustmentPopup";
+import SupervisorCommmentPopup from "../Components/SupervisorCommmentPopup";
 
 class SupervisorStockAdjustmentApproval extends Component {
   constructor() {
@@ -21,6 +22,8 @@ class SupervisorStockAdjustmentApproval extends Component {
         displayDetailTable:false,
         detailInfo: [],
         voucherInfo:[],
+        isShowCommentPopup:false,
+        rejectItem:'',
     }
   }
 
@@ -51,13 +54,20 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
 
     rejectRequest = (item) =>{
-        fetch('https://localhost:5001/api/Store/supervisorRejectRequest', {
+        this.setState({isShowCommentPopup:true,rejectItem:item});
+    }
+
+    submitRejectComment=(comment)=>{
+        fetch('https://localhost:5001/api/Store/supervisorRejectRequest/'+comment, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(item)
+            body: JSON.stringify(this.state.rejectItem)
           }).then(res => res.json()).then(itemList => {
+            this.setState({
+                isShowCommentPopup:false
+            })
               this.componentDidMount();
           });
         this.componentDidMount();
@@ -84,7 +94,8 @@ class SupervisorStockAdjustmentApproval extends Component {
     closePopup = () => {
         this.setState({
             displayPopup: false,
-            displayDetailTable: false
+            displayDetailTable: false,
+            isShowCommentPopup:false
         })
         this.componentDidMount();
     }
@@ -103,6 +114,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     return ( 
       <div>
             <Header />
+            {this.state.isShowCommentPopup ? <SupervisorCommmentPopup submitRejectComment={this.submitRejectComment} rejectItem={this.state.rejectItem} closePopup={this.closePopup}/> :null}
             {this.state.displayPopup ?<SupervisorDetailPopup popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
             {this.state.displayDetailTable? <SupervisorStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup}/>:null}
             <div className="inventoryBody mt-1">
