@@ -14,6 +14,7 @@ class RequisitionHistoryDetailsView extends Component {
             showHistoryDetails: false,
             showHistory: true,
             detailInfo: '',
+            showRequestForm: false,
             identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
         this.historyDetails = this.historyDetails.bind(this)
@@ -30,7 +31,14 @@ class RequisitionHistoryDetailsView extends Component {
     changeView() {
         this.setState({
             showHistoryDetails: false,
-            showHistory: true
+            showHistory: true,
+        });
+    }
+
+    goForm() {
+        this.setState({
+            showRequestForm: true,
+            //showForm: false
         });
     }
 
@@ -62,7 +70,7 @@ class RequisitionHistoryDetailsView extends Component {
                             <div className="col-sm-12  ">
                                 <h1>History</h1>
                                 <RequisitionHistory historyDetails={this.showHisDetail} />
-
+                              
                             </div>
                             : null
                         }

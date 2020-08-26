@@ -3,17 +3,26 @@ import axios from "axios";
 import { Link } from "@material-ui/core";
 import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
 import { NavLink } from "react-router-dom";
+import { Button } from '@material-ui/core';
 
 class RequisitionHistory extends Component {
     constructor() {
         super();
         this.state = {
             //test data
+            
             data: [],
             identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
+        this.goForm = this.goForm.bind(this)
     }
 
+    goForm(previousState) {
+        this.setState({
+            showRequestForm: previousState,
+            //showForm: false
+        });
+    }
 
     //Run once before render - lifecycle
     componentDidMount() {
@@ -33,6 +42,7 @@ class RequisitionHistory extends Component {
             </tr>
         ));
         return (
+            <div>
             <table className="genericTable">
                 <tr className="tableHeader">
                     <th>Requisition ID</th>
@@ -41,6 +51,8 @@ class RequisitionHistory extends Component {
                 </tr>
                 {historyItem}
             </table>
+               
+            </div>
         );
     }
 }

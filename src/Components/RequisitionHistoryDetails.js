@@ -54,6 +54,7 @@ class RequisitionHistoryDetails extends Component {
                     </tr>
                     {hisDetailsItem}
                 </table>
+                
             </div>
         );
     }

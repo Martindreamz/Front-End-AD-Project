@@ -65,8 +65,6 @@ class RequisitionForm extends React.Component {
             showRequestForm: false,
             showReqList: false
         }
-        this.addRequisition = this.addRequisition.bind(this)
-        this.editRequestForm = this.editRequestForm.bind(this)
         this.goHistory = this.goHistory.bind(this)
     }
 
@@ -95,6 +93,7 @@ class RequisitionForm extends React.Component {
         });
     }
 
+    
     //Run once before render - lifecycle
     async componentDidMount() {
         //HTTP get request
