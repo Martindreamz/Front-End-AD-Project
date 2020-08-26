@@ -9,6 +9,7 @@ import DepartmentHeadRep from "../Components/DepartmentHeadRep";
 import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
 import "../Components/ManagerPartition.css";
 
+
 class ManageDepartment extends Component {
   constructor() {
     super();

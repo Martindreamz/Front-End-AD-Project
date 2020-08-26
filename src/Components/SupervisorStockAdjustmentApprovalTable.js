@@ -12,25 +12,24 @@ class InventoryPopup extends React.Component {
             <tr className="tableRow" key={item.stockAdustmentDetailId}>
                 <td>{item.stockAdustmentDetailId}</td>
                 <td>{item.quantity}</td>
-                <td>{item.amount}</td>
+                <td>{(item.amount).toFixed(2)}</td>
                 <td>{item.reason}</td>
             </tr>
         )
         return (
-            <div className="">
-                <div className="container">
-                    <div className="popupInner">
+        <div className="detailContainer">
+            <div className="detailInnerContainer">
                         <HighlightOffIcon onClick={this.props.closePopup} />
-                        <div className="col-sm-12 text-center">
+                        <div className="col-sm-12 text-center white-background-color">
                             <h4>StockAdjustment Detail Records</h4>
                         </div>
-                        <div className="col-sm-12">
+                        <div className="col-sm-12 white-background-color">
                             <div className="col-sm-6">
                             <p>StockAdjustment No:{this.props.detailInfo.stockAdustmentId}</p>
                             </div>
                         </div>
-                        <div  className="col-sm-12 text-center">
-                            <table className="table">
+                        <div  className="col-sm-12 text-center white-background-color">
+                            <table className="table white-background-color">
                                 
                                     <tr className="tableRow">
                                         <th>Item Code</th>
@@ -38,14 +37,13 @@ class InventoryPopup extends React.Component {
                                         <th>Amount</th>
                                         <th>Reason</th>
                                     </tr>
-                            <tbody>    
-                            {tableData}
+                            <tbody className="popupTable">  
+                                {tableData}
                             </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
             </div>
+        </div>
         )
     }
 }

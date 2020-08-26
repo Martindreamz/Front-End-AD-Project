@@ -13,7 +13,7 @@ class StoreMStockAdjustmentApproval extends Component {
       //test data
         data: [],
         isDataEmpty: false,
-        popupData: [],
+        voucherData: [],
         detailApprovalData: [],
         displayPopup: false,
         displayDetailTable:false,
@@ -31,15 +31,7 @@ class StoreMStockAdjustmentApproval extends Component {
     });
     }
 
-   /* showPopup = (event) => {
-        console.log(event)
-        //post request with id to retrieve stock adjustment details
-        this.setState({
-            displayPopup: true
-        })
-    }*/
-
-    showPopup = (item) =>{
+  showPopup = (item) =>{
         fetch('https://localhost:5001/api/Store/issueVoucher', {
             method: 'POST',
             headers: {
@@ -81,6 +73,7 @@ class StoreMStockAdjustmentApproval extends Component {
           }).then(res => res.json()).then(item => {
             this.setState({
                   displayDetailTable: true,
+                  displayPopup: false,
                   detailApprovalData : item
              })
           });
@@ -106,7 +99,7 @@ class StoreMStockAdjustmentApproval extends Component {
     return (
       <div>
             <Header />
-            {this.state.displayPopup ? < StockAdjustmentPopup popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
+            {this.state.displayPopup ?<StockAdjustmentPopup voucherData={this.state.voucherData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
             {this.state.displayDetailTable? <StoreMStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup}/>:null}
             <div className="inventoryBody mt-1">
                {(this.state.data && this.state.data.length)? 
