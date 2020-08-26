@@ -36,7 +36,7 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path="/" exact>
-                            {this.state.identity != null ? <Home /> : < Login />}
+                            {this.state.identity != null ? (this.state.identity.role === "STAFF" ? <RequisitionForm /> : < Home /> ) : < Login />}
                         </Route>
                         <Route path="/requisitionForm">
                             <RequisitionForm />
@@ -52,6 +52,9 @@ class App extends Component {
                         </Route>
                         <Route path="/test1">
                             <ReceivedGoods />
+                        </Route>
+                        <Route path="/home">
+                            <Home />
                         </Route>
                         <Route path="/RequisitionHistoryDetailsView">
                             <RequisitionHistoryDetailsView />

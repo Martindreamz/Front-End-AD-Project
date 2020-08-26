@@ -62,17 +62,12 @@ class Login extends React.Component {
 		//actions
 		axios.post('https://localhost:5001/api/login/post', this.state.identity)
 			.then(response => {
-				console.log(response)
-				if (response.data === "invalid") {
-					//actions here
-					this.setState({ displayError: true })
-				}
-				else {
-					let obj = { id: response.data.id, name: response.data.name, role: response.data.role }
-					sessionStorage.setItem("mySession", JSON.stringify(obj));
-					window.location.href = domain
-                }
-			})
+				console.log(response.status)
+				let obj = { id: response.data.id, name: response.data.name, role: response.data.role }
+				sessionStorage.setItem("mySession", JSON.stringify(obj));
+				window.location.href = domain
+				
+			}).catch(response => this.setState({ displayError: true }))
 	}
 
 
