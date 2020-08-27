@@ -250,7 +250,7 @@ class PlaceOrder extends Component {
                         //clerkId: 15,
                         SupplierId: supplier,
                         status: "ordered",
-                        //StockAdjustmentId: 1,
+                        StockAdjustmentId: 1,
                         DetailList: spodetails
                     }
 
