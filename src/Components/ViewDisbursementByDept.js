@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {domain} from '../Configurations/Config';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Moment from 'moment';
 
 
 class ViewDisbursementByDept extends React.Component {
@@ -18,7 +19,7 @@ class ViewDisbursementByDept extends React.Component {
         
         const byEachDepartmentRecord = this.state.data.map(item =>
             <tr className="tableRow" key={item.id}>
-                <td>{item.date}</td>
+                <td>{Moment(item.date).format('DD-MM-YYYY')}</td>
                 <td>{item.departmentName}</td>
                 <td>{item.representativeName}</td>
                 <td>{item.itemCount}</td>

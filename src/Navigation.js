@@ -42,6 +42,9 @@ class Navigation extends Component {
                         <Route path="/placeOrderSubmit">
                             <PurchaseOrderSubmit />
                         </Route>
+                        <Route path="/DisbursementByDeptList">
+                            <DisbursementByDeptList />
+                        </Route>
                     </Switch>
                     :
                     null
