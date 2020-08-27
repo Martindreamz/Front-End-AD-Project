@@ -30,7 +30,7 @@ class BarChart extends React.Component {
                 <Bar
                     data={data}
                     width={100}
-                    height={50}
+                    height={500}
                     options={{
                         maintainAspectRatio: false
                     }}
