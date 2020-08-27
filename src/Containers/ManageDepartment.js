@@ -9,7 +9,6 @@ import DepartmentHeadRep from "../Components/DepartmentHeadRep";
 import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
 import "../Components/ManagerPartition.css";
 
-
 class ManageDepartment extends Component {
   constructor() {
     super();
@@ -40,40 +39,53 @@ class ManageDepartment extends Component {
   //Run once before render - lifecycle
   componentDidMount() {
     //HTTP get request
-    axios.get("https://localhost:5001/api/Dept/3").then((response) => {
-      const departmentItem = response.data;
-      this.setState({ department: departmentItem });
-    });
+    axios
+      .get(
+        "https://localhost:5001/api/Dept/" +
+          JSON.parse(sessionStorage.getItem("mySession")).departmentId
+      )
+      .then((response) => {
+        const departmentItem = response.data;
+        this.setState({ department: departmentItem });
+      });
 
-    axios.get("https://localhost:5001/api/Dept/deptEmp/3").then((response) => {
-      const employeeItems = response.data;
-      this.setState({ employee: employeeItems });
+    axios
+      .get(
+        "https://localhost:5001/api/Dept/deptEmp/" +
+          JSON.parse(sessionStorage.getItem("mySession")).departmentId
+      )
+      .then((response) => {
+        const employeeItems = response.data;
+        this.setState({ employee: employeeItems });
 
-      axios
-        .get("https://localhost:5001/api/Dept/deptPendingReq/3")
-        .then((response) => {
-          const pendingReqItems = response.data;
+        axios
+          .get(
+            "https://localhost:5001/api/Dept/deptPendingReq/" +
+              JSON.parse(sessionStorage.getItem("mySession")).departmentId
+          )
+          .then((response) => {
+            const pendingReqItems = response.data;
 
-          const newPendingReqItems = [];
-          pendingReqItems.forEach((pendingReqItem) => {
-            const newPendingReqItem = {
-              id: pendingReqItem.id,
-              employeeId: pendingReqItem.employeeId,
-              employeeName: employeeItems.find(
-                (emp) => emp.id === pendingReqItem.employeeId
-              ).name,
-              dateOfRequest: pendingReqItem.dateOfRequest,
-              dateOfAuthorizing: pendingReqItem.dateOfAuthorizing,
-              authorizerId: pendingReqItem.authorizerId,
-              status: pendingReqItem.status,
-              comment: pendingReqItem.comment,
-            };
-            newPendingReqItems.push(newPendingReqItem);
+            const newPendingReqItems = [];
+            pendingReqItems.forEach((pendingReqItem) => {
+              const newPendingReqItem = {
+                id: pendingReqItem.id,
+                employeeId: pendingReqItem.employeeId,
+                employeeName: employeeItems.find(
+                  (emp) => emp.id === pendingReqItem.employeeId
+                ).name,
+                dateOfRequest: pendingReqItem.dateOfRequest,
+                dateOfAuthorizing: pendingReqItem.dateOfAuthorizing,
+                authorizerId: pendingReqItem.authorizerId,
+                status: pendingReqItem.status,
+                comment: pendingReqItem.comment,
+              };
+              newPendingReqItems.push(newPendingReqItem);
+            });
+
+            this.setState({ requisition: newPendingReqItems });
           });
-
-          this.setState({ requisition: newPendingReqItems });
-        });
-    });
+      });
 
     axios
       .get("https://localhost:5001/api/Dept/allCollectionpt")
@@ -87,7 +99,10 @@ class ManageDepartment extends Component {
       this.setState({ stationery: stationeryItems });
 
       axios
-        .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
+        .get(
+          "https://localhost:5001/api/Dept/deptPendingReqDetail/" +
+            JSON.parse(sessionStorage.getItem("mySession")).departmentId
+        )
         .then((response) => {
           const reqDetailItems = response.data;
 
