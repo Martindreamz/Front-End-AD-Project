@@ -19,7 +19,7 @@ class RequisitionApplyForm extends React.Component {
             category: [],
             desc: [],
             itemUnit: [],
-
+            
             message: '',
             currentFormObj: [],
 
@@ -130,6 +130,7 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
+    
 
 
     save = () => {
@@ -308,6 +309,7 @@ class RequisitionApplyForm extends React.Component {
                                         class="btn btn-primary" className="submitReqForm"
                                         onClick={this.save} > Add Item </button>
                                 </div>
+                               
                             </div>
                         </form>
                     </div>
@@ -316,8 +318,13 @@ class RequisitionApplyForm extends React.Component {
                 <div class="row"></div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div className="tblReq">
-                            <table class="requisitionTable">
+                        <div className="tblReq"> 
+                            <div>
+                                <Button variant="contained" onClick={(state) => this.props.goHistory(true)} ident={this.state.identity} >
+                                    Go to History
+                                    </Button>
+                            </div>
+                            <table className="requisitionTable">
                                 {(this.state.newData && this.state.newData.length) ?
                                     <tr className="tableHeader">
                                         <th>Category</th>
@@ -342,11 +349,7 @@ class RequisitionApplyForm extends React.Component {
                         </div>
                         {(this.state.newData && this.state.newData.length) ?
                             <div class="row float-right">
-                                <div>
-                                    <Button variant="contained" onClick={(state) => this.props.goHistory(true)} ident={this.state.identity} >
-                                        Go to History
-                                    </Button>
-                                </div>
+                                
 
                                 <div className="submitRButton">
                                     <Button type="button" id="submit"
