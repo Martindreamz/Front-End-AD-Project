@@ -7,6 +7,7 @@ import Header from '../Components/Headers/Header';
 import "./general.css"
 import axios from 'axios';
 import Pdf from "react-to-pdf";
+import { domain } from '../Configurations/Config';
 
 
 
@@ -175,16 +176,13 @@ class PurchaseOrderSubmit extends Component {
         if (name == "delivered") {
             this.setState(prevState => {
                 const reorder = [...prevState.data];
-                reorder[index] = {
-                    ...reorder[index],
-                    status: "delivered"
-                }
+                
 
                 const id = reorder[index].poNum
-                const temp = {id:id}
                 console.log('id', id)
                 //const url = 'https://localhost:5001/api/Store/PORecieved/'
-                axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
+                //axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
+                window.location.href = domain + 'receivedGoods/' + id
                 return { data: reorder }
             })
         }
