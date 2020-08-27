@@ -12,53 +12,9 @@ class RequisitionForm extends React.Component {
         super()
         this.state = {
             //identity: JSON.parse(sessionStorage.getItem("mySession")),
-            reqData: [
-                {
-                    id: 1,
-                    category: "Clip",
-                    description: "Clips Double 2",
-                    quantity: 10,
-                    unit: "Dozen"
-                },
-                {
-                    id: 2,
-                    category: "Pen",
-                    description: "Pen Ballpoint Black",
-                    quantity: 1,
-                    unit: "Box"
-                },
-                {
-                    id: 3,
-                    category: "Scrissors",
-                    description: "Scissors",
-                    quantity: 3,
-                    unit: "Each"
-                },
-                {
-                    id: 4,
-                    category: "Eraser",
-                    description: "Eraser (soft)",
-                    quantity: 20,
-                    unit: "Each"
-                },
-                {
-                    id: 5,
-                    category: "Eraser",
-                    description: "Eraser (soft)",
-                    quantity: 20,
-                    unit: "Dozen"
-                }
-            ],
+            reqData: [],
 
-            dropdownData: [
-                {
-                    clips: [
-                        {
-
-                        }
-                    ]
-                }
-            ],
+            dropdownData: [],
             category: [],
             //data: [],
             editSupObj: [], isEdit: false,
