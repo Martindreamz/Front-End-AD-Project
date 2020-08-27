@@ -142,7 +142,7 @@ class RequisitionApplyForm extends React.Component {
     save = () => {
         let requestForm = {
             //category: this.state.cat,
-            category: this.state.cat,
+            category: this.state.category[this.state.cat],
             desc: this.state.description,
             reqQty: this.refs.qtyRef.value,
             unit: this.state.itemByDesc.unit,
@@ -152,7 +152,7 @@ class RequisitionApplyForm extends React.Component {
             newData: [
                 ...this.state.newData,
                 {
-                    category: this.state.cat,
+                    category: this.state.category[this.state.cat],
                     desc: this.state.description,
                     reqQty: this.refs.qtyRef.value,
                     unit: this.state.itemByDesc.unit
