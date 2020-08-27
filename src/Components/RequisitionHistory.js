@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 import '../Components/InventoryTable.css';
 import Moment from 'moment';
 
+
 class RequisitionHistory extends Component {
     constructor() {
         super();
@@ -14,9 +15,10 @@ class RequisitionHistory extends Component {
             //test data
 
             data: [],
-            identity: JSON.parse(sessionStorage.getItem("mySession"))
+            identity: JSON.parse(sessionStorage.getItem("mySession")),
+            //showRequestForm: true
         };
-        this.goForm = this.goForm.bind(this)
+        //this.goForm = this.goForm.bind(this)
     }
 
     goForm(previousState) {
@@ -54,7 +56,6 @@ class RequisitionHistory extends Component {
                     </tr>
                     {historyItem}
                 </table>
-
             </div>
         );
     }

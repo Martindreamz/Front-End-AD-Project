@@ -94,9 +94,6 @@ class Navigation extends Component {
                         <Route path="/requisitionForm">
                             <RequisitionForm />
                         </Route>
-                        <Route path="/RequisitionHistoryDetailsView">
-                            <RequisitionHistoryDetailsView />
-                        </Route>
                     </Switch>
                     :
                     null
