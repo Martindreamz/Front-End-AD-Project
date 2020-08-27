@@ -16,7 +16,7 @@ class PurchaseOrderDetailTable extends Component {
     const orderItem = this.props.data.map((item) => (
       <tr className="tableRow">
         <td>{item.id}</td>
-        <td>description</td>
+        <td>{item.desc}</td>
         <td>{item.qty}</td>
         <td>
           <CurrencyFormat

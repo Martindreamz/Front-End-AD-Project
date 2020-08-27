@@ -16,13 +16,21 @@ class DepartmentHeadApproval extends Component {
       width: "100%",
     };
 
+    const thirtyStyle = {
+      width: "30%",
+    };
+
+    const fourtyStyle = {
+      width: "40%",
+    };
+
     return (
       <div>
         <table classname="componentTable">
           <tr className="tableHeader">
-            <th> Pending Stationery Request</th>
-            <th> Action</th>
-            <th> Comments</th>
+            <th style={thirtyStyle}>Pending Stationery Request</th>
+            <th style={fourtyStyle}>Action</th>
+            <th style={thirtyStyle}>Comments</th>
           </tr>
           {this.props.requisition.find((req) => req.status === "Applied") !=
           null ? (
@@ -33,8 +41,8 @@ class DepartmentHeadApproval extends Component {
                     <tr className="tableRow">
                       <Accordion style={accordionStyle}>
                         <AccordionSummary>
-                          <td>{x.employeeName}</td>
-                          <td>
+                          <td style={thirtyStyle}>{x.employeeName}</td>
+                          <td style={fourtyStyle}>
                             <button
                               className="redButton"
                               onClick={() => this.props.handleReject(x.id)}
@@ -48,7 +56,7 @@ class DepartmentHeadApproval extends Component {
                               Approve
                             </button>
                           </td>
-                          <td>
+                          <td style={thirtyStyle}>
                             <textarea
                               onChange={(e) =>
                                 this.props.handleComment(x.id, e.target.value)

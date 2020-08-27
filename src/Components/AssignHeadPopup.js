@@ -147,19 +147,19 @@ class AssignHeadPopup extends Component {
                     return <option value={x.name}>{x.name}</option>;
                   })}
                 </select>
-                <p>Start Date: </p>
-                <input
-                  type="date"
-                  name="startDate"
-                  value={this.state.startDate}
-                  onChange={this.handleStartDateInput}
-                />
                 <p>End Date:</p>
                 <input
                   type="date"
                   name="endDate"
                   value={this.state.endDate}
                   onChange={this.handleEndDateInput}
+                />
+                <p>Start Date: </p>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={this.state.startDate}
+                  onChange={this.handleStartDateInput}
                 />
               </div>
               <br />

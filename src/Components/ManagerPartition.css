@@ -45,6 +45,25 @@ html {
   margin-right: auto;
 }
 
+.centerpane {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.centerpane h4 {
+  text-align: center;
+}
+
+.centerpane table {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .rightpane {
   width: 25%;
   height: 100%;
