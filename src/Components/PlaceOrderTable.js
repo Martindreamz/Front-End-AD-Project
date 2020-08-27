@@ -1,6 +1,6 @@
 import React, { Component, createRef } from "react";
 import "./InventoryTable.css";
-import Moment from 'moment';
+//import Moment from 'moment';
 
 
 class PlaceOrderTable extends Component {

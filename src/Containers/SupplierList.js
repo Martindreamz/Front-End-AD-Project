@@ -19,6 +19,26 @@ class SupplierList extends React.Component {
         this.editSupplier = this.editSupplier.bind(this)
     }
 
+    //Run once before render - lifecycle
+    componentDidMount() {
+        //HTTP get request
+        axios.get('https://localhost:5001/api/Store/Suppliers')
+            .then(response => {
+                const items = response.data;
+                this.setState({ data: items });
+            })
+    }
+    componentDidUpdate(prevState) {
+        if (prevState.data != this.state.data || prevState.showSupplierForm != this.state.showSupplierForm) {
+            //HTTP get request
+            axios.get('https://localhost:5001/api/Store/Suppliers')
+                .then(response => {
+                    const items = response.data;
+                    this.setState({ data: items });
+                })
+        }
+    }
+
     addSupplierFun(previousState) {
         this.setState(
             {
@@ -26,7 +46,7 @@ class SupplierList extends React.Component {
                 showSupplierForm: !previousState,
             }
         )
-        this.componentDidMount();
+        //this.componentDidMount();
     }
 
     editSupplier(supplier) { 
@@ -38,16 +58,6 @@ class SupplierList extends React.Component {
         //axios.put('https://localhost:5001/api/Store/updateSupplier/' + supplier.id).then(result=>{  });
     } 
 
-    //Run once before render - lifecycle
-    componentDidMount() {
-        //HTTP get request
-        axios.get('https://localhost:5001/api/Store/Suppliers')
-            .then(response => {
-                const items = response.data;
-                this.setState({ data: items });
-            })
-    }
-
     checkSupplierAction = () => {
         //redirect to check inventory url
         window.location.href = domain
@@ -55,7 +65,7 @@ class SupplierList extends React.Component {
 
     render() {
 
-        this.componentDidMount();
+        //this.componentDidMount();
         return (
         <div>
             <Header />

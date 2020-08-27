@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "../Components/InventoryTable.css";
 import { Label } from "reactstrap";
+import Moment from 'moment';
 
 class RequisitionHistoryDetails extends Component {
     constructor() {
@@ -42,7 +43,7 @@ class RequisitionHistoryDetails extends Component {
                     <div>Approved By: {this.props.detailInfo.authorizer} </div>
                 </div>
                 <div>
-                    <div>Date: {this.props.detailInfo.authorizedDate} </div>
+                    <div>Date: {Moment(this.props.detailInfo.authorizedDate).format('DD-MM-YYYY')} </div>
 
                 </div>
                 <table className="genericTable">
@@ -54,6 +55,7 @@ class RequisitionHistoryDetails extends Component {
                     </tr>
                     {hisDetailsItem}
                 </table>
+                
             </div>
         );
     }

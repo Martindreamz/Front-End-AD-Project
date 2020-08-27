@@ -3,11 +3,9 @@ import Header from '../Components/Headers/Header';
 import PlaceOrderTable from "../Components/PlaceOrderTable"
 import './RecievedGoods.css';
 import './general.css';
-import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import PlaceOrderPopup from '../Components/PlaceOrderPopup';
-import Utils from "../Utils";
 
 
 class PlaceOrder extends Component {
@@ -28,12 +26,14 @@ class PlaceOrder extends Component {
             isEditing: false,
             redirect: false,
             displayPopup: false,
-            identity: JSON.parse(sessionStorage.getItem("mySession"))
+            allStationery:null
+            //identity: JSON.parse(sessionStorage.getItem("mySession")).id
         }
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
-        this.setRedirect = this.setRedirect.bind(this);
         this.postPO = this.postPO.bind(this)
+        this.setEditing = this.setEditing.bind(this)
+       
     }
 
     closePopup = () => {
@@ -101,6 +101,52 @@ class PlaceOrder extends Component {
 
             })
 
+        //get all stationery --> for add item
+        await axios.get('https://localhost:5001/api/Store/Stationeries/')
+            .then(response => {
+                console.log('all stationery', response)
+                const supplieritems = response.data;
+                this.setState({ stationeries: supplieritems });
+                var reorder = []
+                //var data = items
+                supplieritems.forEach(item => {
+                    const sitems = []
+                    const url = 'https://localhost:5001/api/Store/getSupplierItems/' + item.id
+                    axios.get(url)
+                        .then(response => {
+                            const items = response.data;
+                            console.log('sitems',sitems)
+                            items.forEach(sItem => {
+                                const newsitem = {
+                                    supplierId: sItem.supplierId,
+                                    //map in suppliername
+                                    supplierName: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).name,
+                                    priority: this.state.suppliers.find(supplier => supplier.id == sItem.supplierId).priority,
+                                    price: sItem.price
+                                };
+                                sitems.push(newsitem)
+                            })
+
+                            const order = {
+                                id: item.id,
+                                desc: item.desc,
+                                qty: 0,
+                                unit: item.unit,
+                                selectedSupplier: sitems[0],
+                                //nest supplier items
+                                supplierItems: sitems
+                            };
+                            reorder.push(order)
+                        })
+                })
+
+                this.setState({
+                    allStationery: reorder,
+                })
+
+            })
+
+
     }
 
     updateSubtotal() {
@@ -156,70 +202,73 @@ class PlaceOrder extends Component {
 
             const dict = this.state.selected
 
-            if (dict == null) alert('No reorder items selected')
+            if (dict == null)  alert('No reorder items selected') 
 
             console.log('dict:', dict)
-            var newSelectedItems = [];
-            var purchaseOrders = []
+           if(dict!=null) {
+                var newSelectedItems = [];
+                var purchaseOrders = []
 
-            //get all selected objects
-            Object.entries(dict).forEach(([key, value]) => {
-                value &&
-                    this.state.data.map(item => item.id == key && newSelectedItems.push(item))     
-            });
+                //get all selected objects
+                Object.entries(dict).forEach(([key, value]) => {
+                    value &&
+                        this.state.data.map(item => item.id == key && newSelectedItems.push(item))
+                });
 
-            console.log('newSelectedItems:', newSelectedItems)
+                console.log('newSelectedItems:', newSelectedItems)
 
-            //get all unique supplier ids
-            var suppliers = new Set(newSelectedItems.map(item => item.selectedSupplier.supplierId))
-            console.log('supplier', suppliers)
+                //get all unique supplier ids
+                var suppliers = new Set(newSelectedItems.map(item => item.selectedSupplier.supplierId))
+                console.log('supplier', suppliers)
 
 
-            //group all selectedItems by supplier Id and create PO
-            suppliers.forEach(supplier => {
-               
-                var spodetails = []
-                var poBySupplier = []
+                //group all selectedItems by supplier Id and create PO
+                suppliers.forEach(supplier => {
 
-                //group all selectedItems by supplier Id
-                newSelectedItems.map(item => item.selectedSupplier.supplierId == supplier && poBySupplier.push(item))
+                    var spodetails = []
+                    var poBySupplier = []
 
-                //create PO details
-                poBySupplier.forEach(item => {
-                    const detail =
-                    {
-                     
-                        stationeryId: item.id,
-                        qty: item.qty
+                    //group all selectedItems by supplier Id
+                    newSelectedItems.map(item => item.selectedSupplier.supplierId == supplier && poBySupplier.push(item))
+
+                    //create PO details
+                    poBySupplier.forEach(item => {
+                        const detail =
+                        {
+                            stationeryId: item.id,
+                            qty: item.qty
+                        }
+                        spodetails.push(detail)
+
+                    })
+
+
+                    //create PO
+                    var purchaseOrder = {
+                        //clerkId: this.state.identity,
+                        clerkId: 15,
+                        SupplierId: supplier,
+                        status: "ordered",
+                        StockAdjustmentId: 1,
+                        DetailList: spodetails
                     }
-                    spodetails.push(detail)
+
+                    purchaseOrders.push(purchaseOrder)
+                    console.log('POs', purchaseOrder)
+
 
                 })
 
+                this.setState({
+                    purchaseOrders: purchaseOrders,
+                    //redirect: true
 
-                //create PO
-                var purchaseOrder = {
-                    //clerkId: this.state.identity,
-                    clerkId: 15,
-                    SupplierId: supplier,
-                    status: "ordered",
-                    StockAdjustmentId: 1,
-                    DetailList: spodetails
+                }, () => {
+                    this.postPO()
                 }
 
-                purchaseOrders.push(purchaseOrder)
-                console.log('POs', purchaseOrder)
-               
-
-            })
-
-            this.setState({
-                purchaseOrders: purchaseOrders,
-                redirect: true
-
-            }, () => { this.postPO() }
-
-            )
+                )
+            }
         }
 
         if (name == "qty") {
@@ -238,7 +287,8 @@ class PlaceOrder extends Component {
 
         if (name == "reset") {
             const Recdata = this.state.recommended
-            this.setState({ data: Recdata, isEditing: false })
+            console.log('Recdata', Recdata)
+            this.setState({ data: Recdata }, () => this.setEditing(false))
            
         }
 
@@ -255,28 +305,18 @@ class PlaceOrder extends Component {
         console.log([name], value)
     }
 
+    setEditing(value) {
+        this.setState({ isEditing: value })
+    }
+
     async postPO() {
-        console.log("state POs:", this.state.purchaseOrders)
         axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders).then(response => {
             console.log(response)
-        }, () => this.setRedirect()
-  )
+        },
+            this.setState({ redirect: true })
+        )
+        
            
-    }
-
-    setRedirect() {
-        console.log('set redirect')
-        this.setState({
-            redirect:true
-        })
-
-    }
-
-    renderRedirect = () => {
-        console.log('render redirect')
-        if (this.state.redirect) {
-            return <Redirect to='/PurchaseOrderSubmit' />
-        }
     }
 
     addItem(event) {
@@ -297,7 +337,6 @@ class PlaceOrder extends Component {
         }
 
         if (name == "select") {
-            //console.log('select')
             const newSelected = Object.assign({}, this.state.selected);
             newSelected[value] = !this.state.selected[value];
 
@@ -309,22 +348,30 @@ class PlaceOrder extends Component {
             console.log(this.state.selected)
         }
 
-        if (name == "addNewItem") {
-            this.setState(prevState => {
-                const CurrData = prevState.data
-                CurrData.push(value)
-                return { data: CurrData }
-            })
-        }
-
     }
 
     addNewItem = (item) => {
-        console.log('parent get data',item)
+        console.log('parent get data', item)
+        console.log('parent processing')
     this.setState(prevState => {
         const CurrData = prevState.data
-        CurrData.push(item)
-        return { data: CurrData }
+        const Childitem = item
+        const Pitem = prevState.data.find(x => x.id == item.id && x.selectedSupplier.supplierId == item.selectedSupplier.supplierId)
+        //merge if item exists
+        if (Pitem != null) {
+            console.log('qty', Pitem.qty, Childitem.qty)
+            Childitem.qty = parseInt(Pitem.qty) + parseInt(Childitem.qty)
+            CurrData.push(Childitem)
+            CurrData.pop(Pitem)
+        }
+        else {
+            CurrData.push(Childitem)
+        }
+        //CurrData.push(Childitem)
+        return {
+            data: CurrData,
+            displayPopup: false
+        }
     })
 }
 
@@ -339,7 +386,7 @@ class PlaceOrder extends Component {
                 <h1>{this.state.redirect}</h1>
                 {this.state.displayPopup ?
                     <PlaceOrderPopup
-                        data={this.state.data}
+                        data={this.state.allStationery}
                         closePopup={this.closePopup}
                         newItem={this.addNewItem}
                     /> : null}

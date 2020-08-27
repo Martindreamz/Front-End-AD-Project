@@ -6,12 +6,13 @@ import axios from 'axios';
 import { domain } from '../Configurations/Config';
 
 class ReceivedGoods extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             //test data
             data: [],
-            discrepancy: []
+            discrepancy: [],
+            id: String(this.props.match.params.id)
         }
     }
 
@@ -19,30 +20,31 @@ class ReceivedGoods extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/store/stationeries')
-            .then(response => {
-                const items = response.data.map(item => {
+        Promise.all([
+            axios.get("https://localhost:5001/api/store/getPOD/" + this.state.id),
+            axios.get("https://localhost:5001/api/store/stationeries")
+        ]).then(([pod, items]) => {
+            const result = pod.data.map(item => {
+                return {
+                    Id: item.stationeryId,
+                    desc: items.data.find(record => record.id == item.stationeryId).desc,
+                    inventoryQty: item.qty
+                }
+            });
+            this.setState({ data: result });
+            this.setState(prevState => {
+                const generateDiscrepancy = prevState.data.map(item => {
                     return {
-                        Id: item.id,
-                        desc: item.desc,
-                        inventoryQty: item.inventoryQty
-                    }
-                });
-                this.setState({ data: items });
-                //Generate Discrepancy state base data
-                this.setState(prevState => {
-                    const generateDiscrepancy = prevState.data.map(item => {
-                        return {
-                            StationeryId: item.Id,
-                            discpQty: 0,
-                            comment: ""
-                        }
-                    })
-                    return {
-                        discrepancy: generateDiscrepancy
+                        StationeryId: item.Id,
+                        discpQty: 0,
+                        comment: ""
                     }
                 })
+                return {
+                    discrepancy: generateDiscrepancy
+                }
             })
+        })
     }
 
     //Save input qty to discrepancy state
@@ -68,12 +70,12 @@ class ReceivedGoods extends React.Component {
     }
 
     submitForm = () => {
-        axios.post('https://localhost:5001/api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy)
-            .then(response => {
-                {
-                    window.location.href = domain
-                }
-            })
+        Promise.all([
+            axios.post('https://localhost:5001/api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy),
+            axios.post('https://localhost:5001/api/Store/PORecieved/' + this.state.id)
+        ]).then(([res1, res2]) => {
+            window.location.href = domain + 'placeOrderSubmit'
+        })
     }
 
     render() {

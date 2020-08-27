@@ -115,7 +115,11 @@
 }
 
 .tblReq {
-  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.mouserPointer {
+  cursor: pointer;
 }
 
 tr:nth-child(even) {

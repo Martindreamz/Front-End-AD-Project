@@ -2,116 +2,123 @@ import React, { Component } from "react";
 import Header from "../Components/Headers/Header";
 import StoreMStockAdjustmentApprovalTable from "../Components/StoreMStockAdjustmentApprovalTable";
 import axios from "axios";
-import StockAdjustmentPopup from "../Components/StockAdjustmentPopup";
-import StoreMgrStockAdjustmentSumTable from "../Components/StoreMgrStockAdjustmentSumTable";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-class StoreMStockAdjustmentApproval extends Component {
-  constructor() {
-    super();
-    this.state = {
-      //test data
-        data: [],
-        isDataEmpty: false,
-        voucherData: [],
-        detailApprovalData: [],
-        displayPopup: false,
-        displayDetailTable:false,
-        detailInfo: [],
-        voucherInfo:[],
-    }
-  }
-
-  //Run once before render - lifecycle
-  componentDidMount() {
-    //HTTP get request
-    axios.get(/* api here */).then((response) => {
-      const items = response.data;
-      this.setState({ data: items });
-    });
+import SupervisorDetailPopup from "../Components/SupervisorDetailPopup";
+import SupervisorStockAdjustmentApprovalTable from "../Components/SupervisorStockAdjustmentApprovalTable";
+import SupervisorStockAdjustmentSumTable from "../Components/SupervisorStockAdjustmentSumTable";
+import StockAdjustmentPopup from "../Components/StockAdjustmentPopup";
+import SupervisorCommmentPopup from "../Components/SupervisorCommmentPopup";
+class SupervisorStockAdjustmentApproval extends Component {
+    constructor() {
+        super();
+        this.state = {
+            //test data
+            data: [],
+            isDataEmpty: false,
+            popupData: [],
+            detailApprovalData: [],
+            displayPopup: false,
+            displayDetailTable: false,
+            detailInfo: [],
+            voucherInfo: [],
+            isShowCommentPopup: false,
+            rejectItem: '',
+        }
     }
 
-  showPopup = (item) =>{
-        fetch('https://localhost:5001/api/Store/issueVoucher', {
+    componentDidMount() {
+        //HTTP get request
+        axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+            .then(response => {
+                const resdata = response.data
+                this.setState({ data: resdata })
+            })
+    }
+    componentDidUpdate(prevState) {
+        if (prevState.data != this.state.data || prevState.isShowCommentPopup != this.state.isShowCommentPopup) {
+            axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+                .then(response => {
+                    const resdata = response.data
+                    this.setState({ data: resdata })
+                })
+        }
+    }
+
+    showPopup = (item) => {
+        fetch('https://localhost:5001/api/Store/supervisorissueVoucher', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(item)
-          }).then(res => res.json()).then(itemList => {
+        }).then(res => res.json()).then(itemList => {
+            console.log(itemList);
             this.setState({
-                  displayPopup: true,
-                  popupData : itemList
-             })
-            itemList.map(item => this.setState({voucherInfo:item}))
-          });
+                displayPopup: true,
+                popupData: itemList
+            })
+            itemList.map(item => this.setState({ voucherInfo: item }))
+        });
     }
-
-    rejectRequest = (item) =>{
-        fetch('https://localhost:5001/api/Store/managerRejectRequest', {
+    rejectRequest = (item) => {
+        this.setState({ isShowCommentPopup: true, rejectItem: item });
+    }
+    submitRejectComment = (comment) => {
+        fetch('https://localhost:5001/api/Store/supervisorRejectRequest/' + comment, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(item)
-          }).then(res => res.json()).then(itemList => {
-              this.componentDidMount();
-          });
-        
-    }
-
-
-    showDetail = (item) =>{
-        this.setState({detailInfo:item});
-
-        fetch('https://localhost:5001/api/Store/getAllAdjustDetailLine', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-          }).then(res => res.json()).then(item => {
+            body: JSON.stringify(this.state.rejectItem)
+        }).then(res => res.json()).then(itemList => {
             this.setState({
-                  displayDetailTable: true,
-                  displayPopup: false,
-                  detailApprovalData : item
-             })
-          });
+                isShowCommentPopup: false
+            })
+            //this.componentDidMount();
+        });
+        //this.componentDidMount();
     }
-
+    showDetail = (item) => {
+        this.setState({ detailInfo: item });
+        fetch('https://localhost:5001/api/Store/getAllSupervisorAdjustDetailLine', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        }).then(res => res.json()).then(item => {
+            this.setState({
+                displayDetailTable: true,
+                displayPopup: false,
+                detailApprovalData: item
+            })
+        });
+    }
     closePopup = () => {
         this.setState({
             displayPopup: false,
-            displayDetailTable: false
+            displayDetailTable: false,
+            isShowCommentPopup: false
         })
-        this.componentDidMount();
-    }
-    componentDidMount() {
-        //HTTP get request
-        axios.get('https://localhost:5001/api/Store/adjustmentList')
-            .then(response => {
-                const resdata =response.data
-                this.setState({ data: resdata})
-            })
+        //this.componentDidMount();
     }
 
-  render() {
-    return (
-      <div>
-            <Header />
-            {this.state.displayPopup ?<StockAdjustmentPopup voucherData={this.state.voucherData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup}/> : null}
-            {this.state.displayDetailTable? <StoreMStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup}/>:null}
-            <div className="inventoryBody mt-1">
-               {(this.state.data && this.state.data.length)? 
-                  <StoreMgrStockAdjustmentSumTable data={this.state.data} showDetail={this.showDetail} rejectRequest={this.rejectRequest} showPopup={this.showPopup} closePopup={this.closePopup}/>
-                  :
-                  <div className="col-sm-6 mt-1"><p className="alert alert-primary"> No Stockadjustment request!</p></div>
-                }
-              
+    render() {
+        return (
+            <div>
+                <Header />
+                {this.state.isShowCommentPopup ? <SupervisorCommmentPopup submitRejectComment={this.submitRejectComment} rejectItem={this.state.rejectItem} closePopup={this.closePopup} /> : null}
+                {this.state.displayPopup ? <SupervisorDetailPopup popupData={this.state.popupData} voucherInfo={this.state.voucherInfo} closePopup={this.closePopup} /> : null}
+                {this.state.displayDetailTable ? <SupervisorStockAdjustmentApprovalTable detailApprovalData={this.state.detailApprovalData} detailInfo={this.state.detailInfo} closePopup={this.closePopup} /> : null}
+                <div className="inventoryBody mt-1">
+                    {(this.state.data && this.state.data.length) ?
+                        <SupervisorStockAdjustmentSumTable data={this.state.data} showDetail={this.showDetail} showPopup={this.showPopup} rejectRequest={this.rejectRequest} closePopup={this.closePopup} />
+                        :
+                        <div className="col-sm-6 mt-1"><p className="alert alert-primary"> No Stockadjustment request!</p></div>
+                    }
+                </div>
             </div>
-      </div>
-    );
-  }
+        );
+    }
 }
-
-export default StoreMStockAdjustmentApproval;
+export default SupervisorStockAdjustmentApproval;

@@ -4,9 +4,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import '../Components/InventoryTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Label } from 'reactstrap';
-import Header from '../Components/Headers/Header';
 import { Button } from '@material-ui/core';
+
 
 class RequisitionApplyForm extends React.Component {
     constructor(props) {
@@ -17,48 +16,34 @@ class RequisitionApplyForm extends React.Component {
             newData: [],
             category: [],
             desc: [],
-            itemUnit: [],
-
             message: '',
-            currentFormObj: [],
-
             cat: '',
             openCat: false,
             unit: '',
             openUnit: false,
-
             showDescription: false,
             description: '',
             openDescription: false,
-
             showQtyUnit: false,
             showReqList: false,
+            isAdd: true,
+            identity: JSON.parse(sessionStorage.getItem("mySession")),
         };
-        /*this.initialState = {
-            id: '',
-            category: '',
-            desc: '',
-            reqQty: ,
-            unit: '',
-        } */
         this.showCat = this.showCat.bind(this);
         this.closeCat = this.closeCat.bind(this);
         this.catOpen = this.catOpen.bind(this);
         this.showDesc = this.showDesc.bind(this);
         this.closeDesc = this.closeDesc.bind(this);
         this.descOpen = this.descOpen.bind(this);
-
-        if (props.isEdit) {
-            this.state.currentFormObj = props.editSupObj
-        } else {
-            this.state.currentFormObj = this.initialState;
-        }
     }
 
     //Event Handling
     showCat = (event) => {
         const selected = event.target.value
-        this.setState({ showDescription: true, cat: selected })
+        this.setState({
+            showDescription: true,
+            cat: selected,
+        })
     }
 
     closeCat = () => {
@@ -92,7 +77,7 @@ class RequisitionApplyForm extends React.Component {
             openDescription: !this.state.openDescription,
             showQtyUnit: true
         });
-       
+
     }
     closeDesc = () => {
         this.setState({
@@ -110,8 +95,6 @@ class RequisitionApplyForm extends React.Component {
         const selected = event.target.value
         this.setState({
             unit: selected,
-            //openUnit: !this.stat.openUnit,
-            //showQtyUnit: true
         })
     }
 
@@ -127,52 +110,38 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
-   
-
     save = () => {
         let requestForm = {
-            category: this.state.cat,
+            category: this.state.category[this.state.cat],
             desc: this.state.description,
             reqQty: this.refs.qtyRef.value,
-            unit: "Each",
+            unit: this.state.itemByDesc.unit,
         }
         console.log(requestForm)
         this.setState({
             newData: [
                 ...this.state.newData,
                 {
-                    category: this.state.cat,
+                    category: this.state.category[this.state.cat],
                     desc: this.state.description,
                     reqQty: this.refs.qtyRef.value,
-                    unit: "Each"
+                    unit: this.state.itemByDesc.unit
                 }
             ]
         });
-        this.setState({
-            isAdd: true,
-        })
 
     }
 
     saveRequisition = () => {
         console.log(this.state.newData)
-
-        //if (!this.props.isEdit) {
-        fetch('https://localhost:5001/api/Dept/ApplyRequisition', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.newData)
-
-        }).then(res => res.json())
-            .then(requestForm => {
+        axios.post('https://localhost:5001/api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.newData)
+            .then(response => {
                 this.setState({ message: 'New requested items are successfully applied.' });
-            });
-        //}
+            })
 
-
-
+        this.setState({
+            isAdd: false
+        })
     }
 
     //Run once before render - lifecycle
@@ -189,10 +158,9 @@ class RequisitionApplyForm extends React.Component {
                         unit: item.unit
                     }
                 });
-                
+
                 this.setState(prevState => {
                     const categoryName = [...new Set(items.map(item => item.category))]
-                    //const unit = [...new Set(items.map(item => item.unit))]
                     var data1 = []
                     categoryName.forEach(name => {
                         const categoryData = items.map(item => {
@@ -207,10 +175,9 @@ class RequisitionApplyForm extends React.Component {
                         data: items,
                         desc: data1,
                         category: categoryName,
-                        itemUnit: data1
                     }
                 });
-               
+
 
             })
     }
@@ -237,7 +204,6 @@ class RequisitionApplyForm extends React.Component {
                                 </div>
                                 <div class="col-sm-6">
                                     <Select
-                                        ref="catRef"
                                         className="form-control"
                                         id={this.state.data.id}
                                         value={this.state.cat}
@@ -245,7 +211,7 @@ class RequisitionApplyForm extends React.Component {
                                         onClose={this.closeCat}
                                         onOpen={this.catOpen}
                                         onChange={this.showCat}>
-                                        {this.state.category.map((item, index) => <MenuItem value={index}>{item}</MenuItem>)}
+                                        {this.state.category.map((item, index) => <MenuItem value={index} > {item}</MenuItem>)}
                                     </Select>
                                 </div>
                             </div>
@@ -256,7 +222,6 @@ class RequisitionApplyForm extends React.Component {
                                 <div class="col-sm-6">
                                     {this.state.showDescription ?
                                         <Select
-                                            ref="descRef"
                                             className="form-control"
                                             id={this.state.data.id}
                                             value={this.state.data.id}
@@ -288,70 +253,69 @@ class RequisitionApplyForm extends React.Component {
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" value={this.state.itemByDesc.unit} className="form-control" disabled />
-
                                 </div>
                             </div>
 
                             <div class="col-sm-12 mb-1">
-
                                 <div class="col-sm-6 mb-1">
                                     <button type="button" id="submit"
                                         class="btn btn-primary" className="submitReqForm"
                                         onClick={this.save} > Add Item </button>
                                 </div>
+
                             </div>
                         </form>
                     </div>
 
                 </div>
                 <div class="row"></div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div className="tblReq">
-                            <table class="requisitionTable">
-                                {(this.state.newData && this.state.newData.length) ?
-                                    <tr className="tableHeader">
-                                        <th>Category</th>
-                                        <th>Description</th>
-                                        <th>Requested Quantity</th>
-                                        <th>Unit</th>
-                                    </tr>
-                                    : null
-                                }
-                                {this.state.newData.map(i => {
-                                    return (
-                                        <tr className="tableRow">
-                                            <td>{i.category}</td>
-                                            <td>{i.desc}</td>
-                                            <td>{i.reqQty}</td>
-                                            <td>{i.unit}</td>
-                                        </tr>
-                                    )
-                                })}
-
-                            </table>
-                        </div>
-                        {(this.state.newData && this.state.newData.length) ?
-                            <div class="row float-right">
-                                <div>
-                                    <Button variant="contained" onClick={(state) => this.props.goHistory(true)}>
-                                        Go to History
-                                    </Button>
-                                </div>
-
-                                <div className="submitRButton">
-                                    <Button type="button" id="submit"
-                                        variant="contained"
-                                        onClick={this.saveRequisition} > Submit </Button>
-                                </div>
-                            </div>
-
-                            : null
-
-                        }
-                    </div>
+                <div>
+                    <Button variant="contained" onClick={(state) => this.props.goHistory(true)} >
+                        Go to History
+                    </Button>
                 </div>
+                {this.state.isAdd ?
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div className="tblReq">
+                                <table className="requisitionTable">
+                                    {(this.state.newData && this.state.newData.length) ?
+                                        <tr className="tableHeader">
+                                            <th>Category</th>
+                                            <th>Description</th>
+                                            <th>Requested Quantity</th>
+                                            <th>Unit</th>
+                                        </tr>
+                                        : null
+                                    }
+                                    {this.state.newData.map(i => {
+                                        return (
+                                            <tr className="tableRow">
+                                                <td>{i.category}</td>
+                                                <td>{i.desc}</td>
+                                                <td>{i.reqQty}</td>
+                                                <td>{i.unit}</td>
+                                            </tr>
+                                        )
+                                    })}
 
+                                </table>
+
+                            </div>
+                            {(this.state.newData && this.state.newData.length) ?
+                                <div class="row float-right">
+                                    <div className="submitRButton">
+                                        <Button type="button" id="submit"
+                                            variant="contained"
+                                            onClick={this.saveRequisition} > Submit </Button>
+                                    </div>
+                                </div>
+                                : null
+                            }
+                        </div>
+                    </div>
+                    : null
+                }
             </div>
         )
 

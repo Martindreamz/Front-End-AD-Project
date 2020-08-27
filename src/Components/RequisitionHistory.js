@@ -1,23 +1,29 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from "@material-ui/core";
-import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
-import { NavLink } from "react-router-dom";
+import { Link } from "@material-ui/core"
+import '../Components/InventoryTable.css';
+import Moment from 'moment';
+
 
 class RequisitionHistory extends Component {
     constructor() {
         super();
         this.state = {
-            //test data
             data: [],
+            identity: JSON.parse(sessionStorage.getItem("mySession")),
         };
     }
 
+    goForm(previousState) {
+        this.setState({
+            showRequestForm: previousState,
+        });
+    }
 
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/dept/req').then((response) => {
+        axios.get('https://localhost:5001/api/dept/requisition/' + JSON.parse(sessionStorage.getItem("mySession")).id).then((response) => {
             const items = response.data;
             this.setState({ data: items });
         });
@@ -26,20 +32,23 @@ class RequisitionHistory extends Component {
     render() {
         const historyItem = this.state.data.map((item) => (
             <tr className="tableRow">
-                <td><Link onClick={() => this.props.historyDetails(item)}>{item.id}</Link></td>
-                <td>{item.dateOfRequest}</td>
+                <td><Link onClick={() => this.props.historyDetails(item)} className="mouserPointer">{item.id}</Link></td>
+                <td>{Moment(item.dateOfRequest).format('DD-MM-YYYY')}</td>
                 <td>{item.status}</td>
             </tr>
         ));
         return (
-            <table className="genericTable">
-                <tr className="tableHeader">
-                    <th>Requisition ID</th>
-                    <th>Requested Date</th>
-                    <th>Status</th>
-                </tr>
-                {historyItem}
-            </table>
+            <div>
+                <h6>Click the ID to view the details</h6>
+                <table className="genericTable">
+                    <tr className="tableHeader">
+                        <th>Requisition ID</th>
+                        <th>Requested Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {historyItem}
+                </table>
+            </div>
         );
     }
 }

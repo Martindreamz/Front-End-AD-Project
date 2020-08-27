@@ -118,7 +118,7 @@ class InventoryPopup extends React.Component {
                             </fieldset>
                             <fieldset>
                                 Quantity:
-                                <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} />
+                                <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} disabled/>
                             </fieldset>
                         </div>
                         <div className="formButtons">
