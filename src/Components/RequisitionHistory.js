@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from "@material-ui/core";
-import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
-import { NavLink } from "react-router-dom";
-import { Button } from '@material-ui/core';
+import { Link } from "@material-ui/core"
 import '../Components/InventoryTable.css';
 import Moment from 'moment';
 
@@ -12,19 +9,14 @@ class RequisitionHistory extends Component {
     constructor() {
         super();
         this.state = {
-            //test data
-
             data: [],
             identity: JSON.parse(sessionStorage.getItem("mySession")),
-            //showRequestForm: true
         };
-        //this.goForm = this.goForm.bind(this)
     }
 
     goForm(previousState) {
         this.setState({
             showRequestForm: previousState,
-            //showForm: false
         });
     }
 

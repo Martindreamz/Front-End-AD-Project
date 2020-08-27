@@ -5,7 +5,9 @@ import './RecievedGoods.css';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import Pdf from "react-to-pdf";
+import Moment from 'moment';
 const ref = React.createRef();
+
 
 class DisbursementList extends React.Component {
     constructor() {
@@ -39,7 +41,7 @@ class DisbursementList extends React.Component {
                         </div>
                         <div className="row mt-1 pt-10">
                             <div className="col-sm-6">
-                                <p>Date:  {this.props.deliveryInfo.date}</p>
+                                <p>Date:  {Moment(this.props.deliveryInfo.date).format('DD-MM-YYYY')}</p>
                                 <p>Collection point :  {this.props.deliveryInfo.collectionPoint}</p>
                             </div>
                             <div className="col-sm-6">

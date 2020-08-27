@@ -45,12 +45,10 @@ class App extends Component {
                         </Route>
 
                         <Route path="/disbursementList">
-                          <DisbursementList />
+                            <DisbursementList />
                         </Route>
                         
-                        <Route path="/DisbursementByDeptList">
-                          <DisbursementByDeptList />
-                        </Route>
+                        
                     </Switch>
                 </Router>
                 {this.state.identity != null ? <Navigation role={this.state.identity.role} /> : null}

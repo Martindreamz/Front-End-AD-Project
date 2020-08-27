@@ -1,6 +1,7 @@
 import React from 'react';
 import './StockAdjustmentPopup.css';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Moment from 'moment';
 
 class StockAdjustmentPopup extends React.Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class StockAdjustmentPopup extends React.Component {
                         <div className="col-sm-12">
                             <div className="col-sm-8">
                             <p>Voucher no:{this.props.voucherInfo.vocNo}</p>
-                            <p>Date:{this.props.voucherInfo.date}</p>
+                            <p>Date:{Moment(this.props.voucherInfo.date).format('DD-MM-YYYY')}</p>
                             </div>
                         </div>
                         <div  className="col-sm-12 text-center">

@@ -19,7 +19,7 @@ class Home extends Component {
                 <Header />
                 {this.state.identity.role === 'CLERK' ? 
                     <div className="homeBodyClerk">
-                        <Button>Disbursement List</Button>
+                        <Button onClick={() => window.location.href = domain + "DisbursementByDeptList"}>Disbursement List</Button>
                         <Button onClick={() => window.location.href = domain + "placeOrder"}>Raise Purchase Order</Button>
                         <Button onClick={() => window.location.href = domain + "manageInventory"}>Manage Inventory</Button>
                         <Button onClick={() => window.location.href = domain + "placeOrderSubmit"}>Received Goods</Button>
