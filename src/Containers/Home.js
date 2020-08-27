@@ -44,14 +44,14 @@ class Home extends Component {
                     :
                     null
                 }
-                {/*{this.state.identity.role === 'HEAD' ?
+                {this.state.identity.role === 'REPRESENTATIVE' ?
                     <div className="homeBodyHead">
                         <Button onClick={() => window.location.href = domain + "requisitionForm"}>Request Items</Button>
-                        <Button onClick={() => window.location.href = domain + "manager"}>Manage Department</Button>
+                        <Button onClick={() => window.location.href = domain + "DepRepDisbursement"}>Disbursement(Collection)</Button>
                     </div>
                     :
                     null
-                }*/}
+                }
             </div>
         )
     }

@@ -26,8 +26,8 @@ class PlaceOrder extends Component {
             isEditing: false,
             redirect: false,
             displayPopup: false,
-            allStationery:null
-            //identity: JSON.parse(sessionStorage.getItem("mySession")).id
+            allStationery:null,
+            identity: JSON.parse(sessionStorage.getItem("mySession")).id
         }
         this.handleChange = this.handleChange.bind(this);
         this.addItem = this.addItem.bind(this)
@@ -245,11 +245,11 @@ class PlaceOrder extends Component {
 
                     //create PO
                     var purchaseOrder = {
-                        //clerkId: this.state.identity,
-                        clerkId: 15,
+                        clerkId: this.state.identity,
+                        //clerkId: 15,
                         SupplierId: supplier,
                         status: "ordered",
-                        StockAdjustmentId: 1,
+                        //StockAdjustmentId: 1,
                         DetailList: spodetails
                     }
 

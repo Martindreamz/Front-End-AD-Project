@@ -9,11 +9,11 @@ import DepartmentHeadRep from "../Components/DepartmentHeadRep";
 import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
 import "../Components/ManagerPartition.css";
 
-
 class ManageDepartment extends Component {
   constructor() {
     super();
     this.state = {
+      role: JSON.parse(sessionStorage.getItem("mySession")).role,
       department: {},
       employee: [],
       requisition: [],
@@ -40,40 +40,53 @@ class ManageDepartment extends Component {
   //Run once before render - lifecycle
   componentDidMount() {
     //HTTP get request
-    axios.get("https://localhost:5001/api/Dept/3").then((response) => {
-      const departmentItem = response.data;
-      this.setState({ department: departmentItem });
-    });
+    axios
+      .get(
+        "https://localhost:5001/api/Dept/" +
+          JSON.parse(sessionStorage.getItem("mySession")).departmentId
+      )
+      .then((response) => {
+        const departmentItem = response.data;
+        this.setState({ department: departmentItem });
+      });
 
-    axios.get("https://localhost:5001/api/Dept/deptEmp/3").then((response) => {
-      const employeeItems = response.data;
-      this.setState({ employee: employeeItems });
+    axios
+      .get(
+        "https://localhost:5001/api/Dept/deptEmp/" +
+          JSON.parse(sessionStorage.getItem("mySession")).departmentId
+      )
+      .then((response) => {
+        const employeeItems = response.data;
+        this.setState({ employee: employeeItems });
 
-      axios
-        .get("https://localhost:5001/api/Dept/deptPendingReq/3")
-        .then((response) => {
-          const pendingReqItems = response.data;
+        axios
+          .get(
+            "https://localhost:5001/api/Dept/deptPendingReq/" +
+              JSON.parse(sessionStorage.getItem("mySession")).departmentId
+          )
+          .then((response) => {
+            const pendingReqItems = response.data;
 
-          const newPendingReqItems = [];
-          pendingReqItems.forEach((pendingReqItem) => {
-            const newPendingReqItem = {
-              id: pendingReqItem.id,
-              employeeId: pendingReqItem.employeeId,
-              employeeName: employeeItems.find(
-                (emp) => emp.id === pendingReqItem.employeeId
-              ).name,
-              dateOfRequest: pendingReqItem.dateOfRequest,
-              dateOfAuthorizing: pendingReqItem.dateOfAuthorizing,
-              authorizerId: pendingReqItem.authorizerId,
-              status: pendingReqItem.status,
-              comment: pendingReqItem.comment,
-            };
-            newPendingReqItems.push(newPendingReqItem);
+            const newPendingReqItems = [];
+            pendingReqItems.forEach((pendingReqItem) => {
+              const newPendingReqItem = {
+                id: pendingReqItem.id,
+                employeeId: pendingReqItem.employeeId,
+                employeeName: employeeItems.find(
+                  (emp) => emp.id === pendingReqItem.employeeId
+                ).name,
+                dateOfRequest: pendingReqItem.dateOfRequest,
+                dateOfAuthorizing: pendingReqItem.dateOfAuthorizing,
+                authorizerId: pendingReqItem.authorizerId,
+                status: pendingReqItem.status,
+                comment: pendingReqItem.comment,
+              };
+              newPendingReqItems.push(newPendingReqItem);
+            });
+
+            this.setState({ requisition: newPendingReqItems });
           });
-
-          this.setState({ requisition: newPendingReqItems });
-        });
-    });
+      });
 
     axios
       .get("https://localhost:5001/api/Dept/allCollectionpt")
@@ -87,7 +100,10 @@ class ManageDepartment extends Component {
       this.setState({ stationery: stationeryItems });
 
       axios
-        .get("https://localhost:5001/api/Dept/deptPendingReqDetail/3")
+        .get(
+          "https://localhost:5001/api/Dept/deptPendingReqDetail/" +
+            JSON.parse(sessionStorage.getItem("mySession")).departmentId
+        )
         .then((response) => {
           const reqDetailItems = response.data;
 
@@ -350,54 +366,76 @@ class ManageDepartment extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <div className="toppane">
-          <Header />
-          <h1>LOGIC UNIVERSITY</h1>
-          <h1>DEPARTMENT INFORMATION</h1>
-        </div>
-        <div className="leftpane">
-          <h4>Your People</h4>
-          <div>
-            <DepartmentHeadDelegate
-              department={this.state.department}
-              employee={this.state.employee}
-              handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
-              handleDelegateRevoke={this.handleDelegateRevoke.bind(this)}
+    if (this.state.role === "HEAD") {
+      return (
+        <div>
+          <div className="toppane">
+            <Header />
+            <h1>LOGIC UNIVERSITY</h1>
+            <h1>DEPARTMENT INFORMATION</h1>
+          </div>
+          <div className="leftpane">
+            <h4>Your People</h4>
+            <div>
+              <DepartmentHeadDelegate
+                department={this.state.department}
+                employee={this.state.employee}
+                handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
+                handleDelegateRevoke={this.handleDelegateRevoke.bind(this)}
+              />
+            </div>
+            <div>
+              <DepartmentHeadEmployee employee={this.state.employee} />
+            </div>
+            <div>
+              <DepartmentHeadRep
+                department={this.state.department}
+                employee={this.state.employee}
+                handleRepSubmit={this.handleRepSubmit.bind(this)}
+              />
+            </div>
+          </div>
+          <div className="middlepane">
+            <h4>Your Tasks</h4>
+            <DepartmentHeadApproval
+              requisition={this.state.requisition}
+              requisitionDetail={this.state.requisitionDetail}
+              handleApprove={this.handleApprove.bind(this)}
+              handleReject={this.handleReject.bind(this)}
+              handleComment={this.handleComment.bind(this)}
             />
           </div>
-          <div>
-            <DepartmentHeadEmployee employee={this.state.employee} />
-          </div>
-          <div>
-            <DepartmentHeadRep
+          <div className="rightpane">
+            <h4>Your Logistics</h4>
+            <DepartmentHeadCollection
               department={this.state.department}
-              employee={this.state.employee}
-              handleRepSubmit={this.handleRepSubmit.bind(this)}
+              collectionInfo={this.state.collectionInfo}
+              handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
             />
           </div>
         </div>
-        <div className="middlepane">
-          <h4>Your Tasks</h4>
-          <DepartmentHeadApproval
-            requisition={this.state.requisition}
-            requisitionDetail={this.state.requisitionDetail}
-            handleApprove={this.handleApprove.bind(this)}
-            handleReject={this.handleReject.bind(this)}
-            handleComment={this.handleComment.bind(this)}
-          />
+      );
+    } else if (this.state.role === "DELEGATE") {
+      return (
+        <div>
+          <div className="toppane">
+            <Header />
+            <h1>LOGIC UNIVERSITY</h1>
+            <h1>DEPARTMENT INFORMATION</h1>
+          </div>
+          <div className="centerpane">
+            <h4>Your Tasks</h4>
+            <DepartmentHeadApproval
+              requisition={this.state.requisition}
+              requisitionDetail={this.state.requisitionDetail}
+              handleApprove={this.handleApprove.bind(this)}
+              handleReject={this.handleReject.bind(this)}
+              handleComment={this.handleComment.bind(this)}
+            />
+          </div>
         </div>
-        <div className="rightpane">
-          <h4>Your Logistics</h4>
-          <DepartmentHeadCollection
-            department={this.state.department}
-            collectionInfo={this.state.collectionInfo}
-            handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
-          />
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

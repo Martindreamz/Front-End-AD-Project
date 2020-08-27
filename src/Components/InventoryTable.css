@@ -23,6 +23,26 @@
   margin-top: 1.5rem;
 }
 
+.depRepDistriTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid 0.5px;
+  width: 80%;
+  margin-top: 1.5rem;
+}
+
+.depRepCollectTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid 0.5px;
+  width: 90%;
+  margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .supplierTable {
   display: flex;
   flex-direction: column;
@@ -33,25 +53,25 @@
 }
 
 .inventoryTable {
-    display: flex;
-    flex-direction: column;
-    border: solid 0.5px;
-    width: 60%;
-    overflow: scroll;
-    height: 600px;
+  display: flex;
+  flex-direction: column;
+  border: solid 0.5px;
+  width: 60%;
+  overflow: scroll;
+  height: 600px;
 }
 
 .placeOrderTable {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border: solid 0.5px;
-    width: 60%;
-    max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid 0.5px;
+  width: 60%;
+  max-height: 500px;
 }
 
 .tbody {
-    overflow: scroll;
+  overflow: scroll;
 }
 
 .requisitionTable {
@@ -64,47 +84,51 @@
 }
 
 .h-25 {
-    height: 15px;
+  height: 15px;
 }
 
 .reqForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
-    margin-left: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-left: 200px;
 }
 
-.colReqForm{
-    margin-left: 100px;
-    width: 200px;
+.colReqForm {
+  margin-left: 100px;
+  width: 200px;
 }
 
 .submitReqForm {
-    float: right;
-    justify-content: space-evenly;
-    width: 200px;
-    margin-left: 200px;
+  float: right;
+  justify-content: space-evenly;
+  width: 200px;
+  margin-left: 200px;
 }
 
 .submitRButton {
-    float:right;
-    justify-content: space-evenly;
-    width: 200px;
-    margin-left: 20px;
+  float: right;
+  justify-content: space-evenly;
+  width: 200px;
+  margin-left: 20px;
 }
 
-.tblReq{
-    margin-top:20px;
+.tblReq {
+  margin-top: 20px;
 }
 
-.mouserPointer{
-    cursor: pointer;
+.mouserPointer {
+  cursor: pointer;
 }
-
 
 tr:nth-child(even) {
-    background-color: #f4f5f6;
+  background-color: #f4f5f6;
+}
+
+.depRepDistriTable th,
+.depRepCollectTable th {
+  width: 100%;
 }
 
 td {
@@ -137,7 +161,7 @@ td {
   display: flex;
   justify-content: space-evenly;
   text-align: center;
-  width: 100%
+  width: 100%;
 }
 
 .tableRow {

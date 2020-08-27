@@ -20,7 +20,7 @@ class DepRepCollectTable extends Component {
       <div className="overallContainer">
         <div className="tableColumn">
           <h2>Collection Item List</h2>
-          <table className="componentTable">
+          <table className="depRepCollectTable">
             <tr className="tableHeader">
               <th>Stationery Description</th>
               <th>Quantity</th>

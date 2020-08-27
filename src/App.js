@@ -37,16 +37,13 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path="/" exact>
-                            {this.state.identity != null ? (this.state.identity.role === "STAFF" || this.state.identity.role === "HEAD" ? (this.state.identity.role === "STAFF" ? < RequisitionForm /> : <ManageDepartment />) : < Home />) : < Login />}
+                            {this.state.identity != null ? (this.state.identity.role === "STAFF" || this.state.identity.role === "HEAD" || this.state.identity.role === "DELEGATE" ? (this.state.identity.role === "STAFF" ? < RequisitionForm /> : <ManageDepartment />) : < Home />) : < Login />}
                         </Route>
                         
-                        <Route path="/DepRepDisbursement">
-                            <DepRepDisbursement />
-                        </Route>
-
                         <Route path="/disbursementList">
                             <DisbursementList />
                         </Route>
+
                         
                         
                     </Switch>
