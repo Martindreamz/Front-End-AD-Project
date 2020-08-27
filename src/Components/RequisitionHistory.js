@@ -5,6 +5,7 @@ import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
 import { NavLink } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import '../Components/InventoryTable.css';
+import Moment from 'moment';
 
 class RequisitionHistory extends Component {
     constructor() {
@@ -38,7 +39,7 @@ class RequisitionHistory extends Component {
         const historyItem = this.state.data.map((item) => (
             <tr className="tableRow">
                 <td><Link onClick={() => this.props.historyDetails(item)} className="mouserPointer">{item.id}</Link></td>
-                <td>{item.dateOfRequest}</td>
+                <td>{Moment(item.dateOfRequest).format('DD-MM-YYYY')}</td>
                 <td>{item.status}</td>
             </tr>
         ));
