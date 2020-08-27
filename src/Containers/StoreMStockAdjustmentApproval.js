@@ -28,7 +28,7 @@ class SupervisorStockAdjustmentApproval extends Component {
 
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+        axios.get('https://localhost:5001/api/Store/adjustmentList')
             .then(response => {
                 const resdata = response.data
                 this.setState({ data: resdata })
@@ -36,7 +36,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
     componentDidUpdate(prevState) {
         if (prevState.data != this.state.data || prevState.isShowCommentPopup != this.state.isShowCommentPopup) {
-            axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+            axios.get('https://localhost:5001/api/Store/adjustmentList')
                 .then(response => {
                     const resdata = response.data
                     this.setState({ data: resdata })
@@ -45,7 +45,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
 
     showPopup = (item) => {
-        fetch('https://localhost:5001/api/Store/supervisorissueVoucher', {
+        fetch('https://localhost:5001/api/Store/issueVoucher', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ class SupervisorStockAdjustmentApproval extends Component {
         this.setState({ isShowCommentPopup: true, rejectItem: item });
     }
     submitRejectComment = (comment) => {
-        fetch('https://localhost:5001/api/Store/supervisorRejectRequest/' + comment, {
+        fetch('https://localhost:5001/api/Store/managerRejectRequest/' + comment, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
     showDetail = (item) => {
         this.setState({ detailInfo: item });
-        fetch('https://localhost:5001/api/Store/getAllSupervisorAdjustDetailLine', {
+        fetch('https://localhost:5001/api/Store/getAllAdjustDetailLine', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
