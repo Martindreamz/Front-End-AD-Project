@@ -70,7 +70,7 @@ class RequisitionHistoryDetailsView extends Component {
                             <div className="col-sm-12  ">
                                 <h1>History</h1>
                                 <RequisitionHistory historyDetails={this.showHisDetail} />
-                              
+
                             </div>
                             : null
                         }

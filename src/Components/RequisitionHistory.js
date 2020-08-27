@@ -4,13 +4,14 @@ import { Link } from "@material-ui/core";
 import RequisitionHistoryDetails from "./RequisitionHistoryDetails";
 import { NavLink } from "react-router-dom";
 import { Button } from '@material-ui/core';
+import '../Components/InventoryTable.css';
 
 class RequisitionHistory extends Component {
     constructor() {
         super();
         this.state = {
             //test data
-            
+
             data: [],
             identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
@@ -36,22 +37,23 @@ class RequisitionHistory extends Component {
     render() {
         const historyItem = this.state.data.map((item) => (
             <tr className="tableRow">
-                <td><Link onClick={() => this.props.historyDetails(item)}>{item.id}</Link></td>
+                <td><Link onClick={() => this.props.historyDetails(item)} className="mouserPointer">{item.id}</Link></td>
                 <td>{item.dateOfRequest}</td>
                 <td>{item.status}</td>
             </tr>
         ));
         return (
             <div>
-            <table className="genericTable">
-                <tr className="tableHeader">
-                    <th>Requisition ID</th>
-                    <th>Requested Date</th>
-                    <th>Status</th>
-                </tr>
-                {historyItem}
-            </table>
-               
+                <h6>Click the ID to view the details</h6>
+                <table className="genericTable">
+                    <tr className="tableHeader">
+                        <th>Requisition ID</th>
+                        <th>Requested Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {historyItem}
+                </table>
+
             </div>
         );
     }

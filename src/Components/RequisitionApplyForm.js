@@ -19,11 +19,12 @@ class RequisitionApplyForm extends React.Component {
             category: [],
             desc: [],
             itemUnit: [],
-            
+
             message: '',
             currentFormObj: [],
 
             cat: '',
+            catt: '',
             openCat: false,
             unit: '',
             openUnit: false,
@@ -34,6 +35,8 @@ class RequisitionApplyForm extends React.Component {
 
             showQtyUnit: false,
             showReqList: false,
+
+            isAdd: true,
 
             identity: JSON.parse(sessionStorage.getItem("mySession"))
         };
@@ -61,7 +64,10 @@ class RequisitionApplyForm extends React.Component {
     //Event Handling
     showCat = (event) => {
         const selected = event.target.value
-        this.setState({ showDescription: true, cat: selected })
+        this.setState({
+            showDescription: true,
+            cat: selected,
+        })
     }
 
     closeCat = () => {
@@ -130,15 +136,16 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
-    
+
 
 
     save = () => {
         let requestForm = {
+            //category: this.state.cat,
             category: this.state.cat,
             desc: this.state.description,
             reqQty: this.refs.qtyRef.value,
-            unit: "Each",
+            unit: this.state.itemByDesc.unit,
         }
         console.log(requestForm)
         this.setState({
@@ -148,13 +155,13 @@ class RequisitionApplyForm extends React.Component {
                     category: this.state.cat,
                     desc: this.state.description,
                     reqQty: this.refs.qtyRef.value,
-                    unit: "Each"
+                    unit: this.state.itemByDesc.unit
                 }
             ]
         });
-        this.setState({
+        /*this.setState({
             isAdd: true,
-        })
+        })*/
 
     }
 
@@ -182,7 +189,9 @@ class RequisitionApplyForm extends React.Component {
                 // window.location.href = domain
             })
 
-
+        this.setState({
+            isAdd: false
+        })
     }
 
     //Run once before render - lifecycle
@@ -255,7 +264,7 @@ class RequisitionApplyForm extends React.Component {
                                         onClose={this.closeCat}
                                         onOpen={this.catOpen}
                                         onChange={this.showCat}>
-                                        {this.state.category.map((item, index) => <MenuItem value={index}>{item}</MenuItem>)}
+                                        {this.state.category.map((item, index) => <MenuItem key={item.cat} value={index} catRef={item.category} > {item}</MenuItem>)}
                                     </Select>
                                 </div>
                             </div>
@@ -309,61 +318,66 @@ class RequisitionApplyForm extends React.Component {
                                         class="btn btn-primary" className="submitReqForm"
                                         onClick={this.save} > Add Item </button>
                                 </div>
-                               
+
                             </div>
                         </form>
                     </div>
 
                 </div>
                 <div class="row"></div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div className="tblReq"> 
-                            <div>
-                                <Button variant="contained" onClick={(state) => this.props.goHistory(true)} ident={this.state.identity} >
-                                    Go to History
+                <div>
+                    <Button variant="contained" onClick={(state) => this.props.goHistory(true)} ident={this.state.identity} >
+                        Go to History
                                     </Button>
-                            </div>
-                            <table className="requisitionTable">
-                                {(this.state.newData && this.state.newData.length) ?
-                                    <tr className="tableHeader">
-                                        <th>Category</th>
-                                        <th>Description</th>
-                                        <th>Requested Quantity</th>
-                                        <th>Unit</th>
-                                    </tr>
-                                    : null
-                                }
-                                {this.state.newData.map(i => {
-                                    return (
-                                        <tr className="tableRow">
-                                            <td>{i.category}</td>
-                                            <td>{i.desc}</td>
-                                            <td>{i.reqQty}</td>
-                                            <td>{i.unit}</td>
-                                        </tr>
-                                    )
-                                })}
-
-                            </table>
-                        </div>
-                        {(this.state.newData && this.state.newData.length) ?
-                            <div class="row float-right">
-                                
-
-                                <div className="submitRButton">
-                                    <Button type="button" id="submit"
-                                        variant="contained"
-                                        onClick={this.saveRequisition} > Submit </Button>
-                                </div>
-                            </div>
-
-                            : null
-
-                        }
-                    </div>
                 </div>
+                {this.state.isAdd ?
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div className="tblReq">
 
+
+                                <table className="requisitionTable">
+                                    {(this.state.newData && this.state.newData.length) ?
+                                        <tr className="tableHeader">
+                                            <th>Category</th>
+                                            <th>Description</th>
+                                            <th>Requested Quantity</th>
+                                            <th>Unit</th>
+                                        </tr>
+                                        : null
+                                    }
+                                    {this.state.newData.map(i => {
+                                        return (
+                                            <tr className="tableRow">
+                                                <td>{i.category}</td>
+                                                <td>{i.desc}</td>
+                                                <td>{i.reqQty}</td>
+                                                <td>{i.unit}</td>
+                                            </tr>
+                                        )
+                                    })}
+
+                                </table>
+
+                            </div>
+                            {(this.state.newData && this.state.newData.length) ?
+                                <div class="row float-right">
+
+
+                                    <div className="submitRButton">
+                                        <Button type="button" id="submit"
+                                            variant="contained"
+                                            onClick={this.saveRequisition} > Submit </Button>
+                                    </div>
+                                </div>
+
+                                : null
+
+                            }
+                        </div>
+                    </div>
+                    : null
+                }
             </div>
         )
 
