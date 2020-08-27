@@ -6,6 +6,7 @@ import './general.css';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import PlaceOrderPopup from '../Components/PlaceOrderPopup';
+import { domain } from '../Configurations/Config';
 
 
 class PlaceOrder extends Component {
@@ -26,7 +27,7 @@ class PlaceOrder extends Component {
             isEditing: false,
             redirect: false,
             displayPopup: false,
-            allStationery:null
+            allStationery:null,
             identity: JSON.parse(sessionStorage.getItem("mySession")).id
         }
         this.handleChange = this.handleChange.bind(this);
@@ -381,7 +382,7 @@ class PlaceOrder extends Component {
             <div>
                 <Header />
                 {this.state.redirect == true &&
-                    <Redirect to='/placeOrderSubmit' />
+                    (window.location.href = domain)
                 }
                 <h1>{this.state.redirect}</h1>
                 {this.state.displayPopup ?
