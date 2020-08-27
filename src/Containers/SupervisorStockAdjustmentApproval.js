@@ -27,13 +27,22 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
   }
 
-  //Run once before render - lifecycle
-  componentDidMount() {
-    //HTTP get request
-    axios.get(/* api here */).then((response) => {
-      const items = response.data;
-      this.setState({ data: items });
-    });
+    componentDidMount() {
+        //HTTP get request
+        axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+            .then(response => {
+                const resdata = response.data
+                this.setState({ data: resdata })
+            })
+    }
+    componentDidUpdate(prevState) {
+        if (prevState.data != this.state.data || prevState.isShowCommentPopup != this.state.isShowCommentPopup) {
+            axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
+                .then(response => {
+                    const resdata = response.data
+                    this.setState({ data: resdata })
+                })
+        }
     }
 
     showPopup = (item) =>{
@@ -68,9 +77,9 @@ class SupervisorStockAdjustmentApproval extends Component {
             this.setState({
                 isShowCommentPopup:false
             })
-              this.componentDidMount();
+              //this.componentDidMount();
           });
-        this.componentDidMount();
+        //this.componentDidMount();
     }
 
     showDetail = (item) =>{
@@ -97,17 +106,10 @@ class SupervisorStockAdjustmentApproval extends Component {
             displayDetailTable: false,
             isShowCommentPopup:false
         })
-        this.componentDidMount();
+        //this.componentDidMount();
     }
 
-    componentDidMount() {
-        //HTTP get request
-      axios.get('https://localhost:5001/api/Store/supervisorAdjustment')
-            .then(response => {
-                const resdata =response.data
-                this.setState({ data: resdata})
-      })
-    }
+   
    
   render() {
     

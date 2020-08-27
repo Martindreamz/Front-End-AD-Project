@@ -4,15 +4,16 @@ import './RecievedGoods.css';
 import DiscrepancyTable from '../Components/DiscrepancyTable';
 import axios from 'axios';
 import { domain } from '../Configurations/Config';
+import ErrorPopup from '../Components/ErrorPopup';
 
 
 class DiscrepancyList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            //test data
             data: [],
-            id: String(this.props.match.params.id)
+            id: String(this.props.match.params.id),
+            displayPopup: false
         }
     }
 
@@ -67,11 +68,17 @@ class DiscrepancyList extends React.Component {
                 window.location.href = domain
             })
     }
+    closePopup = () => {
+        this.setState({
+            displayPopup: false
+        })
+    }
 
     render() {
         return (
             <div>
                 <Header />
+                {this.state.displayPopup ? <ErrorPopup message="Please fill in all the reasons" closePopup={this.closePopup} /> : null}
                 <div className="inventoryBody">
                     <DiscrepancyTable data={this.state.data} handleReasonsInput={this.handleInput} />
                     <button className="inventoryButton" onClick={this.submitAction} >Submit</button>

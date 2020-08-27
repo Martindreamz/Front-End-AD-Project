@@ -19,11 +19,10 @@ class Home extends Component {
                 <Header />
                 {this.state.identity.role === 'CLERK' ? 
                     <div className="homeBodyClerk">
-                        <Button>Stationery Retrieval</Button>
                         <Button>Disbursement List</Button>
                         <Button onClick={() => window.location.href = domain + "placeOrder"}>Raise Purchase Order</Button>
                         <Button onClick={() => window.location.href = domain + "manageInventory"}>Manage Inventory</Button>
-                        <Button onClick={() => window.location.href = domain + "receivedGoods"}>Received Goods</Button>
+                        <Button onClick={() => window.location.href = domain + "placeOrderSubmit"}>Received Goods</Button>
                     </div>
                     :
                     null
@@ -45,14 +44,14 @@ class Home extends Component {
                     :
                     null
                 }
-                {this.state.identity.role === 'HEAD' ?
+                {/*{this.state.identity.role === 'HEAD' ?
                     <div className="homeBodyHead">
                         <Button onClick={() => window.location.href = domain + "requisitionForm"}>Request Items</Button>
                         <Button onClick={() => window.location.href = domain + "manager"}>Manage Department</Button>
                     </div>
                     :
                     null
-                }
+                }*/}
             </div>
         )
     }

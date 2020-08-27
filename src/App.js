@@ -37,22 +37,10 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path="/" exact>
-                            {this.state.identity != null ? (this.state.identity.role === "STAFF" ? <RequisitionForm /> : < Home /> ) : < Login />}
+                            {this.state.identity != null ? (this.state.identity.role === "STAFF" || this.state.identity.role === "HEAD" ? (this.state.identity.role === "STAFF" ? < RequisitionForm /> : <ManageDepartment />) : < Home />) : < Login />}
                         </Route>
                         <Route path="/requisitionForm">
                             <RequisitionForm />
-                        </Route>
-                        <Route path="/supplier">
-                            <SupplierList />
-                        </Route>
-                        <Route path="/test3">
-                            <StockTrendAnalysis />
-                        </Route>
-                        <Route path="/test4">
-                            <ManageInventory />
-                        </Route>
-                        <Route path="/test1">
-                            <ReceivedGoods />
                         </Route>
                         <Route path="/home">
                             <Home />
@@ -63,9 +51,6 @@ class App extends Component {
                         
                         <Route path="/DepRepDisbursement">
                             <DepRepDisbursement />
-                        </Route>
-                        <Route path="/manager">
-                            <ManageDepartment />
                         </Route>
 
                         <Route path="/disbursementList">
