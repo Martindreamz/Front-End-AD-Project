@@ -45,6 +45,10 @@ class Navigation extends Component {
                         <Route path="/DisbursementByDeptList">
                             <DisbursementByDeptList />
                         </Route>
+                        <Route path="/disbursementList">
+                            <DisbursementList />
+                        </Route>
+
                     </Switch>
                     :
                     null
