@@ -106,7 +106,7 @@ class SupervisorStockAdjustmentApproval extends Component {
             displayDetailTable: false,
             isShowCommentPopup:false
         })
-        //this.componentDidMount();
+        this.componentDidMount();
     }
 
    

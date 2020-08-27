@@ -41,8 +41,8 @@ class DisbursementList extends React.Component {
                         </div>
                         <div className="row mt-1 pt-10">
                             <div className="col-sm-6">
-                                <p>Date:  {Moment(this.props.deliveryInfo.date).format('DD-MM-YYYY')}</p>
-                                <p>Collection point :  {this.props.deliveryInfo.collectionPoint}</p>
+                                <p>Date:  {Moment(this.props.collectionInfo.collectTime).format('DD-MM-YYYY')}</p>
+                                <p>Collection point :  {this.props.collectionInfo.collectionPoint}</p>
                             </div>
                             <div className="col-sm-6">
                                 <div className="float-right">

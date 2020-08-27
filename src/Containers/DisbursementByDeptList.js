@@ -18,6 +18,7 @@ class DisbursementByDeptList extends React.Component {
             showItemDetail: false, 
             itemDetailData: [],
             deliveryInfo: [],
+            collectionInfo:'',
         }
     }
 
@@ -26,7 +27,7 @@ class DisbursementByDeptList extends React.Component {
     }
 
     detailDisbursement = (item) =>{
-        this.setState({deliveryInfo:item});
+        this.setState({ deliveryInfo: item });
 
         fetch('https://localhost:5001/api/Store/getDisburseItemDetail', {
             method: 'POST',
@@ -38,14 +39,15 @@ class DisbursementByDeptList extends React.Component {
             this.setState({
                   showItemDetail: true,
                   itemDetailData : item
-             })
+            })
+              item.map(r => this.setState({ collectionInfo: r }))
           });
     }
 
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/Store/getAllRequesterRow')
+        axios.get('https://localhost:5001/api/Store/getAllRequesterRow/' + JSON.parse(sessionStorage.getItem("mySession")).id)
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
@@ -56,8 +58,8 @@ class DisbursementByDeptList extends React.Component {
         return (
         <div>
             <Header />
-            {this.state.showItemDetail? 
-                <DisbursementList deliveryInfo={this.state.deliveryInfo} data={this.state.itemDetailData} showList={this.showList}/>
+                {this.state.showItemDetail ?
+                    <DisbursementList deliveryInfo={this.state.deliveryInfo} collectionInfo={this.state.collectionInfo} data={this.state.itemDetailData} showList={this.showList} />
                     : 
                 <div className="container">
                     <div className="col-sm-12" >
