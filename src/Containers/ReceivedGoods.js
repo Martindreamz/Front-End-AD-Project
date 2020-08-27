@@ -6,13 +6,13 @@ import axios from 'axios';
 import { domain } from '../Configurations/Config';
 
 class ReceivedGoods extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             //test data
             data: [],
             discrepancy: [],
-            //id: String(this.props.match.params.id)
+            id: String(this.props.match.params.id)
         }
     }
 
@@ -21,7 +21,7 @@ class ReceivedGoods extends React.Component {
     componentDidMount() {
         //HTTP get request
         Promise.all([
-            axios.get("https://localhost:5001/api/store/getPOD/" + 40),
+            axios.get("https://localhost:5001/api/store/getPOD/" + this.state.id),
             axios.get("https://localhost:5001/api/store/stationeries")
         ]).then(([pod, items]) => {
             const result = pod.data.map(item => {
@@ -70,12 +70,12 @@ class ReceivedGoods extends React.Component {
     }
 
     submitForm = () => {
-        axios.post('https://localhost:5001/api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy)
-            .then(response => {
-                {
-                    window.location.href = domain
-                }
-            })
+        Promise.all([
+            axios.post('https://localhost:5001/api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy),
+            axios.post('https://localhost:5001/api/Store/PORecieved/' + this.state.id)
+        ]).then(([res1, res2]) => {
+            window.location.href = domain + 'placeOrderSubmit'
+        })
     }
 
     render() {

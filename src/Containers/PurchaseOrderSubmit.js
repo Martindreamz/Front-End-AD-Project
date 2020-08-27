@@ -7,7 +7,7 @@ import Header from '../Components/Headers/Header';
 import "./general.css"
 import axios from 'axios';
 import Pdf from "react-to-pdf";
-import { Redirect } from "react-router-dom";
+import { domain } from '../Configurations/Config';
 
 
 
@@ -20,8 +20,7 @@ class PurchaseOrderSubmit extends Component {
             Allpos:[],
             currentPO: null,
             Suppliers: null,
-            uSuppliers: null,
-            redirect:null
+            uSuppliers:null
         }
         this.handleChange = this.handleChange.bind(this)
         this.setUniqueSuppliers = this.setUniqueSuppliers.bind(this)
@@ -177,29 +176,21 @@ class PurchaseOrderSubmit extends Component {
         if (name == "delivered") {
             this.setState(prevState => {
                 const reorder = [...prevState.data];
-                reorder[index] = {
-                    ...reorder[index],
-                    status: "delivered"
-                }
+                
 
                 const id = reorder[index].poNum
-                const temp = {id:id}
                 console.log('id', id)
-                axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
-                return {
-                    data: reorder,
-                    redirect: '/receivedGoods/'+id
-                    }
+                //const url = 'https://localhost:5001/api/Store/PORecieved/'
+                //axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
+                window.location.href = domain + 'receivedGoods/' + id
+                return { data: reorder }
             })
-
-            console.log('redirect', this.state.redirect)
         }
     }
 
     render() {
 
-        var tabs = this.state.uSuppliers != null && this.state.uSuppliers.map((item) => 
-            <div>
+        var tabs = this.state.uSuppliers!=null && this.state.uSuppliers.map((item) => 
             <button
                 key={item.id}
                 name="data"
@@ -208,17 +199,13 @@ class PurchaseOrderSubmit extends Component {
                 onClick={this.handleChange}
             >
                 {item.name}
-                </button>
-                </div>
+            </button>
         )
         const ref = React.createRef();
 
         return (
 
             <div>
-                {this.state.redirect != null &&
-                    <Redirect to={this.state.redirect}/>
-                }
                 <Header />
                 <div className="tableBody">
                     <div className="btn-group">
