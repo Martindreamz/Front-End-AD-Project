@@ -13,14 +13,16 @@ class DepRepDistriTable extends Component {
         <td>{item.desc}</td>
         <td>{item.employee}</td>
         <td>{item.reqQty}</td>
+        <td>{item.rcvQty}</td>
       </tr>
     ));
     return (
-      <table className="genericTable">
+      <table className="depRepDistriTable">
         <tr className="tableHeader">
           <th>Stationery Description</th>
           <th>Requestor</th>
-          <th>Quantity</th>
+          <th>Requested Quantity</th>
+          <th>Received Quantity</th>
         </tr>
         {distriItem}
       </table>

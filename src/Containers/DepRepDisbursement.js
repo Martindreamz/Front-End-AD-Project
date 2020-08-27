@@ -131,6 +131,7 @@ class DepRepDisbursement extends Component {
                               ).desc,
                               status: reqDetailItem.status,
                               reqQty: reqDetailItem.reqQty,
+                              rcvQty: reqDetailItem.rcvQty,
                             };
                             newReqDetailItems.push(newReqDetailItem);
                           });
