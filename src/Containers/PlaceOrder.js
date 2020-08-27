@@ -26,7 +26,7 @@ class PlaceOrder extends Component {
             isEditing: false,
             redirect: false,
             displayPopup: false,
-            allStationery:null
+            allStationery:null,
             identity: JSON.parse(sessionStorage.getItem("mySession")).id
         }
         this.handleChange = this.handleChange.bind(this);
