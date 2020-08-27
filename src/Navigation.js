@@ -107,6 +107,9 @@ class Navigation extends Component {
                         <Route path="/DepRepDisbursement">
                             <DepRepDisbursement />
                         </Route>
+                        <Route path="/requisitionForm">
+                            <RequisitionForm />
+                        </Route>
                     </Switch>
                     :
                     null
