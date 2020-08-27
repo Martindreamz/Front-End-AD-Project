@@ -98,6 +98,10 @@
     margin-top:20px;
 }
 
+.mouserPointer{
+    cursor: pointer;
+}
+
 
 tr:nth-child(even) {
     background-color: #f4f5f6;
