@@ -13,6 +13,7 @@ class ManageDepartment extends Component {
   constructor() {
     super();
     this.state = {
+      role: JSON.parse(sessionStorage.getItem("mySession")).role,
       department: {},
       employee: [],
       requisition: [],
@@ -365,54 +366,76 @@ class ManageDepartment extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <div className="toppane">
-          <Header />
-          <h1>LOGIC UNIVERSITY</h1>
-          <h1>DEPARTMENT INFORMATION</h1>
-        </div>
-        <div className="leftpane">
-          <h4>Your People</h4>
-          <div>
-            <DepartmentHeadDelegate
-              department={this.state.department}
-              employee={this.state.employee}
-              handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
-              handleDelegateRevoke={this.handleDelegateRevoke.bind(this)}
+    if (this.state.role === "HEAD") {
+      return (
+        <div>
+          <div className="toppane">
+            <Header />
+            <h1>LOGIC UNIVERSITY</h1>
+            <h1>DEPARTMENT INFORMATION</h1>
+          </div>
+          <div className="leftpane">
+            <h4>Your People</h4>
+            <div>
+              <DepartmentHeadDelegate
+                department={this.state.department}
+                employee={this.state.employee}
+                handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
+                handleDelegateRevoke={this.handleDelegateRevoke.bind(this)}
+              />
+            </div>
+            <div>
+              <DepartmentHeadEmployee employee={this.state.employee} />
+            </div>
+            <div>
+              <DepartmentHeadRep
+                department={this.state.department}
+                employee={this.state.employee}
+                handleRepSubmit={this.handleRepSubmit.bind(this)}
+              />
+            </div>
+          </div>
+          <div className="middlepane">
+            <h4>Your Tasks</h4>
+            <DepartmentHeadApproval
+              requisition={this.state.requisition}
+              requisitionDetail={this.state.requisitionDetail}
+              handleApprove={this.handleApprove.bind(this)}
+              handleReject={this.handleReject.bind(this)}
+              handleComment={this.handleComment.bind(this)}
             />
           </div>
-          <div>
-            <DepartmentHeadEmployee employee={this.state.employee} />
-          </div>
-          <div>
-            <DepartmentHeadRep
+          <div className="rightpane">
+            <h4>Your Logistics</h4>
+            <DepartmentHeadCollection
               department={this.state.department}
-              employee={this.state.employee}
-              handleRepSubmit={this.handleRepSubmit.bind(this)}
+              collectionInfo={this.state.collectionInfo}
+              handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
             />
           </div>
         </div>
-        <div className="middlepane">
-          <h4>Your Tasks</h4>
-          <DepartmentHeadApproval
-            requisition={this.state.requisition}
-            requisitionDetail={this.state.requisitionDetail}
-            handleApprove={this.handleApprove.bind(this)}
-            handleReject={this.handleReject.bind(this)}
-            handleComment={this.handleComment.bind(this)}
-          />
+      );
+    } else if (this.state.role === "DELEGATE") {
+      return (
+        <div>
+          <div className="toppane">
+            <Header />
+            <h1>LOGIC UNIVERSITY</h1>
+            <h1>DEPARTMENT INFORMATION</h1>
+          </div>
+          <div className="centerpane">
+            <h4>Your Tasks</h4>
+            <DepartmentHeadApproval
+              requisition={this.state.requisition}
+              requisitionDetail={this.state.requisitionDetail}
+              handleApprove={this.handleApprove.bind(this)}
+              handleReject={this.handleReject.bind(this)}
+              handleComment={this.handleComment.bind(this)}
+            />
+          </div>
         </div>
-        <div className="rightpane">
-          <h4>Your Logistics</h4>
-          <DepartmentHeadCollection
-            department={this.state.department}
-            collectionInfo={this.state.collectionInfo}
-            handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
-          />
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
