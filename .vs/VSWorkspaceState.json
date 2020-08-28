@@ -3,10 +3,8 @@
     "",
     "\\src",
     "\\src\\Components",
-    "\\src\\Components\\Headers",
-    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Containers\\PlaceOrder.js",
+  "SelectedNode": "\\src\\Components\\RequisitionApplyForm.js",
   "PreviewInSolutionExplorer": false
 }

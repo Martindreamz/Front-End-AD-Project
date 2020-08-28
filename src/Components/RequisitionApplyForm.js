@@ -111,6 +111,9 @@ class RequisitionApplyForm extends React.Component {
     }
 
     save = () => {
+        this.setState({
+            isAdd: true
+        })
         let requestForm = {
             category: this.state.category[this.state.cat],
             desc: this.state.description,
