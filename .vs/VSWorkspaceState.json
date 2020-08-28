@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\Components",
+    "\\src\\Components\\Headers",
+    "\\src\\Configurations",
+    "\\src\\Containers"
   ],
+  "SelectedNode": "\\src\\Containers\\ManageDepartment.js",
   "PreviewInSolutionExplorer": false
 }

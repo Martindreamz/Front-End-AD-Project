@@ -9,11 +9,13 @@ import Numeral from "numeral";
 class Graph extends React.Component {
     constructor(props) {
         super(props)
-        
+
     }
 
+    
 
     render() {
+        { console.log(this.props.lineData) }
         //graph format
         const options = {
             legend: {
@@ -68,7 +70,7 @@ class Graph extends React.Component {
                             {
                                 backgroundColor: "rgba(204, 16, 52, 0.5)",
                                 borderColor: "#CC1034",
-                                data: this.props.data,
+                                data: this.props.lineData,
                             },
                         ],
                     }}
