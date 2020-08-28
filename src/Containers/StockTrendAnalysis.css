@@ -12,5 +12,8 @@
     padding: 5rem;
 }
 .chartjs-render-monitor {
+    height: 100%;
+}
+.chartjs-size-monitor {
     height: 500px;
 }
