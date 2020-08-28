@@ -23,7 +23,7 @@ class DepRepDistriCollectionList extends Component {
         <div className="inventoryBody">
           <h1>Distribution</h1>
           <DepRepDistriTable
-            requisitionDetail={requisitionDetailinDisbursement}
+            disbursementDetail={this.props.disbursementDetail}
           />
         </div>
       );

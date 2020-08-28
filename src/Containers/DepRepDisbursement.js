@@ -193,6 +193,11 @@ class DepRepDisbursement extends Component {
                                         disDetailItem.disbursementListId,
                                       requisitionDetailId:
                                         disDetailItem.requisitionDetailId,
+                                      requestor: newReqDetailItems.find(
+                                        (reqDetail) =>
+                                          reqDetail.id ===
+                                          disDetailItem.requisitionDetailId
+                                      ).employee,
                                       stationeryDesc: newReqDetailItems.find(
                                         (reqDetail) =>
                                           reqDetail.id ===
