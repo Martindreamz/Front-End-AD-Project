@@ -12,7 +12,7 @@ class InventoryPopup extends React.Component {
             <tr className="tableRow" key={item.stockAdustmentDetailId}>
                 <td>{item.stockAdustmentDetailId}</td>
                 <td>{item.quantity}</td>
-                <td>{item.amount}</td>
+                <td>{(item.amount).toFixed(2)}</td>
                 <td>{item.reason}</td>
             </tr>
         )
