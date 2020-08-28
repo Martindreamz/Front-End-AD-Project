@@ -6,6 +6,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { domain } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class ManageInventory extends React.Component {
     constructor() {
@@ -126,7 +127,7 @@ class ManageInventory extends React.Component {
                 <div className="inventoryBody">
                     <AddCircleIcon onClick={this.addInventoryAction} />
                     <InventoryTable data={this.state.data} editData={this.editInventoryAction} />
-                    <button className="checkInventoryButton" onClick={this.checkInventoryAction} >Check Inventory</button>
+                    <button className="btn btn-outline-primary" onClick={this.checkInventoryAction} >Check Inventory</button>
                 </div>
             </div>
         )
