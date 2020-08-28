@@ -34,6 +34,7 @@ class RequisitionHistoryDetails extends Component {
                 <td>{item.quantity}</td>
                 <td>{item.unit}</td>
                 <td>{item.status}</td>
+                
             </tr>
         ));
         return (
@@ -52,6 +53,7 @@ class RequisitionHistoryDetails extends Component {
                         <th>Quantity</th>
                         <th>Unit</th>
                         <th>Status</th>
+                        
                     </tr>
                     {hisDetailsItem}
                 </table>
