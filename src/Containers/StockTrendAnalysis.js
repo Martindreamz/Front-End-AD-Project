@@ -58,6 +58,7 @@ class StockTrendAnalysis extends React.Component {
                         departmentData: [...new Set(this.state.data.map(item => item.departmentName))]
                     }
                 )
+                console.log(this.state.chartData)
             })
         
     }
@@ -257,7 +258,7 @@ class StockTrendAnalysis extends React.Component {
                             </Tabs>
                         </AppBar>
                         <TabPanel value={this.state.value} index="one">
-                            <Graph data={this.state.chartData} />
+                            <Graph lineData={this.state.chartData} />
                         </TabPanel>
                         <TabPanel value={this.state.value} index="two">
                             <BarChart data={this.state.chartData} />

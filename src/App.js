@@ -40,11 +40,6 @@ class App extends Component {
                             {this.state.identity != null ? (this.state.identity.role === "STAFF" || this.state.identity.role === "HEAD" || this.state.identity.role === "DELEGATE" ? (this.state.identity.role === "STAFF" ? < RequisitionForm /> : <ManageDepartment />) : < Home />) : < Login />}
                         </Route>
                         
-                        <Route path="/disbursementList">
-                            <DisbursementList />
-                        </Route>
-
-                        
                         
                     </Switch>
                 </Router>
