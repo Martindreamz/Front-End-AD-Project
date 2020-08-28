@@ -24,7 +24,7 @@ class Graph extends React.Component {
                     radius: 0,
                 },
             },
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             tooltips: {
                 mode: "index",
                 interect: false,

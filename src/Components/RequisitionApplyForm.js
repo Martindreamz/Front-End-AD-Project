@@ -111,7 +111,7 @@ class RequisitionApplyForm extends React.Component {
     }
 
     save = () => {
-        this.setState({
+         this.setState({
             isAdd: true
         })
         let requestForm = {
