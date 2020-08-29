@@ -96,7 +96,7 @@ class PurchaseOrderSubmit extends Component {
                                 status: po.status,
                                 StockAdjustmentId: po.StockAdjustmentId,
                                 pod: Pod,
-                                subtotal: 0
+                                subtotal: po.subTotal
                             }
 
                             data.push(record)
@@ -133,20 +133,20 @@ class PurchaseOrderSubmit extends Component {
         this.setState({ uSuppliers: sorted_list })
         console.log('AllPOs', this.state.Allpos)
 
-        this.setState(prevState => {
-            const reorder = [...prevState.Allpos];
-            const neworder = [];
-            reorder.forEach(order => {
-                order.subtotal = order.pod.reduce((total, p) => total + (p.qty * p.price), 0)
-                neworder.push(order)
-            })
+        //this.setState(prevState => {
+        //    const reorder = [...prevState.Allpos];
+        //    const neworder = [];
+        //    reorder.forEach(order => {
+        //        order.subtotal = order.pod.reduce((total, p) => total + (p.qty * p.price), 0)
+        //        neworder.push(order)
+        //    })
             
 
-            return ({
-                data: neworder,
-                Allpos: neworder
-            })
-    })
+    //        return ({
+    //            //data: neworder,
+    //            Allpos: neworder
+    //        })
+    //})
     }
 
    
