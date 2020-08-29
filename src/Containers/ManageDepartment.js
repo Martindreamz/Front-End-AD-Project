@@ -342,7 +342,7 @@ class ManageDepartment extends Component {
     sendRequisition = {
       Id: Number(newRequisition.id),
       dateOfAuthorizing: formattedNow,
-      AuthorizerId: JSON.parse(sessionStorage.getItem("mySession")).id,
+      AuthorizerId: JSON.parse(sessionStorage.getItem("mySession")).id, //updated line
       status: newRequisition.status,
       comment: newRequisition.comment,
     };
