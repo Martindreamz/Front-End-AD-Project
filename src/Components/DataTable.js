@@ -1,10 +1,11 @@
 import React from 'react';
 import './InventoryTable.css';
 
+
 function DataTable(props) {
-    const data = props.data.map(item => 
+    const data = props.data.map((item,index) => 
         <tr className="tableRow">
-            <td>{item.x}</td>
+            <td>{new Date().getMonthName(index) /*item.x*/}</td>
             <td>{item.y}</td>
         </tr>
     )

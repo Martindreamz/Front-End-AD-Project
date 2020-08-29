@@ -6,6 +6,7 @@ import './general.css';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import PlaceOrderPopup from '../Components/PlaceOrderPopup';
+import { domain, api } from '../Configurations/Config';
 
 
 class PlaceOrder extends Component {
@@ -47,7 +48,7 @@ class PlaceOrder extends Component {
         var date = new Date().toLocaleString()
 
         //HTTP get all suppliers
-        axios.get('https://localhost:5001/api/Store/Suppliers')
+        axios.get(api + 'api/Store/Suppliers')
             .then(response => {
                 const items = response.data;
                 this.setState({ suppliers: items });
@@ -55,7 +56,7 @@ class PlaceOrder extends Component {
             })
 
         //HTTP get reorderItems
-        await axios.get('https://localhost:5001/api/Store/getReorderItems')
+        await axios.get(api + 'api/Store/getReorderItems')
             .then(response => {
                 const supplieritems = response.data;
                 this.setState({ stationeries: supplieritems });
@@ -63,7 +64,7 @@ class PlaceOrder extends Component {
                 //var data = items
                 supplieritems.forEach(item => {
                     const sitems = []
-                    const url = 'https://localhost:5001/api/Store/getSupplierItems/' + item.id
+                    const url = api + 'api/Store/getSupplierItems/' + item.id
                     axios.get(url)
                         .then(response => {
                             const items = response.data;
@@ -102,7 +103,7 @@ class PlaceOrder extends Component {
             })
 
         //get all stationery --> for add item
-        await axios.get('https://localhost:5001/api/Store/Stationeries/')
+        await axios.get(api + 'api/Store/Stationeries/')
             .then(response => {
                 console.log('all stationery', response)
                 const supplieritems = response.data;
@@ -111,7 +112,7 @@ class PlaceOrder extends Component {
                 //var data = items
                 supplieritems.forEach(item => {
                     const sitems = []
-                    const url = 'https://localhost:5001/api/Store/getSupplierItems/' + item.id
+                    const url = api + 'api/Store/getSupplierItems/' + item.id
                     axios.get(url)
                         .then(response => {
                             const items = response.data;
@@ -309,7 +310,7 @@ class PlaceOrder extends Component {
     }
 
     async postPO() {
-        axios.post('https://localhost:5001/api/Store/generatePO', this.state.purchaseOrders).then(response => {
+        axios.post(api + 'api/Store/generatePO', this.state.purchaseOrders).then(response => {
             console.log(response)
         },
             this.setState({ redirect: true })
@@ -344,7 +345,7 @@ class PlaceOrder extends Component {
                 selectAll: 0,
             }, () => { this.updateSubtotal() });
 
-            console.log(this.state.selected)
+            //console.log(this.state.selected)
         }
 
     }
@@ -380,7 +381,7 @@ class PlaceOrder extends Component {
             <div>
                 <Header />
                 {this.state.redirect == true &&
-                    <Redirect to='/placeOrderSubmit' />
+                    (window.location.href = domain)
                 }
                 <h1>{this.state.redirect}</h1>
                 {this.state.displayPopup ?

@@ -7,7 +7,7 @@ import Header from '../Components/Headers/Header';
 import "./general.css"
 import axios from 'axios';
 import Pdf from "react-to-pdf";
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 
 
 
@@ -33,7 +33,7 @@ class PurchaseOrderSubmit extends Component {
         const Suppliers = [];
        
 
-        axios.get('https://localhost:5001/api/Store/getAllPOs').then(response => {
+        axios.get(api + 'api/Store/getAllPOs').then(response => {
             //console.log('get all POs', response.data);
             const AllPo = response.data;
 
@@ -43,7 +43,7 @@ class PurchaseOrderSubmit extends Component {
                 //var subTotal = 0;
 
                 //get supplier 
-                const Supplierurl = 'https://localhost:5001/api/Store/getSupplier/' + po.supplierId
+                const Supplierurl = api + 'api/Store/getSupplier/' + po.supplierId
                 axios.get(Supplierurl).then(supplier => {
                     const sup = supplier.data
 
@@ -51,23 +51,23 @@ class PurchaseOrderSubmit extends Component {
                     Suppliers.push(sup)
 
                     //get clerk details
-                    const Clerkurl = 'https://localhost:5001/api/Store/getEmployee/' + po.clerkId
+                    const Clerkurl = api + 'api/Store/getEmployee/' + po.clerkId
                     axios.get(Clerkurl).then(clerk => {
                         const clerk1 = clerk.data
 
-                        const Podurl = 'https://localhost:5001/api/Store/getPOD/' + po.id
+                        const Podurl = api + 'api/Store/getPOD/' + po.id
                         axios.get(Podurl).then(pod => {
                             const pods = pod.data
 
                             //get stationeries for description and unit
                             pods.forEach(pod => {
-                                const podurl = 'https://localhost:5001/api/Store/Stationeries/' + pod.stationeryId
+                                const podurl = api + 'api/Store/Stationeries/' + pod.stationeryId
 
                                 axios.get(podurl).then(stationery => {
                                     const desc = stationery.data.desc
                                     const unit = stationery.data.unit
 
-                                    const supUrl = 'https://localhost:5001/api/Store/getSupplierItems/' + pod.stationeryId
+                                    const supUrl = api + 'api/Store/getSupplierItems/' + pod.stationeryId
                                     axios.get(supUrl).then(supItem => {
 
                                         const price = supItem.data.find(sitem => sitem.supplierId === sup.id).price
@@ -180,8 +180,6 @@ class PurchaseOrderSubmit extends Component {
 
                 const id = reorder[index].poNum
                 console.log('id', id)
-                //const url = 'https://localhost:5001/api/Store/PORecieved/'
-                //axios.post('https://localhost:5001/api/Store/PORecieved/',temp).then(res => console.log(res))
                 window.location.href = domain + 'receivedGoods/' + id
                 return { data: reorder }
             })

@@ -7,6 +7,7 @@ class InventoryPopup extends React.Component {
         super(props)
     }
 
+
     render() {
         const tableData = this.props.detailApprovalData.map(item =>
             <tr className="tableRow" key={item.stockAdustmentDetailId}>

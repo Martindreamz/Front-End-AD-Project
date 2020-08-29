@@ -4,6 +4,7 @@ import RequisitionHistoryDetails from "../Components/RequisitionHistoryDetails";
 import Header from '../Components/Headers/Header';
 import RequisitionApplyForm from "../Components/RequisitionApplyForm";
 import RequisitionForm from "./RequisitionForm";
+import { domain, api } from '../Configurations/Config';
 
 class RequisitionHistoryDetailsView extends Component {
     constructor() {
@@ -47,7 +48,7 @@ class RequisitionHistoryDetailsView extends Component {
     showHisDetail = (item) => {
         this.setState({ detailInfo: item });
 
-        fetch('https://localhost:5001/api/dept/getAllItemList', {
+        fetch(api + 'api/dept/getAllItemList', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

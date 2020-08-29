@@ -9,8 +9,11 @@
 }
 .graphSection {
     width: 60%;
-    padding: 5rem;
+    padding: 3rem;
 }
 .chartjs-render-monitor {
+    height: 100%;
+}
+.chartjs-size-monitor {
     height: 500px;
 }

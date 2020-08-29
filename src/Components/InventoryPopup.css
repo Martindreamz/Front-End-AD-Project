@@ -12,12 +12,12 @@
 
 .popupInner {
     position: absolute;
-    max-height: 20%;
+    max-height: 40%;
     max-width: 35%;
     left: 30%;
     right: 30%;
-    top: 35%;
-    bottom: 35%;
+    top: 30%;
+    bottom: 30%;
     margin: auto;
     border-radius: 20px;
     background: white;

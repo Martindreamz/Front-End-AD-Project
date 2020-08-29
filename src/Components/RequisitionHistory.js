@@ -35,6 +35,7 @@ class RequisitionHistory extends Component {
                 <td><Link onClick={() => this.props.historyDetails(item)} className="mouserPointer">{item.id}</Link></td>
                 <td>{Moment(item.dateOfRequest).format('DD-MM-YYYY')}</td>
                 <td>{item.status}</td>
+                <td>{item.comment}</td>
             </tr>
         ));
         return (
@@ -45,6 +46,7 @@ class RequisitionHistory extends Component {
                         <th>Requisition ID</th>
                         <th>Requested Date</th>
                         <th>Status</th>
+                        <th>Comment</th>
                     </tr>
                     {historyItem}
                 </table>

@@ -8,12 +8,11 @@ class DepRepDistriTable extends Component {
   }
 
   render() {
-    const distriItem = this.props.requisitionDetail.map((item) => (
+    const distriItem = this.props.disbursementDetail.map((item) => (
       <tr className="tableRow">
-        <td>{item.desc}</td>
-        <td>{item.employee}</td>
-        <td>{item.reqQty}</td>
-        <td>{item.rcvQty}</td>
+        <td>{item.stationeryDesc}</td>
+        <td>{item.requestor}</td>
+        <td>{item.qty}</td>
       </tr>
     ));
     return (
@@ -21,7 +20,6 @@ class DepRepDistriTable extends Component {
         <tr className="tableHeader">
           <th>Stationery Description</th>
           <th>Requestor</th>
-          <th>Requested Quantity</th>
           <th>Received Quantity</th>
         </tr>
         {distriItem}

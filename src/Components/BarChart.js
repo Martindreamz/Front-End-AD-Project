@@ -1,6 +1,12 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
+Date.prototype.getMonthName = function (x) {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    return monthNames[this.getMonth() - x];
+}
+
 class BarChart extends React.Component {
     constructor(props) {
         super(props)
@@ -10,7 +16,7 @@ class BarChart extends React.Component {
 
     render() {
         const data = {
-            labels: this.props.data.map(item => item.x),
+            labels: this.props.data.map((item, index) => new Date().getMonthName(index) /*item.x*/),
             datasets: [
                 {
                     label: 'Bar Chart',
@@ -30,7 +36,7 @@ class BarChart extends React.Component {
                 <Bar
                     data={data}
                     width={100}
-                    height={50}
+                    height={500}
                     options={{
                         maintainAspectRatio: false
                     }}

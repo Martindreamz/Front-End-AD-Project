@@ -9,7 +9,7 @@ class StockAdjustmentPopup extends React.Component {
     }
 
     render() {
-        const tableData = this.props.voucherData.map(item =>
+        const tableData = this.props.popupData.map(item =>
             <tr className="tableRow">
                 <td>{item.stockAdustmentDetailId}</td>
                 <td>{item.quantity}</td>

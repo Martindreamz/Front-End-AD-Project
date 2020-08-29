@@ -4,7 +4,8 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Axios from 'axios';
-import { domain } from '../Configurations/Config'
+import { domain } from '../Configurations/Config';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class InventoryPopup extends React.Component {
     constructor(props) {
@@ -92,12 +93,14 @@ class InventoryPopup extends React.Component {
                     <HighlightOffIcon className="formCloseBtn" onClick={this.props.closePopup} />
                     <div className="form" onChange={this.handleUpdatedData}>
                         <div className="formSection">
-                            <fieldset>
-                                Item Name:
-                                <input type="text" id="itemName" value={this.state.data.desc} />
-                            </fieldset>
-                            <fieldset>
-                                Item Category:
+                            <div class="form-group row">
+                              <div class="col-sm-6">
+                                  Item Name:
+                                <input type="text" id="itemName" value={this.state.data.desc} className="form-control"/>
+                            
+                              </div>
+                              <div class="col-sm-6">
+                                  Item Category:
                                 {/*<input type="text" id="itemName" value={this.state.data.category} />*/}
                                 <Select
                                     labelId="demo-controlled-open-select-label"
@@ -106,20 +109,30 @@ class InventoryPopup extends React.Component {
                                     open={this.state.openCat}
                                     onClose={this.closeCat}
                                     onOpen={this.catOpen}
-                                    onChange={this.showCat}>
+                                    onChange={this.showCat}
+                                    className="form-control">
                                     {this.props.categoryData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
                                 </Select>
-                            </fieldset>
+                              </div>
+                          </div>
+
+
                         </div>
-                        <div className="formBody">
-                            <fieldset>
-                                Item Unit:
-                                <input type="text" id="itemUnit" value={this.state.data.unit} />
-                            </fieldset>
-                            <fieldset>
-                                Quantity:
-                                <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} disabled/>
-                            </fieldset>
+                        <div className="formSection">
+
+                            <div class="form-group row">
+                              <div class="col-sm-6">
+                                     Item Unit:
+                                <input type="text" id="itemUnit" value={this.state.data.unit} className="form-control"/>
+                            
+                              </div>
+                              <div class="col-sm-6">
+                                   Quantity:
+                                <input type="number" min="1" max="9999" id="qty" value={this.state.data.inventoryQty} className="form-control" disabled/>
+                            
+                              </div>
+                          </div>
+                        
                         </div>
                         <div className="formButtons">
                             <button onClick={async () => { await this.submitForm(); await this.props.closeForm(); }}>Save</button>

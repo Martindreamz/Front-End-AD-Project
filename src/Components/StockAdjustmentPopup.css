@@ -36,7 +36,7 @@
 thead, tbody { display: block; }
 
 .popupTable {
-    height: 230px;       /* Just for the demo          */
+    height: 100%;       /* Just for the demo          */
     overflow-y: auto;    /* Trigger vertical scroll    */
     overflow-x: hidden;  /* Hide the horizontal scroll */
 }

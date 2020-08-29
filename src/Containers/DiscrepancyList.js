@@ -3,7 +3,7 @@ import Header from '../Components/Headers/Header';
 import './RecievedGoods.css';
 import DiscrepancyTable from '../Components/DiscrepancyTable';
 import axios from 'axios';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 import ErrorPopup from '../Components/ErrorPopup';
 
 
@@ -22,8 +22,8 @@ class DiscrepancyList extends React.Component {
     componentDidMount() {
         //HTTP get request
         Promise.all([
-            axios.get("https://localhost:5001/api/store/stkAd/get/" + this.state.id),
-            axios.get("https://localhost:5001/api/store/stationeries")
+            axios.get(api + "api/store/stkAd/get/" + this.state.id),
+            axios.get(api + "api/store/stationeries")
         ]).then(([stkadj, items]) => {
             const result = stkadj.data.map(item => {
                 return {
@@ -61,7 +61,7 @@ class DiscrepancyList extends React.Component {
     //Event handling to send post request to backend
     submitAction = async () => {
         //actions here
-        await axios.put('https://localhost:5001/api/store/stkAd/put', this.state.data)
+        await axios.put(api + 'api/store/stkAd/put', this.state.data)
             .then(response => {
                 window.location.href = domain
             }).catch(response => {

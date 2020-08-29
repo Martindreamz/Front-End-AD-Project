@@ -3,7 +3,7 @@ import Header from '../Components/Headers/Header';
 import './RecievedGoods.css';
 import InventoryTable from '../Components/InventoryTable';
 import axios from 'axios';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 
 class ReceivedGoods extends React.Component {
     constructor(props) {
@@ -21,8 +21,8 @@ class ReceivedGoods extends React.Component {
     componentDidMount() {
         //HTTP get request
         Promise.all([
-            axios.get("https://localhost:5001/api/store/getPOD/" + this.state.id),
-            axios.get("https://localhost:5001/api/store/stationeries")
+            axios.get(api + "api/store/getPOD/" + this.state.id),
+            axios.get(api + "api/store/stationeries")
         ]).then(([pod, items]) => {
             const result = pod.data.map(item => {
                 return {
@@ -71,8 +71,8 @@ class ReceivedGoods extends React.Component {
 
     submitForm = () => {
         Promise.all([
-            axios.post('https://localhost:5001/api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy),
-            axios.post('https://localhost:5001/api/Store/PORecieved/' + this.state.id)
+            axios.post(api + 'api/store/receivedGoods/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy),
+            axios.post(api + 'api/Store/PORecieved/' + this.state.id)
         ]).then(([res1, res2]) => {
             window.location.href = domain + 'placeOrderSubmit'
         })

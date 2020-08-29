@@ -18,11 +18,6 @@ class Header extends React.Component {
     window.location.href = domain;
   };
 
-  toggleButtonAction = () => {
-    document
-      .getElementsByClassName("navbar-links")[0]
-      .classList.toggle("active");
-    };
 
     //Logout event handling
     logoutAction = () => {
@@ -45,20 +40,15 @@ class Header extends React.Component {
           <HomeIcon onClick={this.homeButtonAction} style={iconStyle} />
           <p>Stationery Management System</p>
         </div>
-        <a href="#" className="toggle-button" onClick={this.toggleButtonAction}>
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </a>
         <div className="navbar-links">
           <ul>
-            <li>
+            <li onClick={this.homeButtonAction}>
                         <AccountBoxIcon style={iconStyle} />
                         <a href="#">{this.state.identity != null ? this.state.identity.name : null}</a>
             </li>
-            <li>
+            <li onClick={this.logoutAction}>
                         <ExitToAppIcon style={iconStyle} />
-                        <a href="#" onClick={this.logoutAction}>{this.state.identity != null ? "Logout" : "Login"}</a>
+                        <a href="#" >{this.state.identity != null ? "Logout" : "Login"}</a>
             </li>
           </ul>
         </div>

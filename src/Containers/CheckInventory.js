@@ -4,7 +4,7 @@ import './RecievedGoods.css';
 import InventoryTable from '../Components/InventoryTable';
 import ErrorPopup from '../Components/ErrorPopup';
 import axios from 'axios';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 
 class CheckInventory extends React.Component {
     constructor() {
@@ -21,7 +21,7 @@ class CheckInventory extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/store/stationeries')
+        axios.get(api + 'api/store/stationeries')
             .then(response => {
                 const items = response.data.map(item => {
                     return {
@@ -89,7 +89,7 @@ class CheckInventory extends React.Component {
             })
         }
         else {
-            axios.post('https://localhost:5001/api/store/stkAd/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy)
+            axios.post(api + 'api/store/stkAd/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.discrepancy)
                 .then(response => {
                     if (hasDiscrepancy) {
                         window.location.href = domain + 'discrepancyList/' + response.data.id

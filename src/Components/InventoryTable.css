@@ -58,7 +58,7 @@
   border: solid 0.5px;
   width: 60%;
   overflow: scroll;
-  height: 600px;
+  max-height: 600px;
 }
 
 .placeOrderTable {
