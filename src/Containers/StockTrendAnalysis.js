@@ -12,6 +12,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { domain, api } from '../Configurations/Config';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        display: 'block',
+        marginTop: theme.spacing(2),
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+}));
+
+
 
 
 class StockTrendAnalysis extends React.Component {
@@ -204,13 +221,16 @@ class StockTrendAnalysis extends React.Component {
         this.setState({ value: newValue })
     };
 
+    classes = () => useStyles()
     render() {
+
         return (
             <div>
                 <Header />
                 <div className="StockTrendBody">
-                    <div className="dropDownMenu">
-                        Graph:
+                <div className="dropDownMenu">
+                    <FormControl className={this.classes.formControl}>
+                        <InputLabel id="demo-controlled-open-select-label">Graph</InputLabel>
                         <Select
                             labelId="demo-controlled-open-select-label"
                             id="demo-controlled-open-select"
@@ -222,9 +242,11 @@ class StockTrendAnalysis extends React.Component {
                             <MenuItem value="Requisition">Requisition</MenuItem>
                             <MenuItem value="Reorder">Reorder</MenuItem>
                         </Select>
-                        Category:
+                    </FormControl>
+                    <FormControl className={this.classes.formControl}>
+                        <InputLabel id="demo-controlled-open-select2-label">Category</InputLabel>
                         <Select
-                            labelId="demo-controlled-open-select-label"
+                            labelId="demo-controlled-open-select2-label"
                             id="demo-controlled-open-select"
                             value={this.state.selectedCategory}
                             open={this.state.openCat}
@@ -234,19 +256,25 @@ class StockTrendAnalysis extends React.Component {
                             <MenuItem value="all">select all</MenuItem>
                             {this.state.categoryData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
                         </Select>
-                        Department:
-                        <Select
-                            labelId="demo-controlled-open-select-label"
-                            id="demo-controlled-open-select"
-                            value={this.state.selectedDepartment}
-                            open={this.state.openDept}
-                            onClose={this.closeDept}
-                            onOpen={this.deptOpen}
-                            onChange={this.showDept}>
-                            <MenuItem value="all">select all</MenuItem>
-                            {this.state.departmentData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
-                        </Select>
-                    </div>
+                    </FormControl>
+                    {this.state.selectedGraph === "Reorder" ? 
+                        null:
+                        <FormControl className={this.classes.formControl}>
+                            <InputLabel id="demo-controlled-open-select3-label">Department</InputLabel>
+                            <Select
+                                labelId="demo-controlled-open-select3-label"
+                                id="demo-controlled-open-select"
+                                value={this.state.selectedDepartment}
+                                open={this.state.openDept}
+                                onClose={this.closeDept}
+                                onOpen={this.deptOpen}
+                                onChange={this.showDept}>
+                                <MenuItem value="all">select all</MenuItem>
+                                {this.state.departmentData.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+                            </Select>
+                        </FormControl>
+                    }
+                </div>
                     <div className="graphSection">
                         <AppBar position="static">
                             <Tabs value={this.state.value} onChange={this.handleChange} aria-label="wrapped label tabs example">
