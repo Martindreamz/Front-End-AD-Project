@@ -8,7 +8,7 @@ import DepartmentHeadEmployee from "../Components/DepartmentHeadEmployee";
 import DepartmentHeadRep from "../Components/DepartmentHeadRep";
 import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
 import "../Components/ManagerPartition.css";
-import { domain, api } from '../Configurations/Config';
+import { domain, api } from "../Configurations/Config";
 
 class ManageDepartment extends Component {
   constructor() {
@@ -43,7 +43,8 @@ class ManageDepartment extends Component {
     //HTTP get request
     axios
       .get(
-        api + "api/Dept/" +
+        api +
+          "api/Dept/" +
           JSON.parse(sessionStorage.getItem("mySession")).departmentId
       )
       .then((response) => {
@@ -53,7 +54,8 @@ class ManageDepartment extends Component {
 
     axios
       .get(
-        api + "api/Dept/deptEmp/" +
+        api +
+          "api/Dept/deptEmp/" +
           JSON.parse(sessionStorage.getItem("mySession")).departmentId
       )
       .then((response) => {
@@ -62,7 +64,8 @@ class ManageDepartment extends Component {
 
         axios
           .get(
-            api + "api/Dept/deptPendingReq/" +
+            api +
+              "api/Dept/deptPendingReq/" +
               JSON.parse(sessionStorage.getItem("mySession")).departmentId
           )
           .then((response) => {
@@ -89,12 +92,10 @@ class ManageDepartment extends Component {
           });
       });
 
-    axios
-      .get(api + "api/Dept/allCollectionpt")
-      .then((response) => {
-        const collectionInfoItems = response.data;
-        this.setState({ collectionInfo: collectionInfoItems });
-      });
+    axios.get(api + "api/Dept/allCollectionpt").then((response) => {
+      const collectionInfoItems = response.data;
+      this.setState({ collectionInfo: collectionInfoItems });
+    });
 
     axios.get(api + "api/Dept/stationery").then((response) => {
       const stationeryItems = response.data;
@@ -102,7 +103,8 @@ class ManageDepartment extends Component {
 
       axios
         .get(
-          api + "api/Dept/deptPendingReqDetail/" +
+          api +
+            "api/Dept/deptPendingReqDetail/" +
             JSON.parse(sessionStorage.getItem("mySession")).departmentId
         )
         .then((response) => {
@@ -183,11 +185,9 @@ class ManageDepartment extends Component {
 
     console.log(sendObj);
 
-    axios
-      .post(api + "api/Dept/deptDelegate", sendObj)
-      .then((response) => {
-        console.log(response);
-      });
+    axios.post(api + "api/Dept/deptDelegate", sendObj).then((response) => {
+      console.log(response);
+    });
   }
 
   handleDelegateRevoke() {
@@ -342,6 +342,7 @@ class ManageDepartment extends Component {
     sendRequisition = {
       Id: Number(newRequisition.id),
       dateOfAuthorizing: formattedNow,
+      AuthorizerId: JSON.parse(sessionStorage.getItem("mySession")).id,
       status: newRequisition.status,
       comment: newRequisition.comment,
     };
