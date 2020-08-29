@@ -107,9 +107,11 @@ class PurchaseOrderSubmit extends Component {
                         })
 
             
-                            this.setState({
+                        this.setState({
+                            
                                 Allpos: data,
-                                suppliers: Suppliers 
+                            suppliers: Suppliers,
+                                data:data
 
                             }, () => this.setUniqueSuppliers())
 
@@ -133,20 +135,15 @@ class PurchaseOrderSubmit extends Component {
         this.setState({ uSuppliers: sorted_list })
         console.log('AllPOs', this.state.Allpos)
 
-        //this.setState(prevState => {
-        //    const reorder = [...prevState.Allpos];
-        //    const neworder = [];
-        //    reorder.forEach(order => {
-        //        order.subtotal = order.pod.reduce((total, p) => total + (p.qty * p.price), 0)
-        //        neworder.push(order)
-        //    })
+        this.setState(prevState => {
+            const reorder = [...prevState.Allpos];
             
 
-    //        return ({
-    //            //data: neworder,
-    //            Allpos: neworder
-    //        })
-    //})
+            return ({
+                data: reorder
+               
+            })
+    })
     }
 
    
@@ -225,9 +222,9 @@ class PurchaseOrderSubmit extends Component {
                     </div>
                     }
                     {this.state.currentPO == null &&
-                        <PurchaseOrderTable
-                            data={this.state.data}
-                            handleChange={this.handleChange}
+                            < PurchaseOrderTable
+                            data={ this.state.data }
+                            handleChange={ this.handleChange }
                         />}
                     </div>
                    

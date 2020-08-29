@@ -4,6 +4,8 @@
     font: 12pt "Times new roman";
 }
 
+
+
 * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -56,7 +58,7 @@
     }
     .page {
         margin: 0;
-        border: initial;
+       
         border-radius: initial;
         width: initial;
         min-height: initial;
@@ -66,8 +68,18 @@
         page-break-after: always;
     }
 }
-
 .box {
-    display: flex;
-    align-items: stretch;
+    width: 100%;
+    display:flex;
+    border:double;
+}
+.innerbox {
+    width:50%;
+   padding:10px;
+   padding-left:20px;
+   border:1px solid gray;
+    align-content: center;
+    align-items: center;
+    text-align:center;
+    font:10pt
 }
