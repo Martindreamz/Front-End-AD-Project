@@ -3,7 +3,7 @@ import './Login.css';
 import { Container, CssBaseline, Button, TextField, Typography } from '@material-ui/core';
 //import Header from '../Components/Headers/Header';
 import axios from 'axios';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 //import classes from '*.module.scss';
 
 const styles = {
@@ -60,7 +60,7 @@ class Login extends React.Component {
 
 	loginAction(event) {
 		//actions
-		axios.post('https://localhost:5001/api/login/post', this.state.identity)
+		axios.post(api + 'api/login/post', this.state.identity)
 			.then(response => {
 				console.log(response.data)
 				let obj = { id: response.data.id, name: response.data.name, role: response.data.role, departmentId: response.data.departmentId }
