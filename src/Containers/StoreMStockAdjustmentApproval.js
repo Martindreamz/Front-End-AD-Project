@@ -7,6 +7,7 @@ import StockAdjustmentPopup from "../Components/StockAdjustmentPopup";
 import StoreMgrStockAdjustmentSumTable from "../Components/StoreMgrStockAdjustmentSumTable";
 import SupervisorCommmentPopup from "../Components/SupervisorCommmentPopup";
 import Loader from 'react-loader-spinner';
+import { domain, api } from '../Configurations/Config';
 
 class SupervisorStockAdjustmentApproval extends Component {
     constructor() {
@@ -29,7 +30,7 @@ class SupervisorStockAdjustmentApproval extends Component {
 
     async componentDidMount() {
         this.setState({ loading: true }, () => {
-            axios.get('https://localhost:5001/api/Store/adjustmentList')
+            axios.get(api + 'api/Store/adjustmentList')
             .then((response)=> {
                 const resdata = response.data
                 this.setState({ data: [...resdata],loading: false  })
@@ -38,7 +39,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
     componentDidUpdate(prevState) {
         if (prevState.data != this.state.data || prevState.isShowCommentPopup != this.state.isShowCommentPopup) {
-            axios.get('https://localhost:5001/api/Store/adjustmentList')
+            axios.get(api + 'api/Store/adjustmentList')
                 .then(response => {
                     const resdata = response.data
                     this.setState({ data: resdata })
@@ -47,7 +48,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
 
     showPopup = (item) => {
-        fetch('https://localhost:5001/api/Store/issueVoucher', {
+        fetch(api + 'api/Store/issueVoucher', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,7 +67,7 @@ class SupervisorStockAdjustmentApproval extends Component {
         this.setState({ isShowCommentPopup: true, rejectItem: item });
     }
     submitRejectComment = (comment) => {
-        fetch('https://localhost:5001/api/Store/managerRejectRequest/' + comment, {
+        fetch(api + 'api/Store/managerRejectRequest/' + comment, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,7 +84,7 @@ class SupervisorStockAdjustmentApproval extends Component {
     }
     showDetail = (item) => {
         this.setState({ detailInfo: item });
-        fetch('https://localhost:5001/api/Store/getAllAdjustDetailLine', {
+        fetch(api + 'api/Store/getAllAdjustDetailLine', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

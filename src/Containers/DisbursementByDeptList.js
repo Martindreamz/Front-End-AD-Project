@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import SupplierTable from '../Components/SupplierTable';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,7 +29,7 @@ class DisbursementByDeptList extends React.Component {
     detailDisbursement = (item) =>{
         this.setState({ deliveryInfo: item });
 
-        fetch('https://localhost:5001/api/Store/getDisburseItemDetail', {
+        fetch(api + 'api/Store/getDisburseItemDetail', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ class DisbursementByDeptList extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/Store/getAllRequesterRow/' + JSON.parse(sessionStorage.getItem("mySession")).id)
+        axios.get(api + 'api/Store/getAllRequesterRow/' + JSON.parse(sessionStorage.getItem("mySession")).id)
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });

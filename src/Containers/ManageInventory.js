@@ -3,7 +3,7 @@ import Header from '../Components/Headers/Header';
 import InventoryTable from '../Components/InventoryTable';
 import './RecievedGoods.css';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,7 +30,7 @@ class ManageInventory extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/store/stationeries')
+        axios.get(api + 'api/store/stationeries')
             .then(response => {
                 const items = response.data.map(item => {
                     return {
@@ -52,7 +52,7 @@ class ManageInventory extends React.Component {
     componentDidUpdate(prevState) {
         if (prevState.data != this.state.data) {
             //HTTP get request
-            axios.get('https://localhost:5001/api/store/stationeries')
+            axios.get(api + 'api/store/stationeries')
                 .then(response => {
                     const items = response.data.map(item => {
                         return {

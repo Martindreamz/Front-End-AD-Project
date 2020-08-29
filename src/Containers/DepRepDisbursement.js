@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "../Components/Headers/Header";
 import DepRepDistriCollectionList from "../Components/DepRepDistriCollectionList";
 import axios from "axios";
+import { domain, api } from '../Configurations/Config';
 
 class DepRepDisbursement extends Component {
   constructor() {
@@ -23,7 +24,7 @@ class DepRepDisbursement extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://localhost:5001/api/Dept/" +
+        api + "api/Dept/" +
           JSON.parse(sessionStorage.getItem("mySession")).departmentId
       )
       .then((response) => {
@@ -32,14 +33,14 @@ class DepRepDisbursement extends Component {
       });
 
     axios
-      .get("https://localhost:5001/api/Dept/allCollectionpt")
+      .get(api + "api/Dept/allCollectionpt")
       .then((response) => {
         const collectionItems = response.data;
         this.setState({ collectionInfo: collectionItems });
 
         axios
           .get(
-            "https://localhost:5001/api/Dept/latestDisbursementByDept/" +
+            api + "api/Dept/latestDisbursementByDept/" +
               JSON.parse(sessionStorage.getItem("mySession")).departmentId
           )
           .then((response) => {
@@ -63,7 +64,7 @@ class DepRepDisbursement extends Component {
 
     axios
       .get(
-        "https://localhost:5001/api/Dept/deptEmp/" +
+        api + "api/Dept/deptEmp/" +
           JSON.parse(sessionStorage.getItem("mySession")).departmentId
       )
       .then((response) => {
@@ -72,7 +73,7 @@ class DepRepDisbursement extends Component {
 
         axios
           .get(
-            "https://localhost:5001/api/Dept/deptToDeliverReq/" +
+            api + "api/Dept/deptToDeliverReq/" +
               JSON.parse(sessionStorage.getItem("mySession")).departmentId
           )
           .then((response) => {
@@ -98,14 +99,14 @@ class DepRepDisbursement extends Component {
             this.setState({ requisition: newtoDeliverReqItems });
 
             axios
-              .get("https://localhost:5001/api/Dept/stationery")
+              .get(api + "api/Dept/stationery")
               .then((response) => {
                 const stationeryItems = response.data;
                 this.setState({ stationery: stationeryItems });
 
                 axios
                   .get(
-                    "https://localhost:5001/api/Dept/disbursementDetailByDept/" +
+                    api + "api/Dept/disbursementDetailByDept/" +
                       JSON.parse(sessionStorage.getItem("mySession"))
                         .departmentId
                   )
@@ -114,7 +115,7 @@ class DepRepDisbursement extends Component {
 
                     axios
                       .get(
-                        "https://localhost:5001/api/Dept/deptToDeliverReq/" +
+                        api + "api/Dept/deptToDeliverReq/" +
                           JSON.parse(sessionStorage.getItem("mySession"))
                             .departmentId
                       )
@@ -139,7 +140,7 @@ class DepRepDisbursement extends Component {
 
                         axios
                           .get(
-                            "https://localhost:5001/api/Dept/deptToDeliverReqDetail/" +
+                            api + "api/Dept/deptToDeliverReqDetail/" +
                               JSON.parse(sessionStorage.getItem("mySession"))
                                 .departmentId
                           )
@@ -173,7 +174,7 @@ class DepRepDisbursement extends Component {
 
                             axios
                               .get(
-                                "https://localhost:5001/api/Dept/latestDisbursementByDept/" +
+                                api + "api/Dept/latestDisbursementByDept/" +
                                   JSON.parse(
                                     sessionStorage.getItem("mySession")
                                   ).departmentId

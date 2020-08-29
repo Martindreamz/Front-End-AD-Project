@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from '../Components/Headers/Header';
 import SupplierTable from '../Components/SupplierTable';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 import axios from 'axios';
 import InventoryPopup from "../Components/InventoryPopup";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +22,7 @@ class SupplierList extends React.Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/Store/Suppliers')
+        axios.get(api + 'api/Store/Suppliers')
             .then(response => {
                 const items = response.data;
                 this.setState({ data: items });
@@ -31,7 +31,7 @@ class SupplierList extends React.Component {
     componentDidUpdate(prevState) {
         if (prevState.data != this.state.data || prevState.showSupplierForm != this.state.showSupplierForm) {
             //HTTP get request
-            axios.get('https://localhost:5001/api/Store/Suppliers')
+            axios.get(api + 'api/Store/Suppliers')
                 .then(response => {
                     const items = response.data;
                     this.setState({ data: items });
@@ -55,11 +55,10 @@ class SupplierList extends React.Component {
               isEdit: true,
               showSupplierForm: true,
             });
-        //axios.put('https://localhost:5001/api/Store/updateSupplier/' + supplier.id).then(result=>{  });
+        //axios.put(api + 'api/Store/updateSupplier/' + supplier.id).then(result=>{  });
     } 
 
     checkSupplierAction = () => {
-        //redirect to check inventory url
         window.location.href = domain
     }
 

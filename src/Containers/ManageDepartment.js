@@ -8,6 +8,7 @@ import DepartmentHeadEmployee from "../Components/DepartmentHeadEmployee";
 import DepartmentHeadRep from "../Components/DepartmentHeadRep";
 import DepartmentHeadApproval from "../Components/DepartmentHeadApproval";
 import "../Components/ManagerPartition.css";
+import { domain, api } from '../Configurations/Config';
 
 class ManageDepartment extends Component {
   constructor() {
@@ -42,7 +43,7 @@ class ManageDepartment extends Component {
     //HTTP get request
     axios
       .get(
-        "https://localhost:5001/api/Dept/" +
+        api + "api/Dept/" +
           JSON.parse(sessionStorage.getItem("mySession")).departmentId
       )
       .then((response) => {
@@ -52,7 +53,7 @@ class ManageDepartment extends Component {
 
     axios
       .get(
-        "https://localhost:5001/api/Dept/deptEmp/" +
+        api + "api/Dept/deptEmp/" +
           JSON.parse(sessionStorage.getItem("mySession")).departmentId
       )
       .then((response) => {
@@ -61,7 +62,7 @@ class ManageDepartment extends Component {
 
         axios
           .get(
-            "https://localhost:5001/api/Dept/deptPendingReq/" +
+            api + "api/Dept/deptPendingReq/" +
               JSON.parse(sessionStorage.getItem("mySession")).departmentId
           )
           .then((response) => {
@@ -89,19 +90,19 @@ class ManageDepartment extends Component {
       });
 
     axios
-      .get("https://localhost:5001/api/Dept/allCollectionpt")
+      .get(api + "api/Dept/allCollectionpt")
       .then((response) => {
         const collectionInfoItems = response.data;
         this.setState({ collectionInfo: collectionInfoItems });
       });
 
-    axios.get("https://localhost:5001/api/Dept/stationery").then((response) => {
+    axios.get(api + "api/Dept/stationery").then((response) => {
       const stationeryItems = response.data;
       this.setState({ stationery: stationeryItems });
 
       axios
         .get(
-          "https://localhost:5001/api/Dept/deptPendingReqDetail/" +
+          api + "api/Dept/deptPendingReqDetail/" +
             JSON.parse(sessionStorage.getItem("mySession")).departmentId
         )
         .then((response) => {
@@ -183,7 +184,7 @@ class ManageDepartment extends Component {
     console.log(sendObj);
 
     axios
-      .post("https://localhost:5001/api/Dept/deptDelegate", sendObj)
+      .post(api + "api/Dept/deptDelegate", sendObj)
       .then((response) => {
         console.log(response);
       });
@@ -225,7 +226,7 @@ class ManageDepartment extends Component {
     console.log(sendObj);
 
     axios
-      .post("https://localhost:5001/api/Dept/deptRevokeDelegate", sendObj)
+      .post(api + "api/Dept/deptRevokeDelegate", sendObj)
       .then((response) => {
         console.log(response);
       });
@@ -266,7 +267,7 @@ class ManageDepartment extends Component {
     console.log(sendObj);
 
     axios
-      .post("https://localhost:5001/api/Dept/deptRepresentative", sendObj)
+      .post(api + "api/Dept/deptRepresentative", sendObj)
       .then((response) => {
         console.log(response);
       });
@@ -299,7 +300,7 @@ class ManageDepartment extends Component {
     console.log(sendDepartment);
 
     axios
-      .post("https://localhost:5001/api/Dept/deptCollection", sendDepartment)
+      .post(api + "api/Dept/deptCollection", sendDepartment)
       .then((response) => {
         console.log(response);
       });
@@ -348,7 +349,7 @@ class ManageDepartment extends Component {
     console.log(sendRequisition);
 
     axios
-      .post("https://localhost:5001/api/Dept/deptRequisition", sendRequisition)
+      .post(api + "api/Dept/deptRequisition", sendRequisition)
       .then((response) => {
         console.log(response);
       });

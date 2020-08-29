@@ -11,6 +11,8 @@ import "./StockTrendAnalysis.css";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { domain, api } from '../Configurations/Config';
+
 
 class StockTrendAnalysis extends React.Component {
     constructor() {
@@ -37,7 +39,7 @@ class StockTrendAnalysis extends React.Component {
     }
 
     //Run once before render - lifecycle
-    componentDidMount(url = 'https://localhost:5001/api/report/reqByDay') {
+    componentDidMount(url = api + 'api/report/reqByDay') {
         //HTTP get request
         axios.get(url)
             .then(response => {
@@ -166,7 +168,7 @@ class StockTrendAnalysis extends React.Component {
         }
         else {
             this.setState({ selectedCategory: null, selectedDepartment: null, value: "one" })
-            this.componentDidMount('https://localhost:5001/api/report/reorderbyday')
+            this.componentDidMount(api + 'api/report/reorderbyday')
         }
     }
     closeGraph = () => {
@@ -184,19 +186,19 @@ class StockTrendAnalysis extends React.Component {
     handleChange = (event, newValue) => {
         if (newValue == "one" && this.state.selectedGraph == "Requisition") {
             this.setState({ selectedCategory: null, selectedDepartment: null})
-            this.componentDidMount('https://localhost:5001/api/report/reqByDay')
+            this.componentDidMount(api + 'api/report/reqByDay')
         }
         else if (newValue == "two" && this.state.selectedGraph == "Requisition" || newValue == "three" && this.state.selectedGraph == "Requisition") {
             this.setState({ selectedCategory: null, selectedDepartment: null })
-            this.componentDidMount('https://localhost:5001/api/report/reqByMonth')
+            this.componentDidMount(api + 'api/report/reqByMonth')
         }
         else if (newValue == "one" && this.state.selectedGraph == "Reorder") {
             this.setState({ selectedCategory: null, selectedDepartment: null })
-            this.componentDidMount('https://localhost:5001/api/report/reorderbyday')
+            this.componentDidMount(api + 'api/report/reorderbyday')
         }
         else {
             this.setState({ selectedCategory: null, selectedDepartment: null })
-            this.componentDidMount('https://localhost:5001/api/report/reorder')
+            this.componentDidMount(api + 'api/report/reorder')
         }
         console.log(newValue)
         this.setState({ value: newValue })

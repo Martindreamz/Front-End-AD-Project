@@ -56,7 +56,7 @@ class InventoryTable extends React.Component {
                     <th>Description</th>
                     {this.state.isReceivedGoods || this.state.isCheckInvTable ? null : <th>Unit</th>}
                     {this.state.isReceivedGoods ? <th>Ordered Quantity</th> : <th>Total Quantity</th>}
-                    {this.state.isCheckInvTable || this.state.isReceivedGoods ? (this.state.isCheckInvTable ? < th > Inventory Quantity</th> : <th>Received Quantity</th>) : null}
+                    {this.state.isCheckInvTable || this.state.isReceivedGoods ? (this.state.isReceivedGoods ? < th >Received Quantity</th> : <th>Inventory Quantity</th>) : null}
                 </tr>
                 {inventoryItem}
             </table>

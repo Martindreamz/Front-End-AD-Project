@@ -29,7 +29,7 @@ class SupervisorCommmentPopup extends React.Component {
                         </div>
                         
                         <div  className="col-sm-12 text-center white-background-color">
-                            <button class="btn btn-primary mt-1" onClick={()=>this.props.submitRejectComment(this.refs.comment.value)}> Submit Reject</button>
+                            <button class="btn btn-primary mt-1" onClick={()=>this.props.submitRejectComment(this.refs.comment.value)}> Submit</button>
                         </div>
             </div>
         </div>
