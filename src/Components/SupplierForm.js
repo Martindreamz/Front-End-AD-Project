@@ -50,6 +50,8 @@ class SupplierForm extends React.Component {
         phoneNum : this.refs.phoneNumRef.value,
       }
 
+      console.log(supplier)
+
       if(!this.props.isEdit)
       {
           fetch(api + 'api/Store/saveSupplier', {
