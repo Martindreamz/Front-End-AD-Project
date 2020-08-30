@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {domain} from '../Configurations/Config';
+import {domain, api} from '../Configurations/Config';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -15,7 +15,7 @@ class SupplierTable extends React.Component {
     
     deleteSupplier(supplier) {  
      
-    /*axios.delete('https://localhost:5001/api/Store/deleteSupplier/' + id).then(result=>{  
+    /*axios.delete(api + 'api/Store/deleteSupplier/' + id).then(result=>{  
        this.setState({  
           data: this.state.data.filter(s=>s.id !== id), 
           initial: false,
@@ -23,7 +23,7 @@ class SupplierTable extends React.Component {
 
       });*/
 
-      fetch('https://localhost:5001/api/Store/deleteSupplier', {
+      fetch(api + 'api/Store/deleteSupplier', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

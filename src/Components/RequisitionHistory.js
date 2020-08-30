@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "@material-ui/core"
 import '../Components/InventoryTable.css';
 import Moment from 'moment';
+import { domain, api } from '../Configurations/Config';
 
 
 class RequisitionHistory extends Component {
@@ -23,7 +24,7 @@ class RequisitionHistory extends Component {
     //Run once before render - lifecycle
     componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/dept/requisition/' + JSON.parse(sessionStorage.getItem("mySession")).id).then((response) => {
+        axios.get(api + 'api/dept/requisition/' + JSON.parse(sessionStorage.getItem("mySession")).id).then((response) => {
             const items = response.data;
             this.setState({ data: items });
         });
