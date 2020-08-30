@@ -217,7 +217,7 @@ class RequisitionApplyForm extends React.Component {
 
                 <div class="row">
                     <div class="col-md-12 mx-auto text-center">
-                        <p class="display-4">Requisition Form jljklj</p>
+                        <p class="display-4">Requisition Form</p>
                         {this.state.message == '' ? null :
                             <div class="alert alert-primary" role="alert">
                                 {this.state.message}
