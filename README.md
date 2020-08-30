@@ -24,8 +24,8 @@ This is a Stationery Store Inventory System Front-end Application
 - Machine Learning:Python & Flask (deployed via Azure
 
 ## Contributors
-<a href="https://github.com/darylkouk/Front-End-AD-Project/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=darylkouk/Front-End-AD-Project" />
+<a href="https://github.com/darylkouk/front-end-ad-project/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=darylkouk/front-end-ad-project" />
 </a>
 
 Made with [contributors-img](https://contributors-img.web.app).
