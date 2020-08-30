@@ -11,6 +11,15 @@ class DepRepDistriTable extends Component {
     this.handleRequestorInput = this.handleRequestorInput.bind(this);
   }
 
+  componentDidMount() {
+    const timer = setTimeout(() => {
+      let defaultRequestor = null;
+      defaultRequestor = this.props.requestorList[0];
+      this.setState({ selectedRequestor: defaultRequestor });
+    }, 1000);
+    return () => clearTimeout(timer);
+  }
+
   handleRequestorInput(event) {
     this.setState({ selectedRequestor: event.target.value });
   }

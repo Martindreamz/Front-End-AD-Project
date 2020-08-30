@@ -15,7 +15,7 @@ class DepRepDisbursement extends Component {
       disbursementList: [],
       deliveryDate: null,
       deliveryPointList: [],
-      requisition: {},
+      requisition: [],
       stationery: [],
       requisitionDetail: [],
       disbursementDetail: [],
@@ -96,30 +96,30 @@ class DepRepDisbursement extends Component {
               axios
                 .get(
                   api +
-                    "api/Dept/deptToDeliverReq/" +
+                    "api/Dept/deptAllReq/" +
                     JSON.parse(sessionStorage.getItem("mySession")).departmentId
                 )
                 .then((response) => {
-                  const toDeliverReqItems = response.data;
+                  const reqItems = response.data;
 
-                  const newtoDeliverReqItems = [];
-                  toDeliverReqItems.forEach((toDeliverReqItem) => {
-                    const newtoDeliverReqItem = {
-                      id: toDeliverReqItem.id,
-                      employeeId: toDeliverReqItem.employeeId,
+                  let newReqItems = [];
+                  reqItems.forEach((reqItem) => {
+                    const newReqItem = {
+                      id: reqItem.id,
+                      employeeId: reqItem.employeeId,
                       employeeName: employeeItems.find(
-                        (emp) => emp.id === toDeliverReqItem.employeeId
+                        (emp) => emp.id === reqItem.employeeId
                       ).name,
-                      dateOfRequest: toDeliverReqItem.dateOfRequest,
-                      dateOfAuthorizing: toDeliverReqItem.dateOfAuthorizing,
-                      authorizerId: toDeliverReqItem.authorizerId,
-                      status: toDeliverReqItem.status,
-                      comment: toDeliverReqItem.comment,
+                      dateOfRequest: reqItem.dateOfRequest,
+                      dateOfAuthorizing: reqItem.dateOfAuthorizing,
+                      authorizerId: reqItem.authorizerId,
+                      status: reqItem.status,
+                      comment: reqItem.comment,
                     };
-                    newtoDeliverReqItems.push(newtoDeliverReqItem);
+                    newReqItems.push(newReqItem);
                   });
 
-                  this.setState({ requisition: newtoDeliverReqItems });
+                  this.setState({ requisition: newReqItems });
 
                   axios.get(api + "api/Dept/stationery").then((response) => {
                     const stationeryItems = response.data;
@@ -138,129 +138,99 @@ class DepRepDisbursement extends Component {
                         axios
                           .get(
                             api +
-                              "api/Dept/deptToDeliverReq/" +
+                              "api/Dept/deptAllReqDetail/" +
                               JSON.parse(sessionStorage.getItem("mySession"))
                                 .departmentId
                           )
                           .then((response) => {
-                            const tempToDeliverReqItems = response.data;
+                            const reqDetailsItems = response.data;
 
-                            const newtempToDeliverReqItems = [];
-                            tempToDeliverReqItems.forEach(
-                              (tempToDeliverReqItem) => {
-                                const newtempToDeliverReqItem = {
-                                  id: tempToDeliverReqItem.id,
-                                  employeeName: employeeItems.find(
-                                    (emp) =>
-                                      emp.id === tempToDeliverReqItem.employeeId
-                                  ).name,
-                                };
-                                newtempToDeliverReqItems.push(
-                                  newtempToDeliverReqItem
-                                );
-                              }
+                            const newReqDetailItems = [];
+                            reqDetailsItems.forEach((reqDetailItem) => {
+                              const newReqDetailItem = {
+                                id: reqDetailItem.id,
+                                requisitionId: reqDetailItem.requisitionId,
+                                employee: newReqItems.find(
+                                  (req) =>
+                                    req.id === reqDetailItem.requisitionId
+                                ).employeeName,
+                                stationeryId: reqDetailItem.stationeryId,
+                                desc: stationeryItems.find(
+                                  (stat) =>
+                                    stat.id === reqDetailItem.stationeryId
+                                ).desc,
+                                status: reqDetailItem.status,
+                                reqQty: reqDetailItem.reqQty,
+                                rcvQty: reqDetailItem.rcvQty,
+                              };
+                              newReqDetailItems.push(newReqDetailItem);
+                            });
+
+                            this.setState({
+                              requisitionDetail: newReqDetailItems,
+                            });
+
+                            const newDisDetailItems = [];
+                            disDetailItems.forEach((disDetailItem) => {
+                              newDisbursementItems.forEach(
+                                (newDisDetailItem) => {
+                                  if (
+                                    disDetailItem.disbursementListId ===
+                                    newDisDetailItem.id
+                                  ) {
+                                    const newDisDetailItem = {
+                                      id: disDetailItem.id,
+                                      disbursementListId:
+                                        disDetailItem.disbursementListId,
+                                      requisitionDetailId:
+                                        disDetailItem.requisitionDetailId,
+                                      requestor: newReqDetailItems.find(
+                                        (reqDetail) =>
+                                          reqDetail.id ===
+                                          disDetailItem.requisitionDetailId
+                                      ).employee,
+                                      stationeryDesc: newReqDetailItems.find(
+                                        (reqDetail) =>
+                                          reqDetail.id ===
+                                          disDetailItem.requisitionDetailId
+                                      ).desc,
+                                      qty: disDetailItem.qty,
+                                      status: newDisbursementItems.find(
+                                        (newDisbursementItem) =>
+                                          newDisbursementItem.id ===
+                                          disDetailItem.disbursementListId
+                                      ).status,
+                                      deliveryPoint: newDisbursementItems.find(
+                                        (newDisbursementItem) =>
+                                          newDisbursementItem.id ===
+                                          disDetailItem.disbursementListId
+                                      ).deliveryPoint,
+                                    };
+                                    newDisDetailItems.push(newDisDetailItem);
+                                  }
+                                }
+                              );
+                            });
+
+                            this.setState({
+                              disbursementDetail: newDisDetailItems,
+                            });
+
+                            const requestors = [];
+                            newDisDetailItems.forEach((item) => {
+                              requestors.push(item.requestor);
+                            });
+
+                            const uniqueRequestors = new Set(requestors);
+
+                            const finalRequestors = [];
+                            uniqueRequestors.forEach((requestor) =>
+                              finalRequestors.push(requestor)
                             );
 
-                            axios
-                              .get(
-                                api +
-                                  "api/Dept/deptToDeliverReqDetail/" +
-                                  JSON.parse(
-                                    sessionStorage.getItem("mySession")
-                                  ).departmentId
-                              )
-                              .then((response) => {
-                                const reqDetailsItems = response.data;
-
-                                const newReqDetailItems = [];
-                                reqDetailsItems.forEach((reqDetailItem) => {
-                                  const newReqDetailItem = {
-                                    id: reqDetailItem.id,
-                                    requisitionId: reqDetailItem.requisitionId,
-                                    employee: newtempToDeliverReqItems.find(
-                                      (req) =>
-                                        req.id === reqDetailItem.requisitionId
-                                    ).employeeName,
-                                    stationeryId: reqDetailItem.stationeryId,
-                                    desc: stationeryItems.find(
-                                      (stat) =>
-                                        stat.id === reqDetailItem.stationeryId
-                                    ).desc,
-                                    status: reqDetailItem.status,
-                                    reqQty: reqDetailItem.reqQty,
-                                    rcvQty: reqDetailItem.rcvQty,
-                                  };
-                                  newReqDetailItems.push(newReqDetailItem);
-                                });
-
-                                this.setState({
-                                  requisitionDetail: newReqDetailItems,
-                                });
-
-                                const newDisDetailItems = [];
-                                disDetailItems.forEach((disDetailItem) => {
-                                  newDisbursementItems.forEach(
-                                    (newDisDetailItem) => {
-                                      if (
-                                        disDetailItem.disbursementListId ===
-                                        newDisDetailItem.id
-                                      ) {
-                                        const newDisDetailItem = {
-                                          id: disDetailItem.id,
-                                          disbursementListId:
-                                            disDetailItem.disbursementListId,
-                                          requisitionDetailId:
-                                            disDetailItem.requisitionDetailId,
-                                          requestor: newReqDetailItems.find(
-                                            (reqDetail) =>
-                                              reqDetail.id ===
-                                              disDetailItem.requisitionDetailId
-                                          ).employee,
-                                          stationeryDesc: newReqDetailItems.find(
-                                            (reqDetail) =>
-                                              reqDetail.id ===
-                                              disDetailItem.requisitionDetailId
-                                          ).desc,
-                                          qty: disDetailItem.qty,
-                                          status: newDisbursementItems.find(
-                                            (newDisbursementItem) =>
-                                              newDisbursementItem.id ===
-                                              disDetailItem.disbursementListId
-                                          ).status,
-                                          deliveryPoint: newDisbursementItems.find(
-                                            (newDisbursementItem) =>
-                                              newDisbursementItem.id ===
-                                              disDetailItem.disbursementListId
-                                          ).deliveryPoint,
-                                        };
-                                        newDisDetailItems.push(
-                                          newDisDetailItem
-                                        );
-                                      }
-                                    }
-                                  );
-                                });
-
-                                this.setState({
-                                  disbursementDetail: newDisDetailItems,
-                                });
-
-                                const requestors = [];
-                                newDisDetailItems.forEach((item) => {
-                                  requestors.push(item.requestor);
-                                });
-
-                                const uniqueRequestors = new Set(requestors);
-
-                                const finalRequestors = [];
-                                uniqueRequestors.forEach((requestor) =>
-                                  finalRequestors.push(requestor)
-                                );
-
-                                this.setState({
-                                  requestorList: finalRequestors,
-                                });
-                              });
+                            this.setState({
+                              requestorList: finalRequestors,
+                            });
                           });
                       });
                   });

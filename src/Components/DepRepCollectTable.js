@@ -12,6 +12,15 @@ class DepRepCollectTable extends Component {
     this.handleDeliveryPointInput = this.handleDeliveryPointInput.bind(this);
   }
 
+  componentDidMount() {
+    const timer = setTimeout(() => {
+      let defaultDeliveryPoint = null;
+      defaultDeliveryPoint = this.props.deliveryPointList[0];
+      this.setState({ selectedDeliveryPoint: defaultDeliveryPoint });
+    }, 1000);
+    return () => clearTimeout(timer);
+  }
+
   handleDeliveryPointInput(event) {
     this.setState({ selectedDeliveryPoint: event.target.value });
   }
