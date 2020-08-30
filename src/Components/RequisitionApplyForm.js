@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import '../Components/InventoryTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from '@material-ui/core';
+import { domain, api } from '../Configurations/Config';
 
 
 class RequisitionApplyForm extends React.Component {
@@ -61,7 +62,7 @@ class RequisitionApplyForm extends React.Component {
     showDesc = (event) => {
 
         const selected = event.target.value
-        fetch('https://localhost:5001/api/Dept/getItemByDesc', {
+        fetch(api + 'api/Dept/getItemByDesc', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -137,7 +138,7 @@ class RequisitionApplyForm extends React.Component {
 
     saveRequisition = () => {
         console.log(this.state.newData)
-        axios.post('https://localhost:5001/api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.newData)
+        axios.post(api + 'api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.newData)
             .then(response => {
                 this.setState({ message: 'New requested items are successfully applied.' });
             })
@@ -150,7 +151,7 @@ class RequisitionApplyForm extends React.Component {
     //Run once before render - lifecycle
     async componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/dept/stationery')
+        axios.get(api + 'api/dept/stationery')
             .then(response => {
                 const items = response.data.map(item => {
                     return {

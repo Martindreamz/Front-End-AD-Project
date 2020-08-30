@@ -96,7 +96,7 @@ class PurchaseOrderSubmit extends Component {
                                 status: po.status,
                                 StockAdjustmentId: po.StockAdjustmentId,
                                 pod: Pod,
-                                subtotal: 0
+                                subtotal: po.subTotal
                             }
 
                             data.push(record)
@@ -107,9 +107,11 @@ class PurchaseOrderSubmit extends Component {
                         })
 
             
-                            this.setState({
+                        this.setState({
+                            
                                 Allpos: data,
-                                suppliers: Suppliers 
+                            suppliers: Suppliers,
+                                data:data
 
                             }, () => this.setUniqueSuppliers())
 
@@ -135,16 +137,11 @@ class PurchaseOrderSubmit extends Component {
 
         this.setState(prevState => {
             const reorder = [...prevState.Allpos];
-            const neworder = [];
-            reorder.forEach(order => {
-                order.subtotal = order.pod.reduce((total, p) => total + (p.qty * p.price), 0)
-                neworder.push(order)
-            })
             
 
             return ({
-                data: neworder,
-                Allpos: neworder
+                data: reorder
+               
             })
     })
     }
@@ -225,9 +222,9 @@ class PurchaseOrderSubmit extends Component {
                     </div>
                     }
                     {this.state.currentPO == null &&
-                        <PurchaseOrderTable
-                            data={this.state.data}
-                            handleChange={this.handleChange}
+                            < PurchaseOrderTable
+                            data={ this.state.data }
+                            handleChange={ this.handleChange }
                         />}
                     </div>
                    

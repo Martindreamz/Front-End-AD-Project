@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './InventoryTable.css';
-import { domain } from '../Configurations/Config';
+import { domain, api } from '../Configurations/Config';
 import Axios from "axios";
 
 
@@ -19,7 +19,7 @@ class InventoryTable extends React.Component {
     deleteButton = (event) => {
         //actions to delete record
         const selectedId = event.currentTarget.id
-        Axios.delete('https://localhost:5001/api/store/stationery/delete/' + selectedId);
+        Axios.delete(api + 'api/store/stationery/delete/' + selectedId);
     }
 
     render() {

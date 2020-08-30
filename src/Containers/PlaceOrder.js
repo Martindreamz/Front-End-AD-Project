@@ -247,15 +247,14 @@ class PlaceOrder extends Component {
                     //create PO
                     var purchaseOrder = {
                         clerkId: this.state.identity,
-                        //clerkId: 15,
                         SupplierId: supplier,
                         status: "ordered",
-                        StockAdjustmentId: 1,
-                        DetailList: spodetails
+                        DetailList: spodetails,
+                        subTotal: this.state.subTotal
                     }
 
                     purchaseOrders.push(purchaseOrder)
-                    //console.log('POs', purchaseOrder)
+                    console.log('POs', purchaseOrder)
 
 
                 })
@@ -288,7 +287,7 @@ class PlaceOrder extends Component {
 
         if (name == "reset") {
             const Recdata = this.state.recommended
-            //console.log('Recdata', Recdata)
+            console.log('Recdata', Recdata)
             this.setState({ data: Recdata }, () => this.setEditing(false))
            
         }
@@ -360,14 +359,14 @@ class PlaceOrder extends Component {
         const Pitem = prevState.data.find(x => x.id == item.id && x.selectedSupplier.supplierId == item.selectedSupplier.supplierId)
         //merge if item exists
         if (Pitem != null) {
-            console.log('qty', Pitem.qty, Childitem.qty)
-            Childitem.qty = parseInt(Pitem.qty) + parseInt(Childitem.qty)
-            CurrData.push(Childitem)
+            console.log('new qty', Pitem.qty, Childitem.qty)
+            //Childitem.qty = parseInt(Pitem.qty) + parseInt(Childitem.qty)
+            //CurrData.push(Childitem)
             CurrData.pop(Pitem)
         }
-        else {
+        
             CurrData.push(Childitem)
-        }
+        
         //CurrData.push(Childitem)
         return {
             data: CurrData,
