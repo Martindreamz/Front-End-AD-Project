@@ -3,8 +3,10 @@
     "",
     "\\src",
     "\\src\\Components",
+    "\\src\\Components\\Headers",
+    "\\src\\Configurations",
     "\\src\\Containers"
   ],
-  "SelectedNode": "\\src\\Containers\\PurchaseOrderSubmit.js",
+  "SelectedNode": "\\src\\Containers\\ManageDepartment.js",
   "PreviewInSolutionExplorer": false
 }
