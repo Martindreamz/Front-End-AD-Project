@@ -36,9 +36,6 @@ class DisbursementList extends React.Component {
             <div>
                 <div className="container">
                     <div className="mt-1" ref={ref}>
-                        <div class="col-md-12 mx-auto text-center">
-                          <p class="display-4">Disbursement List</p>
-                        </div>
                         <div className="row mt-1 pt-10">
                             <div className="col-sm-6">
                                 <p>Date:  {Moment(this.props.deliveryInfo.date).format('DD-MM-YYYY')}</p>
