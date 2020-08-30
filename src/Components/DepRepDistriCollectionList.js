@@ -9,21 +9,13 @@ class DepRepDistriCollectionList extends Component {
   }
 
   render() {
-    let requisitionDetailinDisbursement = [];
-    this.props.requisitionDetail.map((x) => {
-      this.props.disbursementDetail.map((y) => {
-        if (x.id === y.requisitionDetailId) {
-          requisitionDetailinDisbursement.push(x);
-        }
-      });
-    });
-
     if (this.props.showDistribution) {
       return (
         <div className="inventoryBody">
           <h1>Distribution</h1>
           <DepRepDistriTable
             disbursementDetail={this.props.disbursementDetail}
+            requestorList={this.props.requestorList}
           />
         </div>
       );
@@ -33,7 +25,9 @@ class DepRepDistriCollectionList extends Component {
       <div className="inventoryBody">
         <h1>Collection</h1>
         <DepRepCollectTable
-          disbursement={this.props.disbursement}
+          deliveryPointList={this.props.deliveryPointList}
+          collectionInfo={this.props.collectionInfo}
+          deliveryDate={this.props.deliveryDate}
           disbursementDetail={this.props.disbursementDetail}
         />
       </div>

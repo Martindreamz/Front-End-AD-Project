@@ -42,16 +42,18 @@ class PurchaseOrder extends Component {
                         </div>
                        <div className="box">
                            {this.props.data.supplier == null ? null :
-                               <div>
-                                   Supplier<br />
-                            Name:  {this.props.data.supplier.name} <br />
-                            Person to contact:  {this.props.data.supplier.contactPerson}<br />
-                            Contact: {this.props.data.supplier.phoneNum}<br />
+                               <div className="innerbox">
+                            <h5>Vendor:</h5>
+                            {this.props.data.supplier.name} <br />
+                           {this.props.data.supplier.contactPerson}<br />
+                            {this.props.data.supplier.phoneNum}<br />
                                </div>}
-                       <div>
-                           Attn to: {this.props.data.clerk.name}<br />
-                           Deliver to: Logic University Stationery Store
-                           Contact: {this.props.data.clerk.phoneNum}
+                       <div className="innerbox">
+                       
+                           <h5>Attention to:</h5>
+                            Logic University Stationery Store<br />
+                          {this.props.data.clerk.name}<br />
+                           {this.props.data.clerk.phoneNum}
                           
                             
                            </div>

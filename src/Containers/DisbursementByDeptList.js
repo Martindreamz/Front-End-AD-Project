@@ -58,6 +58,12 @@ class DisbursementByDeptList extends React.Component {
         return (
         <div>
             <Header />
+                <div className="text-center mt-1 mb-1">
+                    
+                    <h4>LOGIC UNIVERSITY</h4>
+                    <h4>Disbursement INFORMATION</h4>
+                </div>
+
                 {this.state.showItemDetail ?
                     <DisbursementList deliveryInfo={this.state.deliveryInfo} collectionInfo={this.state.collectionInfo} data={this.state.itemDetailData} showList={this.showList} />
                     : 
