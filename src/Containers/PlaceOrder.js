@@ -58,6 +58,7 @@ class PlaceOrder extends Component {
         //HTTP get reorderItems
         await axios.get(api + 'api/Store/getReorderItems')
             .then(response => {
+                console.log("reorder items", response.data)
                 const supplieritems = response.data;
                 this.setState({ stationeries: supplieritems });
                 var reorder = []

@@ -55,8 +55,9 @@ class PlaceOrderPopup extends React.Component {
             this.setState(prevState => {
                 const item = prevState.item
                 if (item != null) {
-                    console.log('not null')
-                    item.selectedSupplier=value
+                    const supplier =item.supplierItems.find(si => si.supplierId==value)
+                    item.selectedSupplier = supplier
+                    console.log("item.selectedSupplier", supplier)
                     return { item: item }
                 }
             })
@@ -126,7 +127,7 @@ class PlaceOrderPopup extends React.Component {
                                         {this.state.item.id != null &&
                                             < select onChange={this.handleChange} name="selectedSupplier">
                                             {this.state.item.supplierItems.map(sitem =>
-                                                <option value={sitem}>{sitem.supplierName}</option>
+                                                <option value={sitem.supplierId}>{sitem.supplierName}</option>
                                                 )}
                                             </select>
                                         }

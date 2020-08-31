@@ -20,7 +20,7 @@ class PurchaseOrderSubmit extends Component {
             Allpos:[],
             currentPO: null,
             Suppliers: null,
-            uSuppliers:null
+            uSuppliers: null
         }
         this.handleChange = this.handleChange.bind(this)
         this.setUniqueSuppliers = this.setUniqueSuppliers.bind(this)
@@ -135,15 +135,15 @@ class PurchaseOrderSubmit extends Component {
         this.setState({ uSuppliers: sorted_list })
         console.log('AllPOs', this.state.Allpos)
 
-        this.setState(prevState => {
-            const reorder = [...prevState.Allpos];
+    //    this.setState(prevState => {
+    //        const reorder = [...prevState.Allpos];
             
 
-            return ({
-                data: reorder
+    //        return ({
+    //            data: reorder
                
-            })
-    })
+    //        })
+    //})
     }
 
    
@@ -221,7 +221,7 @@ class PurchaseOrderSubmit extends Component {
                         </div>
                     </div>
                     }
-                    {this.state.currentPO == null &&
+                    {this.state.currentPO == null && this.state.data.length!=0 &&
                             < PurchaseOrderTable
                             data={ this.state.data }
                             handleChange={ this.handleChange }
