@@ -1,4 +1,3 @@
-// JavaScript source code
 import "./InventoryTable.css"
 import React, { Component } from "react";
 import Moment from 'moment';

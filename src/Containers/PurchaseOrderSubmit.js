@@ -34,13 +34,11 @@ class PurchaseOrderSubmit extends Component {
        
 
         axios.get(api + 'api/Store/getAllPOs').then(response => {
-            //console.log('get all POs', response.data);
             const AllPo = response.data;
 
 
             AllPo.forEach(po => {
                 const Pod = [];
-                //var subTotal = 0;
 
                 //get supplier 
                 const Supplierurl = api + 'api/Store/getSupplier/' + po.supplierId
@@ -134,16 +132,6 @@ class PurchaseOrderSubmit extends Component {
         const sorted_list = usups.sort((a, b) => b.priority- a.priority)
         this.setState({ uSuppliers: sorted_list })
         console.log('AllPOs', this.state.Allpos)
-
-    //    this.setState(prevState => {
-    //        const reorder = [...prevState.Allpos];
-            
-
-    //        return ({
-    //            data: reorder
-               
-    //        })
-    //})
     }
 
    

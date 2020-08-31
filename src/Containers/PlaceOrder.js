@@ -4,7 +4,6 @@ import PlaceOrderTable from "../Components/PlaceOrderTable"
 import './RecievedGoods.css';
 import './general.css';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
 import PlaceOrderPopup from '../Components/PlaceOrderPopup';
 import { domain, api } from '../Configurations/Config';
 
@@ -110,7 +109,6 @@ class PlaceOrder extends Component {
                 const supplieritems = response.data;
                 this.setState({ stationeries: supplieritems });
                 var reorder = []
-                //var data = items
                 supplieritems.forEach(item => {
                     const sitems = []
                     const url = api + 'api/Store/getSupplierItems/' + item.id
@@ -262,7 +260,6 @@ class PlaceOrder extends Component {
 
                 this.setState({
                     purchaseOrders: purchaseOrders,
-                    //redirect: true
 
                 }, () => {
                     this.postPO()
@@ -346,7 +343,6 @@ class PlaceOrder extends Component {
                 selectAll: 0,
             }, () => { this.updateSubtotal() });
 
-            //console.log(this.state.selected)
         }
 
     }
@@ -358,17 +354,12 @@ class PlaceOrder extends Component {
         const CurrData = prevState.data
         const Childitem = item
         const Pitem = prevState.data.find(x => x.id == item.id && x.selectedSupplier.supplierId == item.selectedSupplier.supplierId)
-        //merge if item exists
         if (Pitem != null) {
-            console.log('new qty', Pitem.qty, Childitem.qty)
-            //Childitem.qty = parseInt(Pitem.qty) + parseInt(Childitem.qty)
-            //CurrData.push(Childitem)
             CurrData.pop(Pitem)
         }
         
             CurrData.push(Childitem)
         
-        //CurrData.push(Childitem)
         return {
             data: CurrData,
             displayPopup: false

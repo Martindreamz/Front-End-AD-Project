@@ -1,14 +1,11 @@
 import React, { Component, createRef } from "react";
 import "./InventoryTable.css";
-//import Moment from 'moment';
 
 
 class PlaceOrderTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //selected: {},
-            //selectAll: 2,
             data: this.props.data
         };
 
@@ -98,7 +95,6 @@ class PlaceOrderTable extends Component {
         ));
 
         return (
-          //  this.props.data!=null&&
             <table className="placeOrderTable">
                 <tr className="tableHeader">
                         <th >
