@@ -14,22 +14,21 @@ class RequisitionApplyForm extends React.Component {
         super(props);
         this.state = {
             data: [],
-            itemByDesc: '',
             newData: [],
             category: [],
             desc: [],
+            itemByDesc: '',
             message: '',
             cat: '',
-            openCat: false,
             unit: '',
+            description: '',
+            openCat: false,
             openUnit: false,
             showDescription: false,
-            description: '',
             openDescription: false,
             showQtyUnit: false,
             showReqList: false,
             isAdd: true,
-            identity: JSON.parse(sessionStorage.getItem("mySession")),
         };
         this.showCat = this.showCat.bind(this);
         this.closeCat = this.closeCat.bind(this);
@@ -112,6 +111,12 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
+    onDeleteClick(item) {
+        this.setState({
+            newData: this.state.newData.filter(s => s.desc !== item.desc)
+        });
+    }
+
     save = () => {
         this.setState({
             isAdd: true
@@ -124,19 +129,10 @@ class RequisitionApplyForm extends React.Component {
             unit: this.state.itemByDesc.unit,
         }
 
-        //list: state.list.map(oldPerson => oldPerson.objectId === action.result.objectId ? action.result : oldPerson)
         this.state.newData.map(item => item.desc === requestForm.desc? 
             requestForm.reqQty=parseInt(requestForm.reqQty)+parseInt(item.reqQty): requestForm.reqQty=parseInt(requestForm.reqQty));
-
         
         this.state.newData = this.state.newData.filter((item) => item.desc !== requestForm.desc);
-        
-        console.log(requestForm)
-       /* this.setState({
-            newData: [
-                ...this.state.newData, requestForm
-            ]
-        });*/
 
         this.setState({
             newData: [
@@ -163,15 +159,6 @@ class RequisitionApplyForm extends React.Component {
             isAdd: false
         })
     }
-
-    onDeleteClick(item){
-        //this.state.newData = this.state.newData.filter((i) => i.desc !== item.desc);
-        this.setState({  
-                  newData: this.state.newData.filter(s=>s.desc !== item.desc)
-                });
-    }
-
-    onEditClick = person => this.showEditor(person);
 
     //Run once before render - lifecycle
     async componentDidMount() {

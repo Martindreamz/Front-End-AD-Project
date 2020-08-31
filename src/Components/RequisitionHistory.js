@@ -11,14 +11,7 @@ class RequisitionHistory extends Component {
         super();
         this.state = {
             data: [],
-            identity: JSON.parse(sessionStorage.getItem("mySession")),
         };
-    }
-
-    goForm(previousState) {
-        this.setState({
-            showRequestForm: previousState,
-        });
     }
 
     //Run once before render - lifecycle
