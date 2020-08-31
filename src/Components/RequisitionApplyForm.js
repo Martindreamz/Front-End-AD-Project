@@ -5,6 +5,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import '../Components/InventoryTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from '@material-ui/core';
+import { domain, api } from '../Configurations/Config';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 class RequisitionApplyForm extends React.Component {
@@ -61,7 +63,7 @@ class RequisitionApplyForm extends React.Component {
     showDesc = (event) => {
 
         const selected = event.target.value
-        fetch('https://localhost:5001/api/Dept/getItemByDesc', {
+        fetch(api + 'api/Dept/getItemByDesc', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -111,24 +113,39 @@ class RequisitionApplyForm extends React.Component {
     }
 
     save = () => {
-         this.setState({
+        this.setState({
             isAdd: true
         })
+
         let requestForm = {
             category: this.state.category[this.state.cat],
             desc: this.state.description,
             reqQty: this.refs.qtyRef.value,
             unit: this.state.itemByDesc.unit,
         }
+
+        //list: state.list.map(oldPerson => oldPerson.objectId === action.result.objectId ? action.result : oldPerson)
+        this.state.newData.map(item => item.desc === requestForm.desc? 
+            requestForm.reqQty=parseInt(requestForm.reqQty)+parseInt(item.reqQty): requestForm.reqQty=parseInt(requestForm.reqQty));
+
+        
+        this.state.newData = this.state.newData.filter((item) => item.desc !== requestForm.desc);
+        
         console.log(requestForm)
+       /* this.setState({
+            newData: [
+                ...this.state.newData, requestForm
+            ]
+        });*/
+
         this.setState({
             newData: [
                 ...this.state.newData,
                 {
-                    category: this.state.category[this.state.cat],
-                    desc: this.state.description,
-                    reqQty: this.refs.qtyRef.value,
-                    unit: this.state.itemByDesc.unit
+                    category: requestForm.category,
+                    desc: requestForm.desc,
+                    reqQty: requestForm.reqQty,
+                    unit: requestForm.unit
                 }
             ]
         });
@@ -137,7 +154,7 @@ class RequisitionApplyForm extends React.Component {
 
     saveRequisition = () => {
         console.log(this.state.newData)
-        axios.post('https://localhost:5001/api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.newData)
+        axios.post(api + 'api/Dept/ApplyRequisition/' + JSON.parse(sessionStorage.getItem("mySession")).id, this.state.newData)
             .then(response => {
                 this.setState({ message: 'New requested items are successfully applied.' });
             })
@@ -147,10 +164,19 @@ class RequisitionApplyForm extends React.Component {
         })
     }
 
+    onDeleteClick(item){
+        //this.state.newData = this.state.newData.filter((i) => i.desc !== item.desc);
+        this.setState({  
+                  newData: this.state.newData.filter(s=>s.desc !== item.desc)
+                });
+    }
+
+    onEditClick = person => this.showEditor(person);
+
     //Run once before render - lifecycle
     async componentDidMount() {
         //HTTP get request
-        axios.get('https://localhost:5001/api/dept/stationery')
+        axios.get(api + 'api/dept/stationery')
             .then(response => {
                 const items = response.data.map(item => {
                     return {
@@ -281,23 +307,27 @@ class RequisitionApplyForm extends React.Component {
                     <div class="row">
                         <div class="col-sm-12">
                             <div className="tblReq">
-                                <table className="requisitionTable">
+                                <table className="requisitionTable text-center">
                                     {(this.state.newData && this.state.newData.length) ?
-                                        <tr className="tableHeader">
+                                        <tr className="tableHeader text-center">
                                             <th>Category</th>
                                             <th>Description</th>
                                             <th>Requested Quantity</th>
                                             <th>Unit</th>
+                                            <th>Action</th>
                                         </tr>
                                         : null
                                     }
                                     {this.state.newData.map(i => {
                                         return (
-                                            <tr className="tableRow">
+                                            <tr className="tableRow text-center">
                                                 <td>{i.category}</td>
                                                 <td>{i.desc}</td>
                                                 <td>{i.reqQty}</td>
                                                 <td>{i.unit}</td>
+                                                <td>
+                                                    <DeleteIcon onClick={() => this.onDeleteClick(i)}/>
+                                                </td>
                                             </tr>
                                         )
                                     })}

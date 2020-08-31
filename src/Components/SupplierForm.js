@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../Components/Headers/Header';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { domain, api } from '../Configurations/Config';
 
 class SupplierForm extends React.Component {
    constructor(props) {
@@ -49,9 +50,11 @@ class SupplierForm extends React.Component {
         phoneNum : this.refs.phoneNumRef.value,
       }
 
+      console.log(supplier)
+
       if(!this.props.isEdit)
       {
-          fetch('https://localhost:5001/api/Store/saveSupplier', {
+          fetch(api + 'api/Store/saveSupplier', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -63,7 +66,7 @@ class SupplierForm extends React.Component {
       }
       else
       {
-          //axios.post('https://localhosch:5001/api/Store/updateSupplier/' + this.state.currentSupplierObj.id).then(result=>{  
+          //axios.post(api + 'api/Store/updateSupplier/' + this.state.currentSupplierObj.id).then(result=>{  
           //  this.setState({message:' Supplier is Edited Successfully'});
           //});
           let supplierEdit = {
@@ -79,7 +82,7 @@ class SupplierForm extends React.Component {
           phoneNum : this.refs.phoneNumRef.value,
         }
 
-          fetch('https://localhost:5001/api/Store/updateSupplier', {
+          fetch(api + 'api/Store/updateSupplier', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

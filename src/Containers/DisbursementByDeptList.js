@@ -61,7 +61,7 @@ class DisbursementByDeptList extends React.Component {
                 <div className="text-center mt-1 mb-1">
                     
                     <h4>LOGIC UNIVERSITY</h4>
-                    <h4>Disbursement INFORMATION</h4>
+                    <h4>DISBURSEMENT INFORMATION</h4>
                 </div>
 
                 {this.state.showItemDetail ?

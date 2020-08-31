@@ -12,11 +12,14 @@ class DepRepDisbursement extends Component {
       class: "collectView",
       department: {},
       collectionInfo: [],
-      disbursement: {},
-      requisition: {},
+      disbursementList: [],
+      deliveryDate: null,
+      deliveryPointList: [],
+      requisition: [],
       stationery: [],
       requisitionDetail: [],
       disbursementDetail: [],
+      requestorList: [],
     };
     this.changeView = this.changeView.bind(this);
   }
@@ -40,26 +43,45 @@ class DepRepDisbursement extends Component {
       axios
         .get(
           api +
-            "api/Dept/nearestDisbursementByDept/" +
+            "api/Dept/nearestDisbursementListByDept/" +
             JSON.parse(sessionStorage.getItem("mySession")).departmentId
         )
         .then((response) => {
-          const disbursementItem = response.data;
+          const disbursementItems = response.data;
 
-          let newDisbursementItem = {};
-          newDisbursementItem = {
-            id: disbursementItem.id,
-            departmentId: disbursementItem.departmentId,
-            date: disbursementItem.date,
-            time: collectionItems.find(
-              (collect) =>
-                collect.collectionPoint === disbursementItem.deliveryPoint
-            ).collectionTime,
-            deliveryPoint: disbursementItem.deliveryPoint,
-            status: disbursementItem.status,
-          };
+          const newDisbursementItems = [];
+          disbursementItems.forEach((disbursementItem) => {
+            const newDisbursementItem = {
+              id: disbursementItem.id,
+              departmentId: disbursementItem.departmentId,
+              date: disbursementItem.date,
+              deliveryPoint: disbursementItem.deliveryPoint,
+              deliveryTime: collectionItems.find(
+                (collectionItem) =>
+                  collectionItem.collectionPoint ===
+                  disbursementItem.deliveryPoint
+              ).collectionTime,
+              status: disbursementItem.status,
+            };
+            newDisbursementItems.push(newDisbursementItem);
+          });
 
-          this.setState({ disbursement: newDisbursementItem });
+          this.setState({ disbursementList: newDisbursementItems });
+          this.setState({ deliveryDate: newDisbursementItems[0].date });
+
+          const deliveryPoints = [];
+          newDisbursementItems.forEach((item) => {
+            deliveryPoints.push(item.deliveryPoint);
+          });
+
+          const uniqueDeliveryPoints = new Set(deliveryPoints);
+
+          const finalDeliveryPoints = [];
+          uniqueDeliveryPoints.forEach((point) =>
+            finalDeliveryPoints.push(point)
+          );
+
+          this.setState({ deliveryPointList: finalDeliveryPoints });
 
           axios
             .get(
@@ -74,30 +96,30 @@ class DepRepDisbursement extends Component {
               axios
                 .get(
                   api +
-                    "api/Dept/deptToDeliverReq/" +
+                    "api/Dept/deptAllReq/" +
                     JSON.parse(sessionStorage.getItem("mySession")).departmentId
                 )
                 .then((response) => {
-                  const toDeliverReqItems = response.data;
+                  const reqItems = response.data;
 
-                  const newtoDeliverReqItems = [];
-                  toDeliverReqItems.forEach((toDeliverReqItem) => {
-                    const newtoDeliverReqItem = {
-                      id: toDeliverReqItem.id,
-                      employeeId: toDeliverReqItem.employeeId,
+                  let newReqItems = [];
+                  reqItems.forEach((reqItem) => {
+                    const newReqItem = {
+                      id: reqItem.id,
+                      employeeId: reqItem.employeeId,
                       employeeName: employeeItems.find(
-                        (emp) => emp.id === toDeliverReqItem.employeeId
+                        (emp) => emp.id === reqItem.employeeId
                       ).name,
-                      dateOfRequest: toDeliverReqItem.dateOfRequest,
-                      dateOfAuthorizing: toDeliverReqItem.dateOfAuthorizing,
-                      authorizerId: toDeliverReqItem.authorizerId,
-                      status: toDeliverReqItem.status,
-                      comment: toDeliverReqItem.comment,
+                      dateOfRequest: reqItem.dateOfRequest,
+                      dateOfAuthorizing: reqItem.dateOfAuthorizing,
+                      authorizerId: reqItem.authorizerId,
+                      status: reqItem.status,
+                      comment: reqItem.comment,
                     };
-                    newtoDeliverReqItems.push(newtoDeliverReqItem);
+                    newReqItems.push(newReqItem);
                   });
 
-                  this.setState({ requisition: newtoDeliverReqItems });
+                  this.setState({ requisition: newReqItems });
 
                   axios.get(api + "api/Dept/stationery").then((response) => {
                     const stationeryItems = response.data;
@@ -116,70 +138,45 @@ class DepRepDisbursement extends Component {
                         axios
                           .get(
                             api +
-                              "api/Dept/deptToDeliverReq/" +
+                              "api/Dept/deptAllReqDetail/" +
                               JSON.parse(sessionStorage.getItem("mySession"))
                                 .departmentId
                           )
                           .then((response) => {
-                            const tempToDeliverReqItems = response.data;
+                            const reqDetailsItems = response.data;
 
-                            const newtempToDeliverReqItems = [];
-                            tempToDeliverReqItems.forEach(
-                              (tempToDeliverReqItem) => {
-                                const newtempToDeliverReqItem = {
-                                  id: tempToDeliverReqItem.id,
-                                  employeeName: employeeItems.find(
-                                    (emp) =>
-                                      emp.id === tempToDeliverReqItem.employeeId
-                                  ).name,
-                                };
-                                newtempToDeliverReqItems.push(
-                                  newtempToDeliverReqItem
-                                );
-                              }
-                            );
+                            const newReqDetailItems = [];
+                            reqDetailsItems.forEach((reqDetailItem) => {
+                              const newReqDetailItem = {
+                                id: reqDetailItem.id,
+                                requisitionId: reqDetailItem.requisitionId,
+                                employee: newReqItems.find(
+                                  (req) =>
+                                    req.id === reqDetailItem.requisitionId
+                                ).employeeName,
+                                stationeryId: reqDetailItem.stationeryId,
+                                desc: stationeryItems.find(
+                                  (stat) =>
+                                    stat.id === reqDetailItem.stationeryId
+                                ).desc,
+                                status: reqDetailItem.status,
+                                reqQty: reqDetailItem.reqQty,
+                                rcvQty: reqDetailItem.rcvQty,
+                              };
+                              newReqDetailItems.push(newReqDetailItem);
+                            });
 
-                            axios
-                              .get(
-                                api +
-                                  "api/Dept/deptToDeliverReqDetail/" +
-                                  JSON.parse(
-                                    sessionStorage.getItem("mySession")
-                                  ).departmentId
-                              )
-                              .then((response) => {
-                                const reqDetailsItems = response.data;
+                            this.setState({
+                              requisitionDetail: newReqDetailItems,
+                            });
 
-                                const newReqDetailItems = [];
-                                reqDetailsItems.forEach((reqDetailItem) => {
-                                  const newReqDetailItem = {
-                                    id: reqDetailItem.id,
-                                    requisitionId: reqDetailItem.requisitionId,
-                                    employee: newtempToDeliverReqItems.find(
-                                      (req) =>
-                                        req.id === reqDetailItem.requisitionId
-                                    ).employeeName,
-                                    stationeryId: reqDetailItem.stationeryId,
-                                    desc: stationeryItems.find(
-                                      (stat) =>
-                                        stat.id === reqDetailItem.stationeryId
-                                    ).desc,
-                                    status: reqDetailItem.status,
-                                    reqQty: reqDetailItem.reqQty,
-                                    rcvQty: reqDetailItem.rcvQty,
-                                  };
-                                  newReqDetailItems.push(newReqDetailItem);
-                                });
-
-                                this.setState({
-                                  requisitionDetail: newReqDetailItems,
-                                });
-
-                                const newDisDetailItems = [];
-                                disDetailItems.forEach((disDetailItem) => {
+                            const newDisDetailItems = [];
+                            disDetailItems.forEach((disDetailItem) => {
+                              newDisbursementItems.forEach(
+                                (newDisDetailItem) => {
                                   if (
                                     disDetailItem.disbursementListId ===
-                                    newDisbursementItem.id
+                                    newDisDetailItem.id
                                   ) {
                                     const newDisDetailItem = {
                                       id: disDetailItem.id,
@@ -198,16 +195,42 @@ class DepRepDisbursement extends Component {
                                           disDetailItem.requisitionDetailId
                                       ).desc,
                                       qty: disDetailItem.qty,
-                                      status: newDisbursementItem.status,
+                                      status: newDisbursementItems.find(
+                                        (newDisbursementItem) =>
+                                          newDisbursementItem.id ===
+                                          disDetailItem.disbursementListId
+                                      ).status,
+                                      deliveryPoint: newDisbursementItems.find(
+                                        (newDisbursementItem) =>
+                                          newDisbursementItem.id ===
+                                          disDetailItem.disbursementListId
+                                      ).deliveryPoint,
                                     };
                                     newDisDetailItems.push(newDisDetailItem);
                                   }
-                                });
+                                }
+                              );
+                            });
 
-                                this.setState({
-                                  disbursementDetail: newDisDetailItems,
-                                });
-                              });
+                            this.setState({
+                              disbursementDetail: newDisDetailItems,
+                            });
+
+                            const requestors = [];
+                            newDisDetailItems.forEach((item) => {
+                              requestors.push(item.requestor);
+                            });
+
+                            const uniqueRequestors = new Set(requestors);
+
+                            const finalRequestors = [];
+                            uniqueRequestors.forEach((requestor) =>
+                              finalRequestors.push(requestor)
+                            );
+
+                            this.setState({
+                              requestorList: finalRequestors,
+                            });
                           });
                       });
                   });
@@ -236,8 +259,11 @@ class DepRepDisbursement extends Component {
         <Header />
         <DepRepDistriCollectionList
           showDistribution={this.state.showDistribution}
-          disbursement={this.state.disbursement}
+          collectionInfo={this.state.collectionInfo}
+          deliveryDate={this.state.deliveryDate}
+          deliveryPointList={this.state.deliveryPointList}
           disbursementDetail={this.state.disbursementDetail}
+          requestorList={this.state.requestorList}
         />
         <div className={this.state.class}>
           <button onClick={this.changeView}>

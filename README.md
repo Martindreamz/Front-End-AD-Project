@@ -1,4 +1,53 @@
+<div float=right>
+  <img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5382f6b0-53fe-4086-b2a8-0bd47762cf3a%2Flogo.png?table=block&id=2d9d5067-a082-43b4-a538-8e24e63b95b2&width=1670&userId=&cache=v2" width="400" alt="logo"/>
+</div>
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+# Team8-AD Project Stationery Store Inventory System
+
+## Table of Contents
+- [Background](#background)
+- [Platform](#platform)
+- [Application Structure](#structure)
+- [Contributors](#contributors)
+- [License](#license)
+
+
+## Background
+This is a Stationery Store Inventory System Front-end Application
+
+## Platform
+- Backend: C# .NET Core Web Application to offer Web API Services (deployed via Azure)
+- Databased: MsSQL Server (deployed via Azure)
+- Frontend: ReactJS for Web & Android studio for Mobile App (deployed via Firebase)
+- Machine Learning:Python & Flask (deployed via Azure
+
+## Contributors
+<a href="https://github.com/darylkouk/front-end-ad-project/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=darylkouk/front-end-ad-project" />
+</a>
+
+Made with [contributors-img](https://contributors-img.web.app).
+
+
+## .NET Core Frontend Structure
+### Components:
+  - Reusable web components for screens
+### Containers:
+  - Screens for app
+### Configurations
+  - config
+ 
+### Other techiques
+
+### External Libraries
+  - Material UI
+  - React Chart-js
+  
+## License
+
 
 ## Available Scripts
 
