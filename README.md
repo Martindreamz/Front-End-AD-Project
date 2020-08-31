@@ -3,7 +3,7 @@
 </div>
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and deployed on firebase: https://logicuniversityweb.web.app.
 
 # Team8-AD Project Stationery Store Inventory System
 
