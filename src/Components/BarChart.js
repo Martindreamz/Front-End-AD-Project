@@ -16,7 +16,7 @@ class BarChart extends React.Component {
 
     render() {
         const data = {
-            labels: this.props.data.map((item, index) => new Date().getMonthName(index) /*item.x*/),
+            labels: this.props.data.map((item, index) => new Date().getMonthName(index)),
             datasets: [
                 {
                     label: 'Bar Chart',

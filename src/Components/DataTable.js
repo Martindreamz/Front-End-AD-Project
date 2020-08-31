@@ -5,7 +5,7 @@ import './InventoryTable.css';
 function DataTable(props) {
     const data = props.data.map((item,index) => 
         <tr className="tableRow">
-            <td>{new Date().getMonthName(index) /*item.x*/}</td>
+            <td>{new Date().getMonthName(index)}</td>
             <td>{item.y}</td>
         </tr>
     )
