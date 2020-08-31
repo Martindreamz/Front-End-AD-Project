@@ -379,15 +379,15 @@ class ManageDepartment extends Component {
           <div className="leftpane">
             <h4>Your People</h4>
             <div>
+              <DepartmentHeadEmployee employee={this.state.employee} />
+            </div>
+            <div>
               <DepartmentHeadDelegate
                 department={this.state.department}
                 employee={this.state.employee}
                 handleDelegateSubmit={this.handleDelegateSubmit.bind(this)}
                 handleDelegateRevoke={this.handleDelegateRevoke.bind(this)}
               />
-            </div>
-            <div>
-              <DepartmentHeadEmployee employee={this.state.employee} />
             </div>
             <div>
               <DepartmentHeadRep
@@ -425,7 +425,17 @@ class ManageDepartment extends Component {
             <h1>LOGIC UNIVERSITY</h1>
             <h1>DEPARTMENT INFORMATION</h1>
           </div>
-          <div className="centerpane">
+          <div className="leftpane">
+            <h4>Your People</h4>
+            <div>
+              <DepartmentHeadRep
+                department={this.state.department}
+                employee={this.state.employee}
+                handleRepSubmit={this.handleRepSubmit.bind(this)}
+              />
+            </div>
+          </div>
+          <div className="middlepane">
             <h4>Your Tasks</h4>
             <DepartmentHeadApproval
               requisition={this.state.requisition}
@@ -433,6 +443,14 @@ class ManageDepartment extends Component {
               handleApprove={this.handleApprove.bind(this)}
               handleReject={this.handleReject.bind(this)}
               handleComment={this.handleComment.bind(this)}
+            />
+          </div>
+          <div className="rightpane">
+            <h4>Your Logistics</h4>
+            <DepartmentHeadCollection
+              department={this.state.department}
+              collectionInfo={this.state.collectionInfo}
+              handleCollectionSubmit={this.handleCollectionSubmit.bind(this)}
             />
           </div>
         </div>

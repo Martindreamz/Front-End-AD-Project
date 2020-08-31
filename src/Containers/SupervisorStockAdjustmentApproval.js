@@ -15,7 +15,6 @@ class SupervisorStockAdjustmentApproval extends Component {
   constructor() {
     super();
     this.state = {
-      //test data
         data: [],
         isDataEmpty: false,
         popupData: [],
@@ -117,7 +116,6 @@ class SupervisorStockAdjustmentApproval extends Component {
             displayDetailTable: false,
             isShowCommentPopup:false
         })
-        //this.componentDidMount();
     }
 
    

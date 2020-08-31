@@ -10,7 +10,6 @@ class RequisitionFormTableNew extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            //requestData: [],
             data: [],
             initial: true, editSupObj: []
         }

@@ -5,11 +5,6 @@ import "./InventoryTable.css";
 class DepartmentHeadDelegate extends Component {
   constructor() {
     super();
-    /*this.state() = {
-            staff: [],
-            requisition: [],
-            department: ""
-        }*/
   }
 
   render() {

@@ -7,10 +7,6 @@ class SupervisorCommmentPopup extends React.Component {
         super(props)
     }
 
-    /*addComment(){
-        ()=>this.props.submitRejectComment(this.refs.comment.value)
-    }
-*/
     render() {
         return (
         <div className="detailContainer">

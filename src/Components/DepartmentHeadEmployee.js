@@ -4,11 +4,6 @@ import "./InventoryTable.css";
 class DepartmentHeadEmployee extends Component {
   constructor() {
     super();
-    /*this.state() = {
-            staff: [],
-            requisition: [],
-            department: ""
-        }*/
   }
 
   render() {
@@ -20,11 +15,13 @@ class DepartmentHeadEmployee extends Component {
           </tr>
           <div style={{ overflowY: "scroll", height: "100px" }}>
             {this.props.employee.map((x) => {
-              return (
-                <tr className="tableRow">
-                  <td> {x.name}</td>
-                </tr>
-              );
+              if (x.role != "HEAD") {
+                return (
+                  <tr className="tableRow">
+                    <td> {x.name}</td>
+                  </tr>
+                );
+              }
             })}
           </div>
         </table>

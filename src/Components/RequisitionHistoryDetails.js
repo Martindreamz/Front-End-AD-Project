@@ -7,25 +7,7 @@ import Moment from 'moment';
 class RequisitionHistoryDetails extends Component {
     constructor() {
         super();
-        this.state = {
-            //test data
-            hisDetailsData: [],
-            aut: '',
-        };
-
     }
-
-
-    //Run once before render - lifecycle
-    componentDidMount() {
-        //HTTP get request
-        axios.get('api here').then((response) => {
-            const items = response.hisDetailsData;
-            this.setState({ hisDetailsData: items });
-        });
-    }
-
-
 
     render() {
         const hisDetailsItem = this.props.details.map((item) => (
