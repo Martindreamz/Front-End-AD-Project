@@ -14,15 +14,6 @@ class SupplierTable extends React.Component {
     }
     
     deleteSupplier(supplier) {  
-     
-    /*axios.delete(api + 'api/Store/deleteSupplier/' + id).then(result=>{  
-       this.setState({  
-          data: this.state.data.filter(s=>s.id !== id), 
-          initial: false,
-        });
-
-      });*/
-
       fetch(api + 'api/Store/deleteSupplier', {
               method: 'POST',
               headers: {

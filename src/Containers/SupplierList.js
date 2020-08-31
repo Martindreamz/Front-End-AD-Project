@@ -11,7 +11,6 @@ class SupplierList extends React.Component {
     constructor() {
         super()
         this.state = {
-            //test data
             data: [],editSupObj: [],isEdit:false,
             showSupplierForm : false, 
         }
@@ -19,9 +18,7 @@ class SupplierList extends React.Component {
         this.editSupplier = this.editSupplier.bind(this)
     }
 
-    //Run once before render - lifecycle
     componentDidMount() {
-        //HTTP get request
         axios.get(api + 'api/Store/Suppliers')
             .then(response => {
                 const items = response.data;

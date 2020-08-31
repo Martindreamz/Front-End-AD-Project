@@ -7,8 +7,6 @@ class PlaceOrderTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //selected: {},
-            //selectAll: 2,
             data: this.props.data
         };
 

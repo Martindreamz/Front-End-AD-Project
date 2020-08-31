@@ -135,15 +135,6 @@ class PurchaseOrderSubmit extends Component {
         this.setState({ uSuppliers: sorted_list })
         console.log('AllPOs', this.state.Allpos)
 
-    //    this.setState(prevState => {
-    //        const reorder = [...prevState.Allpos];
-            
-
-    //        return ({
-    //            data: reorder
-               
-    //        })
-    //})
     }
 
    
