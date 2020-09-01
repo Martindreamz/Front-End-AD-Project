@@ -19,9 +19,11 @@ Known bug when pulling from github
 - node.js corrupted when pulled from github 
 Run npm audit fix, if fail run npm update in the terminal
 - Error from missing external library 
- - npm install datetime
- - npm install date-fns
- - npm install react chart js
+ 1) npm install datetime
+ 2) npm install date-fns
+ 3) npm install react chart js
+- raise purchase order may not function properly on cloud but working normally on localhost
+
 
 ## Table of Contents
 - [Background](#background)
