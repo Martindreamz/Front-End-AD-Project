@@ -20,7 +20,8 @@ Known bug when pulling from github
 Run npm audit fix, if fail run npm update in the terminal
 - Error from missing external library 
  - npm install datetime
- - npm install 
+ - npm install date-fns
+ - npm install react chart js
 
 ## Table of Contents
 - [Background](#background)
