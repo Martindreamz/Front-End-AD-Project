@@ -7,6 +7,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Team8-AD Project Stationery Store Inventory System
 
+#Login as following actors with email and default password: 123
+- Store Manager (martin@gmail.com)
+- Store Supervisor (tin@gmail.com)
+- Store Clerk (esther@gmail.com)
+- Dept Staff (peter3@gmail.com)
+- Dept Rep (peter2@gmail.com)
+- Dept Head (peter@gmail.com)
+
 ## Table of Contents
 - [Background](#background)
 - [Platform](#platform)
