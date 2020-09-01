@@ -15,6 +15,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Dept Rep (peter2@gmail.com)
 - Dept Head (peter@gmail.com)
 
+Known bug when pulling from github
+- node.js corrupted when pulled from github 
+Run npm audit fix, if fail run npm update in the terminal
+- Error from missing external library 
+ - npm install datetime
+ - npm install 
+
 ## Table of Contents
 - [Background](#background)
 - [Platform](#platform)
